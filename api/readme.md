@@ -25,3 +25,16 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ### License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
+### Apache
+
+```
+<VirtualHost *:80>
+  ServerName udemix.com
+  DocumentRoot "/var/www/udemix.com/api/public"
+  ServerAlias www.udemix.com
+  <Directory "/var/www/udemix.com/api/public">
+    AllowOverride all
+  </Directory>
+</VirtualHost>
+```
