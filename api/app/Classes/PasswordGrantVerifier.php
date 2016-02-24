@@ -14,7 +14,7 @@ class PasswordGrantVerifier
       ];
 
       if (Auth::once($credentials)) {
-          return Auth::user()->id;
+          return Auth::user()->user_id;
       }
 
       return false;

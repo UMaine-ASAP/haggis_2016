@@ -24,11 +24,18 @@ class User extends Model implements AuthenticatableContract,
     protected $table = 'users';
 
     /**
+     * Primary key for this table
+     * 
+     * @var string
+     */
+    protected $primaryKey = "user_id";
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['first_name', 'last_name', 'middle_initial', 'email', 'website', 'user_type'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -36,4 +43,34 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function classes() 
+    {
+    	return $this->hasMany('App\Classes');
+    }
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function evaluations() 
+    {
+    	return $this->hasMany('App\Evaluation');
+    }
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function projects() 
+    {
+    	return $this->belongsToMany('App\Project', 'projects_users');
+    }
 }

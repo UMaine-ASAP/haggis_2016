@@ -11,24 +11,41 @@
 |
 */
 
-Route::get('/', function() {
-	return array('user' => 'derek', 'age' => '22', 'profession' => 'asdfasdf');
-});
-
+// prefix all api routes with "api/v1"
 Route::group(['prefix' => 'api/v1'], function () {
-	Route::get('/users', function() {
-		return array('user' => 'derek', 'age' => '22', 'profession' => 'dev');
+	/**
+	________       ______ __________       
+	___  __ \___  ____  /____  /__(_)______
+	__  /_/ /  / / /_  __ \_  /__  /_  ___/
+	_  ____// /_/ /_  /_/ /  / _  / / /__  
+	/_/     \__,_/ /_.___//_/  /_/  \___/ 
+
+	**/
+
+	Route::post('oauth/access_token', function() {
+	    return Response::json(Authorizer::issueAccessToken());
 	});
+
+	Route::resource('users', 'UsersController');
+
+	/**
+	________             _____           _____     _________
+	___  __ \______________  /_____________  /___________  /
+	__  /_/ /_  ___/  __ \  __/  _ \  ___/  __/  _ \  __  / 
+	_  ____/_  /   / /_/ / /_ /  __/ /__ / /_ /  __/ /_/ /  
+	/_/     /_/    \____/\__/ \___/\___/ \__/ \___/\__,_/ 
+
+	**/
+    Route::group(['middleware' => 'oauth', 'before' => 'oauth'], function() {
+        Route::get('/stuff', function() {
+            $user_id=Authorizer::getResourceOwnerId(); // the token user_id
+            $user=\App\User::find($user_id);// get the user data from database
+            return Response::json($user);
+        });
+
+
+    });
+
 });
 
-Route::post('oauth/access_token', function() {
- return Response::json(Authorizer::issueAccessToken());
-});
 
-Route::get('/register', function() {
-    $user = new App\User();
-    $user->name="test user";
-    $user->email="test@test.com";
-    $user->password = \Illuminate\Support\Facades\Hash::make("password");
-    $user->save();
-});
