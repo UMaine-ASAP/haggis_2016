@@ -26,4 +26,35 @@ class Assignment extends Model
      * @var array
      */
     protected $fillable = ['title', 'description'];
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function criteria()
+    {
+        return $this->belongsToMany('App\Criterion', 'assignments_criteria', 'assignment_id', 'criterion_id');
+    }
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function parts()
+    {
+        return $this->belongsToMany('App\Part', 'assignments_parts', 'assignment_id', 'part_id');
+    }
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function projects()
+    {
+        return $this->belongsToMany('App\Project', 'assignments_projects', 'assignment_id', 'part_id');
+    }
+
 }

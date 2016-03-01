@@ -26,4 +26,25 @@ class Class extends Model
      * @var array
      */
     protected $fillable = ['course_id', 'title', 'description', 'start_time', 'location'];
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'classes_users', 'class_id', 'user_id');
+    }
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function courses()
+    {
+        return $this->belongsToMany('App\Course', 'courses_classes', 'class_id', 'course_id');
+    }
+
 }

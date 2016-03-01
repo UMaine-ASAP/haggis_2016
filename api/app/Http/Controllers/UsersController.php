@@ -57,6 +57,18 @@ class UsersController extends ApiController
      */
     public function store(Request $request)
     {
+        $v = Validator::make($request->all(), [
+            'title' => 'required|unique|max:255',
+            'body' => 'required',
+        ]);
+
+        if ($v->fails()) {
+            return $this->respondWithError("User does not exist");
+        }
+        else {
+            
+        }
+
         $user = new User();
         $user->first_name="Derek";
         $user->last_name="Myska";

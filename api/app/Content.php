@@ -26,4 +26,14 @@ class Content extends Model
      * @var array
      */
     protected $fillable = ['name', 'format', 'size', 'lcoation'];
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function parts()
+    {
+        return $this->belongsToMany('App\Part', 'contents_parts', 'content_id', 'part_id');
+    }
 }
