@@ -26,4 +26,14 @@ class Course extends Model
      * @var array
      */
     protected $fillable = ['title', 'code', 'description'];
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function classes()
+    {
+        return $this->belongsToMany('App\Class', 'courses_classes', 'course_id', 'class_id');
+    }
 }

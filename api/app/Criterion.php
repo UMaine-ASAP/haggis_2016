@@ -26,4 +26,24 @@ class Criterion extends Model
      * @var array
      */
     protected $fillable = ['title', 'description', 'range'];
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function assignments()
+    {
+        return $this->belongsToMany('App\Assignment', 'assignments_criteria', 'criterion_id', 'assignment_id');
+    }
+
+    /**
+     * relationship
+     * 
+     * @return [type] [description]
+     */
+    public function parts()
+    {
+        return $this->belongsToMany('App\Part', 'criteria_parts', 'criterion_id', 'part_id');
+    }
 }

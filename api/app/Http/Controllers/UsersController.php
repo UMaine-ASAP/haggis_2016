@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -58,15 +59,29 @@ class UsersController extends ApiController
     public function store(Request $request)
     {
         $user = new User();
-        $user->first_name="Derek";
-        $user->last_name="Myska";
-        $user->middle_initial="J";
-        $user->email="derek.myska@gmail.com";
-        $user->website='http://www.derekmyska.com';
-        $user->user_type=1;
-        $user->password = \Illuminate\Support\Facades\Hash::make("password");
-        $user->save();
-        return ('created');
+        $validator = Validator::make($request->all(), $user->rules());
+
+        if ($validator->fails()) {
+            return $this->respondBadRequest("User creation failed, please check your request");
+        }
+        else {
+            try {
+                $user = new User();
+                $user->first_name = $request['first_name'];
+                $user->last_name = $request['last_name'];
+                $user->middle_initial = $request['middle_initial'];
+                $user->email = $request['email'];
+                $user->website = $request['website'];
+                $user->user_type = 1;
+                $user->password = \Illuminate\Support\Facades\Hash::make($request['password']);            
+                $user->save();
+            }
+            catch(\Exception $e) {
+                return $this->respondBadRequest("User creation failed, please check your request");
+            }
+
+            return $this->respondCreated("User created successfully");
+        }
     }
 
     /**

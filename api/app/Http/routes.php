@@ -21,12 +21,11 @@ Route::group(['prefix' => 'api/v1'], function () {
 	/_/     \__,_/ /_.___//_/  /_/  \___/ 
 
 	**/
-
 	Route::post('oauth/access_token', function() {
 	    return Response::json(Authorizer::issueAccessToken());
 	});
 
-	Route::resource('users', 'UsersController');
+	
 
 	/**
 	________             _____           _____     _________
@@ -37,6 +36,9 @@ Route::group(['prefix' => 'api/v1'], function () {
 
 	**/
     Route::group(['middleware' => 'oauth', 'before' => 'oauth'], function() {
+
+    	Route::resource('users', 'UsersController');
+
         Route::get('/stuff', function() {
             $user_id=Authorizer::getResourceOwnerId(); // the token user_id
             $user=\App\User::find($user_id);// get the user data from database
