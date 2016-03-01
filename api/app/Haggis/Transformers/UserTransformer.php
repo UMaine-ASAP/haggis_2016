@@ -14,9 +14,12 @@ class UserTransformer extends Transformer {
 	public function transform($user)
 	{
 		return [
-		    'id' => (int) $user['id'],
-		    'name' => $user['name'],
-		    'email' => $user['email']
+		    'id' => (int) $user['user_id'],
+		    'first_name' => $user['first_name'],
+		    'last_name' => $user['last_name'],
+		    'middle_initial' => $user['middle_initial'],
+		    'email' => $user['email'],
+		    'website' => $user['website']
 		];
 	}
 }

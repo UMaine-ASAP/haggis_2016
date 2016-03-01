@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Http\Request;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -44,15 +45,6 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * relationship
-     *
-     * @return [type] [description]
-     */
-    public function classes()
-    {
-    	return $this->hasMany('App\Classes');
-    }
 
     /**
      * relationship
@@ -97,18 +89,54 @@ class User extends Model implements AuthenticatableContract,
  
 
     /**
-     * rules for user validation
+     * rules for user validation based on the type of request
+     * 
      * @return [type] [description]
      */
-    public static function rules()
+    public function rules()
     {
-    	return array(
-    		'email' => 'required|email',
-    		'password' => 'required|between:4,30',
-    		'website' => 'url',
+        return [
+            'email' => 'required|email',
+            'password' => 'required|between:4,30',
+            'website' => 'url',
             'first_name' => 'required|alpha_dash',
             'last_name' => 'required|alpha_dash',
             'middle_initial' => 'alpha|between:0,1',
-    	);
+        ];
+        
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE': 
+            {
+                return [];
+            }
+            case 'POST': 
+            {
+                return [
+                    'email' => 'required|email',
+                    'password' => 'required|between:4,30',
+                    'website' => 'url',
+                    'first_name' => 'required|alpha_dash',
+                    'last_name' => 'required|alpha_dash',
+                    'middle_initial' => 'alpha|between:0,1',
+                ];
+            }
+            case 'PUT':
+            case 'PATCH':
+            {
+                return [
+                    'email' => 'required|email',
+                    'password' => 'required|between:4,30',
+                    'website' => 'url',
+                    'first_name' => 'required|alpha_dash',
+                    'last_name' => 'required|alpha_dash',
+                    'middle_initial' => 'alpha|between:0,1',
+                ];
+            }
+
+            default: break;
+
+        }
+
     }
 }

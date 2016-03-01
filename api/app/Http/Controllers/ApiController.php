@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * ApiController
+ *
+ * This controller extends the base Laravel Controller
+ * and adds methods specific to our API
+ * 
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Response as IlluminateResponse;
@@ -52,6 +58,32 @@ class ApiController extends Controller {
 	{
 		return $this->setStatusCode(IlluminateResponse::HTTP_INTERNAL_SERVER_ERROR)->respondWithError($message);
 	}
+
+	/**
+	 * [respondInternalError description]
+	 * @param  string $message [description]
+	 * @return [type]          [description]
+	 */
+	public function respondBadRequest($message = "Bad Request")
+	{
+		return $this->setStatusCode(IlluminateResponse::HTTP_BAD_REQUEST)->respondWithError($message);
+	}
+
+	/**
+	 * [respondInternalError description]
+	 * @param  string $message [description]
+	 * @return [type]          [description]
+	 */
+	public function respondCreated($message = "Created")
+	{
+		return $this->setStatusCode(IlluminateResponse::HTTP_CREATED)->respond([			
+			'data' => [
+				'message' => $message,
+				'status_code' => $this->getStatusCode()
+			]
+		]);
+	}
+
 
 	/**
 	 * [respond description]
