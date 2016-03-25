@@ -8,20 +8,14 @@
 	//get the html page ready to be displayed
 	$page = file_get_contents(dirname(__FILE__) . '/../views/login.html');
 	echo $page;
-	
 	if(isset($_POST['submitLogin'])){	//change submitLogin to the equivalent login.html file
 
-		//get actual DB
-		require_once dirname(__FILE__) . "/../system/database.php";
-		$db = GetDB();
+		$user = new User(-1); //User with no user id to give
+		$user->User_Login($_POST['postName'], $_POST['postPassword']); //check for right credentials
 
-		//query for the user in the database
-		$query = "SELECT * FROM `user` WHERE `email` = '" .  $_POST['postName'] . "' AND `password` = '" .  $_POST['postPassword'] . "';";
-		$result = $db->query($query);
-		//if found, set SESSION variables and go to correct home page
-		if($result->num_rows != 0){
-			$user = $result->fetch_array(MYSQLI_BOTH);
-			$_SESSION['user'] = new User($user['userID']);
+		//if correct credentials, set SESSION variables and go to correct home page
+		if($user->userID != -1){
+			$_SESSION['user'] = $user;
 			$_SESSION['sessionCheck'] = 'true';
 			if ($_SESSION['user']->userType == 'Student'){
 				header("location:student_home.php");
