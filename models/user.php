@@ -13,6 +13,11 @@ class User {
 	public $password;
 
 	public function User($user_id){
+		//check to see if valid user_id
+		if($user_id <= -1){
+			return;
+		}
+
 		$this->userID = $user_id;
 
 		$db = GetDB();
@@ -46,6 +51,27 @@ class User {
 			}
 		} else {
 			die("Couldn't find user: " . $this->userID);
+		}
+	}
+
+	public function User_Login($email, $password){
+		$db = GetDB();
+
+		//query for the user in the database using credentials
+		$query = "SELECT * FROM `user` WHERE `email` = '" .  $email . "' AND `password` = '" .  $password . "';";
+		$result = $db->query($query);
+
+		//if the result isn't empty
+		if($result->num_rows != 0){
+			$user = $result->fetch_array(MYSQLI_BOTH);
+
+			$this->userID = $user['userID'];
+			$this->firstName = $user['firstName'];
+			$this->lastName = $user['lastName'];
+			$this->middleInitial = $user['middleInitial'];
+			$this->userType = $user['userType'];
+			$this->email = $user['email'];
+			$this->password = $user['password'];
 		}
 	}
 
