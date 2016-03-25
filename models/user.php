@@ -56,7 +56,6 @@ class User {
 
 	public function User_Login($email, $password){
 		$db = GetDB();
-		
 
 		//query for the user in the database using credentials
 		$query = "SELECT * FROM `user` WHERE `email` = '" .  $email . "' AND `password` = '" .  $password . "';";
