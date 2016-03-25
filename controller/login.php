@@ -4,10 +4,10 @@
 
 	//get user file
 	require_once dirname(__FILE__) . "/../models/user.php";
-
 	//get the html page ready to be displayed
 	$page = file_get_contents(dirname(__FILE__) . '/../views/login.html');
 	echo $page;
+
 	if(isset($_POST['submitLogin'])){	//change submitLogin to the equivalent login.html file
 
 		$user = new User(-1); //User with no user id to give
@@ -18,10 +18,11 @@
 			$_SESSION['user'] = $user;
 			$_SESSION['sessionCheck'] = 'true';
 			if ($_SESSION['user']->userType == 'Student'){
-				header("location:student_home.php");
+				header("Location: student_home.php");
+				exit;
 			}
 			else{
-				header("location:instructor_home.php");	
+				header("Location: instructor_home.php");	
 			}
 		}
 		else {

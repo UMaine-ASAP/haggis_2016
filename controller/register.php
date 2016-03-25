@@ -7,4 +7,9 @@
 
 	echo $page;
 	
+
+	if(isset($_POST['submitRegister'])){	//change submitRegister to the equivalent register.html file
+		$user = new User(0);
+		$user->firstName = 
+	}
 ?>
