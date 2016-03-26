@@ -54,7 +54,7 @@ class User {
 		}
 	}
 
-	public function User_Login($email, $password){
+	public function Login($email, $password){
 		$db = GetDB();
 
 		//query for the user in the database using credentials
