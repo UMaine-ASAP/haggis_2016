@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__) . "/../system/database.php";
 require_once dirname(__FILE__) . "/../models/user.php";
+require_once dirname(__FILE__) . "/../models/assignment.php";
 
 class Period {
 
@@ -153,7 +154,35 @@ class Period {
 		}
 	}
 
+/////////////////////////////////////////////////////////////////// Assignments
+
+	public function GetAssignments(){
+		
+			$query =  "SELECT * FROM `assignment_class` WHERE `classID` = {$this->classID}";
+
+			$db = GetDB();
+			$rows = $db->query($query);
+			if($rows){
+				$ret = Array();
+				while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+					$u = array(new Assignment($row['assignmentID']), $row['dueDate']);
+					$ret[] = $u;
+
+				}
+				return $ret;
+			} else {
+				return Array();
+			}
+	}
+
 }
+
+
+
+
+
+
 
 /*
 $u = new Period(1);

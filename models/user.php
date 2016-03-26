@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__) . "/../system/database.php";
 require_once dirname(__FILE__) . "/../models/evaluation.php";
+require_once dirname(__FILE__) . "/../models/class.php";
 
 class User {
 
@@ -184,7 +185,33 @@ class User {
 		}
 	}
 
+////////////////////////////////////////////////////////////// Classes
+	public function GetClasses(){
+
+			$query = "SELECT * FROM `class_user` WHERE `userID` = {$this->userID}";
+
+			$db = GetDB();
+			$rows = $db->query($query);
+			if($rows){
+				$ret = Array();
+				while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+					$u = new Period($row['classID']);
+					$ret[] = $u;
+
+				}
+				return $ret;
+			} else {
+				return Array();
+			}
+	}
+
 }
+
+
+
+
+
 
 /*
 $u = new User(1);
