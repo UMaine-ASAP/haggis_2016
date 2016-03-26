@@ -54,11 +54,7 @@ class User {
 		}
 	}
 
-<<<<<<< HEAD
 	public function Login($email, $password){
-=======
-	public function User_Login($email, $password){
->>>>>>> refs/remotes/origin/master
 		$db = GetDB();
 
 		//query for the user in the database using credentials
