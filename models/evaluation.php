@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__) . "/../system/database.php";
 require_once dirname(__FILE__) . "/../models/user.php";
+require_once dirname(__FILE__) . "/../models/assignment.php";
+require_once dirname(__FILE__) . "/../models/criteria.php";
 
 class Evaluation {
 
@@ -99,6 +101,22 @@ class Evaluation {
 		}
 	}	
 
+	public function GetAssignment(){
+		$db = GetDB();
+
+		$query =  "SELECT * FROM `assignment_criteria` WHERE `assignmentID` = {$this->criteriaID}";
+		
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$assign = $result->fetch_array(MYSQLI_BOTH);
+
+			$assignment = new Assignment($assign['assignmentID']);
+			return $assignment;
+		}
+		else{
+			die("Couldn't find assignment for criteria: " . $this->criteriaID);
+		}
+	}
 }
 
 ?>
