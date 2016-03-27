@@ -54,7 +54,7 @@ class User {
 		}
 	}
 
-	public function User_Login($email, $password){
+	public function Login($email, $password){
 		$db = GetDB();
 
 		//query for the user in the database using credentials
@@ -89,10 +89,13 @@ class User {
 			$db = GetDB();
 			if($db->query($query) === TRUE){
 				// Updated succesfully
+				return TRUE;
 			} else {
+				return FALSE;
 				die("Couldn't update user: " . $this->userID);
 			}
 		}
+		return FALSE;
 	}
 
 	public function Delete(){
