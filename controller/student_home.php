@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 	//get user file
 	require_once dirname(__FILE__) . "/../models/user.php";
 	require_once dirname(__FILE__) . "/../models/assignment.php";
@@ -74,4 +75,8 @@
 	$page = str_replace('$evaluationsToDo', $evaluationsToDo, $page);
 	$page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
 	echo $page;
+=======
+session_start();
+echo 'Student login success';
+>>>>>>> master
 ?>

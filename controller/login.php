@@ -11,7 +11,7 @@
 	if(isset($_POST['submitLogin'])){	//change submitLogin to the equivalent login.html file
 
 		$user = new User(-1); //User with no user id to give
-		$user->User_Login($_POST['postName'], $_POST['postPassword']); //check for right credentials
+		$user->Login($_POST['postName'], $_POST['postPassword']); //check for right credentials
 
 		//if correct credentials, set SESSION variables and go to correct home page
 		if($user->userID != -1){
