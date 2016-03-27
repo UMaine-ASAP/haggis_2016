@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . "/../system/database.php";
+require_once dirname(__FILE__) . "/../models/user.php";
 
 class Evaluation {
 
@@ -76,6 +77,27 @@ class Evaluation {
 			die("Couldn't delete evaluation: " . $this->evaluationID);
 		}
 	}
+
+////////////////////////////////////////////////////////////// USERS
+
+	public function GetUser(){
+		$db = GetDB();
+
+
+		$query =  "SELECT * FROM `user_evaluation` WHERE `evaluationID` = {$this->evaluationID}";
+
+		
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$user = $result->fetch_array(MYSQLI_BOTH);
+
+			$user = new User ($user['userID']);
+			return $user;
+		}
+		else{
+			die("Couldn't find user for evaluationID: " . $this->evaluationID);
+		}
+	}	
 
 }
 
