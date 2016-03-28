@@ -1,10 +1,81 @@
-/*haggis stylesheet*/
-body{
-	border-style:solid;
-	border-width:1px;
-	border-color:black;
+/*HEADER--------------------------------------------*/
+
+header{
+	background: #216499;
+	border-bottom: 3px solid black;
+	height: 50px;
+	vertical-align: middle;
+	min-width: 300px;
+	color: white;
 }
 
-#login{
-	align:center;
+#siteTitle{
+	display: inline-block;
+	margin: 10px 0px 10px 5px;
+	
+}
+
+
+/*BODY--------------------------------------------*/
+
+body{
+	font-family: 'Lora', serif;
+}
+
+#content{
+	margin: 5px;
+}
+
+/*FOOTER--------------------------------------------*/
+
+#footer{
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}
+
+#footer #copywrite{
+	width: 215px;
+	margin: 0px auto;
+}
+
+/*LOGIN--------------------------------------------*/
+
+header .register{
+	display: inline-block;
+	float: right;
+	margin: 10px 5px 10px 0px;
+	
+}
+
+.register input{
+	border-color: black;
+	background: white;
+	font-style: italic;
+}
+
+input[name="submitLogin"]{
+	background: #216499;
+	color: white;
+	border-color: black;
+	border-width: 2px;
+	font-size: 18px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 15px;
+
+}
+
+#loginContainer{
+	width: 200px;
+	margin: 0 auto;
+}
+
+#loginContainer h2{
+	color: #216499;
+	font-style: italic;
+}
+
+#loginContainer input{
+	margin-bottom: 5px;
 }
