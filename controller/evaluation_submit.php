@@ -3,7 +3,10 @@
 	require_once dirname(__FILE__) . "/../models/user.php";
 	require_once dirname(__FILE__) . "/../models/assignment.php";
 	session_start();
-
+	if($_SESSION['sessionCheck'] != 'true'){
+			session_destroy();
+			header("location:login.php");
+		}
 	$page = file_get_contents(dirname(__FILE__) . '/../views/evaluation_submit.html');
 	
 
@@ -20,33 +23,36 @@
 	//get critera set
 	$criteria = $assignment->GetCriteria();
 
+	$count = 0;
+	$evalDetails .= '<form method="get" action="evaluation_submit_request.php">';
+
 	//create section for each criteria
 	foreach($criteria as $c){
-		$evalDetails .= '<div class="criteria">';
+		$count++;
+		$_SESSION['criteria' . $count] = $c->criteriaID;
 		$evalDetails .= '<h3>'.$c->title.'</h3>';
 		$evalDetails .= '<div>'.$c->description.'</div>';
 		$evalDetails .= 'Strongly Disagree';
-		$evalDetails .= '<input type="radio" name="agree">';
+		$evalDetails .= '<input type="radio" name="c'. $count .'" value="1">';
 		$evalDetails .= 'Disagree';
-		$evalDetails .= '<input type="radio" name="agree">';
+		$evalDetails .= '<input type="radio" name="c'. $count .'" value="2">';
 		$evalDetails .= 'Neutral';
-		$evalDetails .= '<input type="radio" name="agree">';
+		$evalDetails .= '<input type="radio" name="c'. $count .'" value="3">';
 		$evalDetails .= 'Agree';
-		$evalDetails .= '<input type="radio" name="agree">';
+		$evalDetails .= '<input type="radio" name="c'. $count .'" value="4">';
 		$evalDetails .= 'Strongly Agree';
-		$evalDetails .= '<input type="radio" name="agree">';
-		$evalDetails .= '<input type="text" name="comments" placeholder="Comments">';
-		$evalDetails .= '<input type="button" value="save"><input type="button" value="submit"></div>';
+		$evalDetails .= '<input type="radio" name="c'. $count .'" value="5">';
+		$evalDetails .= '<input type="text" name="'. $count .'comments" placeholder="Comments">';
+		$evalDetails .= '<br><br>';
 	}
+	$evalDetails .= '<input type="button" value="save">';
+	$evalDetails .= '<input type="submit" value="submit"></form>';
+
+	$_SESSION['evaluation'] = $_POST['evaluationID'];
+	$_SESSION['count'] = $count;
 
 	//get the html page ready to be displayed
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
 	$page = str_replace('$evaluationInfo', $evalDetails, $page);
 	echo $page;
-
-	if($_SESSION['sessionCheck'] != 'true'){
-			session_destroy();
-			header("location:login.php");
-		}
-	echo "evaluation to submit: " . $_POST['evaluationID'];
 ?>

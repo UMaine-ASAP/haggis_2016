@@ -15,6 +15,10 @@ class Evaluation {
 	public function Evaluation($class_id){
 		$this->evaluationID = $class_id;
 
+		if($this->evaluationID == -1){
+			return;
+		}
+
 		$db = GetDB();
 
 		// If the evaluation_id is equal to zero, then this must be a new evaluation
@@ -45,6 +49,24 @@ class Evaluation {
 		} else {
 			die("Couldn't find evaluation: " . $this->evaluationID);
 		}
+	}
+
+	public function Add(){
+		
+			$query = "INSERT INTO `evaluation`(`evaluationID`, `criteriaID`, `rating`, `comment`, `evaluatorID`) VALUES (";
+			$query .= "NULL,'";
+			$query .= $this->criteriaID . "','";
+			$query .= $this->rating . "','";
+			$query .= $this->comment . "','";
+			$query .= $this->evaluatorID . "')";
+
+			$db = GetDB();
+			if($db->query($query) === TRUE){
+				// Updated succesfully
+			} else {
+				die("Couldn't add evaluation: " . $this->evaluationID);
+			}
+		
 	}
 
 	public function Save(){
