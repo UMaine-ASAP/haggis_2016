@@ -43,4 +43,10 @@
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
 	$page = str_replace('$evaluationInfo', $evalDetails, $page);
 	echo $page;
+
+	if($_SESSION['sessionCheck'] != 'true'){
+			session_destroy();
+			header("location:login.php");
+		}
+	echo "evaluation to submit: " . $_POST['evaluationID'];
 ?>
