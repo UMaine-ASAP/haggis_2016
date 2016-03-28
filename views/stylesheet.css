@@ -15,6 +15,27 @@ header{
 	
 }
 
+#welcome{
+	display: inline-block;
+	float: right;
+	margin: 15px 10px 10px 5px;
+}
+
+header .register, header .logout{
+	display: inline-block;
+	float: right;
+	margin: 10px 5px 10px 0px;
+	
+}
+
+.register input, .logout input{
+	border-color: black;
+	background: white;
+	font-style: italic;
+}
+
+
+
 
 /*BODY--------------------------------------------*/
 
@@ -41,18 +62,6 @@ body{
 
 /*LOGIN--------------------------------------------*/
 
-header .register{
-	display: inline-block;
-	float: right;
-	margin: 10px 5px 10px 0px;
-	
-}
-
-.register input{
-	border-color: black;
-	background: white;
-	font-style: italic;
-}
 
 input[name="submitLogin"]{
 	background: #216499;
@@ -79,3 +88,4 @@ input[name="submitLogin"]{
 #loginContainer input{
 	margin-bottom: 5px;
 }
+
