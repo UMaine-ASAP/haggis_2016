@@ -26,17 +26,17 @@
 	//echo '<br>' . $assignments[0][0][1];		  this is the assignment due date
 
 	//setup table for assignments
-	$assignmentInfo = "<table border='1' style='width:100'><tr><th>Assignments</th><th>Due Date</th></tr>";
+	$assignmentInfo = "<table><thead><tr><th>Assignments</tr></thead>";
 	
 	if($assignments != array()){
 		foreach($assignments[0] as $assignment){
 				
-			$assignmentInfo .= "<tr><th>"; 
+			$assignmentInfo .= "<tr><td>"; 
 			$assignmentInfo .= '<form method="post" action="assignment_controller.php">';
 			$assignmentInfo .= '<button type="submit" value="' . $assignment[0]->assignmentID . '" name="assignmentID" ';
 			$assignmentInfo .= 'formaction="assignment_controller.php"> ';
-			$assignmentInfo .= "{$assignment[0]->title}</button></th>";
-			$assignmentInfo .=  "<th>{$assignment[1]}</th></tr>";
+			$assignmentInfo .= "{$assignment[0]->title}</button> Due: ".$assignment[1]."</td>";
+			// $assignmentInfo .=  "<td>{$assignment[1]}</td></tr>";
 		}
 	}
 	$assignmentInfo .= "</table>";
@@ -45,17 +45,19 @@
 	$evaluations = $_SESSION['user']->GetEvaluations();
 
 	//setup table for evaluations to do
-	$evaluationsToDo = "<br><table border='1' style='width:100'><tr><th>Evaluations To Do</th></tr>";
+	$evaluationsToDo = "<table><thead><tr><th>Evaluations To Do</tr></thead>";
 
 	if($evaluations != array()){
 		foreach($evaluations as $eval){
+			//This may not be a significant way of telling whether or not the evaluation is finished or not.
+			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating. 
 			if($eval->rating == 0){
 				$u = new User($eval->evaluatorID);
-				$evaluationsToDo .= "<tr><th>"; 
+				$evaluationsToDo .= "<tr><td>"; 
 				$evaluationsToDo .= '<form method="post" action="evaluation_submit.php">';
 				$evaluationsToDo .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID"';
 				$evaluationsToDo .= ' formaction="evaluation_submit.php"> ';
-				$evaluationsToDo .= "Evaluation for {$u->firstName}</button></th></tr>";
+				$evaluationsToDo .= "Evaluation for {$u->firstName}</button></td></tr>";
 			}
 		}
 	}
@@ -65,17 +67,17 @@
 	$rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();
 
 	//setup table for assignments
-	$evaluationsReceived = "<br><table border='1' style='width:100'><tr><th>Evaluations Received</th></tr>";
+	$evaluationsReceived = "<table><thead><tr><th>Evaluations Received</tr></thead>";
 
 	if($rec_evaluations != array()){
 		foreach($rec_evaluations as $eval){
 			$e = new Evaluation($eval->evaluationID);
 			$u = $e->GetUser();
-			$evaluationsReceived .= "<tr><th>"; 
+			$evaluationsReceived .= "<tr><td>"; 
 			$evaluationsReceived .= '<form method="post" action="evaluation_view.php">';
 			$evaluationsReceived .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID" ';
 			$evaluationsReceived .= 'formaction="evaluation_view.php"> ';
-			$evaluationsReceived .= "Evaluation from {$u->firstName}</button></th></tr>";
+			$evaluationsReceived .= "Evaluation from {$u->firstName}</button></td></tr>";
 		}
 	}
 	$evaluationsReceived .= "</table>";
