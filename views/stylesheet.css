@@ -50,9 +50,8 @@ body{
 /*FOOTER--------------------------------------------*/
 
 #footer{
-	position: fixed;
-	bottom: 0px;
 	width: 100%;
+	display: block;	
 }
 
 #footer #copywrite{
@@ -89,3 +88,16 @@ input[name="submitLogin"]{
 	margin-bottom: 5px;
 }
 
+/*STUDENT HOME--------------------------------------------*/
+table{
+	border: 1px solid black;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+table th{
+	background: #216499;
+	padding: 5px;
+	font-size: 18px;
+}
