@@ -55,14 +55,14 @@ class Period {
 			$query .= "`courseID` = '" . $this->courseID . "', ";
 			$query .= "`time` = '" . $this->time . "', ";
 			$query .= "`description` = '" . $this->description . "', ";
-			$query .= "`location` = '" . $this->location . "', ";
+			$query .= "`location` = '" . $this->location . "' ";
 			$query .= "WHERE `classID` = " . $this->classID;
 
 			$db = GetDB();
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update class: " . $this->classID);
+				die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
 			}
 		}
 	}

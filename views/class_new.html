@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Haggis - Create Class</title>
+	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
+	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<header>
+		<h2 id="siteTitle">Haggis</h2>
+		<a href="logout.php" class="logout">
+			<input type="button" value="Logout">
+		</a>
+	</header>
+	
+	<div id="content">
+
+	<div id="courseHeading">
+		$courseName
+	</div>
+		<div>
+			<form action="class_new.php" method="post">
+				Title of Class<br>
+				<input type="text" name="classTitle"></input><br>
+				Time of Class<br>
+				<input type="time" name="classTime"></input><br>
+				Description of Class<br>
+				<input type="text" name="classDesc"></input><br>
+				Location of Class<br>
+				<input type="text" name="classLoc"></input><br>
+
+				<button id="createClassButton" type="submit" name="createClassSubmit">Create Class</button>
+			</form>
+		</div>
+
+	</div>
+
+	<div id="footer">
+		<div id="copywrite">© 2016 ASAP Media Services</div>
+	</div>
+</body>
+</html>
