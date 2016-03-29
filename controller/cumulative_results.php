@@ -23,8 +23,13 @@
 
 
 
-	// Access a class
-	$class = new Period(1); // This gets the class with ID equal to 1. NOTE that the name of the class is "Period", not "Class"
+	// Access a class by id
+	
+	// Get assignment
+	// $assignment = new Assignment(1);
+	// Get project submission by user 
+
+
 
 
 
