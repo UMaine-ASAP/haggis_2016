@@ -44,8 +44,7 @@
 	if(isset($_POST['createClassSubmit']))
 	{
 		createClass();
-		echo "Success";
-		// header("location:instructor_home.php");
+		header("location:instructor_home.php");
 	}
 
 	//get the html page ready to be displayed
