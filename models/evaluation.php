@@ -6,9 +6,9 @@ class Evaluation {
 
 	public $evaluationID = -1;
 	public $criteriaID;
-	public $rating;
+	public $done;
 	public $comment;
-	public $evaluatorID;
+	public $target_userID;
 
 	public function Evaluation($class_id){
 		$this->evaluationID = $class_id;
@@ -34,9 +34,9 @@ class Evaluation {
 
 			if($evaluation != NULL){
 				$this->criteriaID = $evaluation['criteriaID'];
-				$this->rating = $evaluation['rating'];
+				$this->done = $evaluation['done'];
 				$this->comment = $evaluation['comment'];
-				$this->evaluatorID = $evaluation['evaluatorID'];
+				$this->target_userID = $evaluation['target_userID'];
 			} else {
 				die("Couldn't find evaluation: " . $this->evaluationID);
 			}
@@ -49,9 +49,9 @@ class Evaluation {
 		if($this->evaluationID != -1){
 			$query = "UPDATE `evaluation` SET ";
 			$query .= "`criteriaID` = '" . $this->criteriaID . "', ";
-			$query .= "`rating` = '" . $this->rating . "', ";
+			$query .= "`done` = '" . $this->done . "', ";
 			$query .= "`comment` = '" . $this->comment . "', ";
-			$query .= "`evaluatorID` = '" . $this->evaluatorID . "', ";
+			$query .= "`target_userID` = '" . $this->target_userID . "', ";
 			$query .= "WHERE `evaluationID` = " . $this->evaluationID;
 
 			$db = GetDB();

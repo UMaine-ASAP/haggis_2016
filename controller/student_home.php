@@ -51,8 +51,8 @@
 		foreach($evaluations as $eval){
 			//This may not be a significant way of telling whether or not the evaluation is finished or not.
 			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating. 
-			if($eval->rating == 0){
-				$u = new User($eval->evaluatorID);
+			if($eval->done == 0){
+				$u = new User($eval->target_userID);
 				$evaluationsToDo .= "<tr><td>"; 
 				$evaluationsToDo .= '<form method="post" action="evaluation_submit.php">';
 				$evaluationsToDo .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID"';
