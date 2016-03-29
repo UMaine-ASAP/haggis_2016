@@ -1,5 +1,6 @@
 <?php
 	require_once dirname(__FILE__) . "/../models/evaluation.php";
+	require_once dirname(__FILE__) . "/../models/criteria.php";
 	require_once dirname(__FILE__) . "/../models/user.php";
 
 	session_start();
@@ -8,17 +9,16 @@
 			header("location:login.php");
 	}
 
-	$evaluation = $_SESSION['evaluation'];
+	$evaluation = new Evaluation($_SESSION['evaluation']);
 	$count = $_SESSION['count'];
 
 	for ($i = 1; $i<=$count; $i++){
-		$eval = new Evaluation(-1);
-		$eval->criteriaID = $_SESSION['criteria' . $i];
-		$eval->rating = $_GET['c'.$i];
-	 	$eval->comment = $_GET[$i. 'comments'];
-		$eval->evaluatorID = $_SESSION['user']->userID;
-		$eval->Add();
+		$criteria = new Criteria($_SESSION['criteria' . $i]);
+		$criteria->rating = $_GET['c'.$i];
+	 	$criteria->comment = $_GET[$i. 'comments'];
+		$criteria->SaveResult();
 	}
-
-	
+	$evaluation->rating = 1;
+	$evaluation->Save();
+	header("location:student_home.php");
 ?>

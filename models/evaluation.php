@@ -72,10 +72,10 @@ class Evaluation {
 	public function Save(){
 		if($this->evaluationID != -1){
 			$query = "UPDATE `evaluation` SET ";
-			$query .= "`criteriaID` = '" . $this->criteriaID . "', ";
-			$query .= "`rating` = '" . $this->rating . "', ";
-			$query .= "`comment` = '" . $this->comment . "', ";
-			$query .= "`evaluatorID` = '" . $this->evaluatorID . "', ";
+			$query .= "`criteriaID` = '"	 	. $this->criteriaID . "', ";
+			$query .= "`rating` = '" 			. $this->rating . "', ";
+			$query .= "`comment` = '" 			. $this->comment . "', ";
+			$query .= "`evaluatorID` = '"		. $this->evaluatorID . "' ";
 			$query .= "WHERE `evaluationID` = " . $this->evaluationID;
 
 			$db = GetDB();
@@ -137,6 +137,26 @@ class Evaluation {
 		}
 		else{
 			die("Couldn't find assignment for criteria: " . $this->criteriaID);
+		}
+	}
+////////////////////////////////////////////////////////////// CRITERIA
+	public function GetCriteria(){
+
+		$query = "SELECT * FROM `evaluation_criteria` WHERE `evaluationID` = {$this->evaluationID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+				$u = new Criteria($row['criteriaID']);
+				$ret[] = $u;
+
+			}
+			return $ret;
+		} else {
+			return Array();
 		}
 	}
 }

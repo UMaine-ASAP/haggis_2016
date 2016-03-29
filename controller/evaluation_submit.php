@@ -13,15 +13,12 @@
 	//get evaluation info
 	$eval = new Evaluation($_POST['evaluationID']);
 
-	$evalDetails = "";
-
-	$evalDetails .= '<div id="evaluation">';
-
-	//get assignment
-	$assignment = $eval->GetAssignment();
-
 	//get critera set
-	$criteria = $assignment->GetCriteria();
+	$criteria = $eval->GetCriteria();
+
+
+	$evalDetails = "";
+	$evalDetails .= '<div id="evaluation">';
 
 	$count = 0;
 	$evalDetails .= '<form method="get" action="evaluation_submit_request.php">';
@@ -45,7 +42,6 @@
 		$evalDetails .= '<input type="text" name="'. $count .'comments" placeholder="Comments">';
 		$evalDetails .= '<br><br>';
 	}
-	$evalDetails .= '<input type="button" value="save">';
 	$evalDetails .= '<input type="submit" value="submit"></form>';
 
 	$_SESSION['evaluation'] = $_POST['evaluationID'];
