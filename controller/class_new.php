@@ -13,7 +13,6 @@
 
 	if($_SESSION['user']->userType == 'Student')
 	{
-		echo "wrong permission";
 		header("location:login.php");
 	}
 
@@ -39,13 +38,14 @@
 		$class->description = $classDesc;
 		$class->location = $classLoc;
 		$class->Save();
+		$class->addUser($_SESSION['user']->userID, $_SESSION['user']->userType);
 	}
 
 	if(isset($_POST['createClassSubmit']))
 	{
 		createClass();
-		echo "Created Successfully";
-		header("location:instructor_home.php");
+		echo "Success";
+		// header("location:instructor_home.php");
 	}
 
 	//get the html page ready to be displayed

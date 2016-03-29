@@ -21,14 +21,17 @@
 	</div>
 		<div>
 			<form action="class_new.php" method="post">
-				Title of Class<br>
-				<input type="text" name="classTitle"></input><br>
-				Time of Class<br>
-				<input type="time" name="classTime"></input><br>
-				Description of Class<br>
-				<input type="text" name="classDesc"></input><br>
-				Location of Class<br>
-				<input type="text" name="classLoc"></input><br>
+				<div>Title of Class</div>
+				<input type="text" name="classTitle" placeholder="Title of Class"></input><br>
+
+				<div>Time of Class</div>
+				<input type="time" name="classTime" placeholder="Time of Class"></input><br>
+
+				<div>Description of Class</div>
+				<input type="text" name="classDesc" placeholder="Description of Class"></input><br>
+				
+				<div>Location of Class</div>
+				<input type="text" name="classLoc" placeholder="Location of Class"></input><br>
 
 				<button id="createClassButton" type="submit" name="createClassSubmit">Create Class</button>
 			</form>
