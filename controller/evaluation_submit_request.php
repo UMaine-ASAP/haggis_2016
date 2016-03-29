@@ -18,7 +18,7 @@
 	 	$criteria->comment = $_GET[$i. 'comments'];
 		$criteria->SaveResult();
 	}
-	$evaluation->rating = 1;
+	$evaluation->done = 1;
 	$evaluation->Save();
 	header("location:student_home.php");
 ?>

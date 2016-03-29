@@ -77,7 +77,12 @@
 			$evaluationsReceived .= '<form method="post" action="evaluation_view.php">';
 			$evaluationsReceived .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID" ';
 			$evaluationsReceived .= 'formaction="evaluation_view.php"> ';
-			$evaluationsReceived .= "Evaluation from {$u->firstName}</button></td></tr>";
+
+			// if($e->evaluation_type == "group")
+			$evaluationsReceived .= $e->GetAssignment()->title." ";
+			$evaluationsReceived .= $e->evaluation_type." evaluation";
+
+			//[assignment] [group/peer] evaluation
 		}
 	}
 	$evaluationsReceived .= "</table>";

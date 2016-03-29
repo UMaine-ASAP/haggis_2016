@@ -9,8 +9,9 @@ class Evaluation {
 	public $evaluationID = -1;
 	public $criteriaID;
 	public $done;
-	public $comment;
+	public $evaluation_type;
 	public $target_userID;
+	public $groupID;
 
 	public function Evaluation($class_id){
 		$this->evaluationID = $class_id;
@@ -43,6 +44,8 @@ class Evaluation {
 				$this->done = $evaluation['done'];
 				$this->comment = $evaluation['comment'];
 				$this->target_userID = $evaluation['target_userID'];
+				$this->evaluation_type = $evaluation['evaluation_type'];
+				$this->groupID = $evaluation['groupID'];
 			} else {
 				die("Couldn't find evaluation: " . $this->evaluationID);
 			}
@@ -56,9 +59,10 @@ class Evaluation {
 			$query = "INSERT INTO `evaluation`(`evaluationID`, `criteriaID`, `rating`, `comment`, `evaluatorID`) VALUES (";
 			$query .= "NULL,'";
 			$query .= $this->criteriaID . "','";
-			$query .= $this->rating . "','";
-			$query .= $this->comment . "','";
-			$query .= $this->evaluatorID . "')";
+			$query .= $this->done . "','";
+			$query .= $this->evaluation_type . "','";
+			$query .= $this->target_userID . "','";
+			$query .= $this->groupID . "')";
 
 			$db = GetDB();
 			if($db->query($query) === TRUE){
@@ -75,8 +79,9 @@ class Evaluation {
 
 			$query .= "`criteriaID` = '" . $this->criteriaID . "', ";
 			$query .= "`done` = '" . $this->done . "', ";
-			$query .= "`comment` = '" . $this->comment . "', ";
-			$query .= "`target_userID` = '" . $this->target_userID . "', ";
+			$query .= "`evaluation_type` = '" . $this->evaluation_type . "', ";
+			$query .= "`target_userID` = '" . $this->target_userID . "' ";
+			$query .= "`groupID` = '" . $this->groupID . "' ";
 
 			$query .= "WHERE `evaluationID` = " . $this->evaluationID;
 
@@ -128,7 +133,7 @@ class Evaluation {
 	public function GetAssignment(){
 		$db = GetDB();
 
-		$query =  "SELECT * FROM `assignment_criteria` WHERE `assignmentID` = {$this->criteriaID}";
+		$query =  "SELECT * FROM `assignment_evaluation` WHERE `evaluationID` = {$this->evaluationID}";
 		
 		$result = $db->query($query);
 		if($result->num_rows != 0){
@@ -138,7 +143,7 @@ class Evaluation {
 			return $assignment;
 		}
 		else{
-			die("Couldn't find assignment for criteria: " . $this->criteriaID);
+			die("Couldn't find assignment for evaluation: " . $this->evaluationID);
 		}
 	}
 ////////////////////////////////////////////////////////////// CRITERIA
