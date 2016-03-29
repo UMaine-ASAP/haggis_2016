@@ -13,38 +13,21 @@
 	//get the html page ready to be displayed
 	$page = file_get_contents(dirname(__FILE__) . '/../views/cumulative_results.html');
 
-	//get user's classes
-	$classes = $_SESSION['user']->GetClasses();
 
-	//get assignments for each class
-	$assignments = Array();
-	foreach ($classes as $class) {
-		$assignments[] = $class->GetAssignments();
-	}
-
-
-	//get user evaluations
-	$evaluations = $_SESSION['user']->GetEvaluations();
-
-	//var_dump($evaluations);
+	// This controller should accept the class.
 
 
 
-	
 
-	// // if they have assignments
-	// if($assignments != array()){
-	// 	// for each assignment
-	// 	foreach($assignments[0] as $assignment){
-	// 		$assignment_results = "<tr><td>".$assignment->title."<td>"
-	// 		foreach(criteria of $assignment){
-	// 			$assignment_results .= "<td>".$criteria->rating."<td>"
-	// 		}
+	// $class = $_POST["classID"];
 
-	// 		$assignment_results .= "</tr>"
 
-	// 	}
-	// }
+
+	// Access a class
+	$class = new Period(1); // This gets the class with ID equal to 1. NOTE that the name of the class is "Period", not "Class"
+
+
+
 
 	// $page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
 	echo $page;
