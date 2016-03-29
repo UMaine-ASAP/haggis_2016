@@ -9,10 +9,13 @@
 			header("location:login.php");
 		}
 
+	//get assignment
+	$a = new Assignment($_POST['assignmentID']);
 	//get the html page ready to be displayed
-	//$page = file_get_contents(dirname(__FILE__) . '/../views/student_home.html');
+	$page = file_get_contents(dirname(__FILE__) . '/../views/assignment_view.html');
+	$page = str_replace('$assignmentName', $a->title, $page);
+	$page = str_replace('$assignmentDescription', $a->description, $page);
+	echo $page;
 
-
-
-	echo "evaluation to view: " . $_POST['assignmentID'];
+	//echo "assignment to view: " . $_POST['assignmentID'];
 ?>
