@@ -1,0 +1,12 @@
+{
+    "name": "root/haggis",
+    "authors": [
+        {
+            "name": "ASAP",
+            "email": "asap@example.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^2.2"
+    }
+}
