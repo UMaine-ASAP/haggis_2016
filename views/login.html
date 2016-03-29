@@ -1,39 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Sign In</title>
-	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
-	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
-	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Haggis - Sign In{% endblock %}
+{% block header %}
+<h2 id="siteTitle">Haggis</h2>
+<a href="register.php" class="register">
+	<input type="button" value="Register">
+</a>
+{% endblock %}
 
-	<header>
-		<h2 id="siteTitle">Haggis</h2>
-		<a href="register.php" class="register">
-			<input type="button" value="Register">
-		</a>
-	</header>
-
-	<div id="content">
-
-		<div id="loginContainer">
-			<h2>Login</h2>
-			<form method='POST' name='login form'>
-				<input type="text" name='postName' placeholder="Email"/>
-				<input type="password" name='postPassword' placeholder="Password"/>
-				<a href="passwordreset.php">forgot your password?</a>
-				<input type="submit" name='submitLogin' value="Login"></input>
-			</form>		
-		</div>
-
-	</div>
-
-	<div id="footer">
-		<div id="copywrite">© 2016 ASAP Media Services</div>
-	</div>
-
-</body>
-
-
-</html>
+{% block content %}
+<div id="loginContainer">
+	<h2>Login</h2>
+	<form method='POST' name='login form'>
+		<input type="text" name='postName' placeholder="Email"/>
+		<input type="password" name='postPassword' placeholder="Password"/>
+		<a href="passwordreset.php">forgot your password?</a>
+		<input type="submit" name='submitLogin' value="Login"></input>
+	</form>
+</div>
+{% endblock %}
