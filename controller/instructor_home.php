@@ -9,9 +9,11 @@
 			session_destroy();
 			header("location:login.php");
 		}
-	echo 'Success';
-
+	
     $page = file_get_contents(dirname(__FILE__) . '/../views/instructor_home.html');
 
-    $className .= "hello"; 
+    $classes = $_SESSION['user']->GetClasses();
+    // var_dump($classes);
+    $page = str_replace('$className', $classes[0]->title, $page);
+    echo $page;
 ?>

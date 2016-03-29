@@ -2,27 +2,28 @@
 <html>
 <head>
 	<title>Haggis - Instructor Home</title>
-	<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
+	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<div id="container">
-		<div id="headder">
-			<h3>Haggis</h3>
-			<p align="right">Welcome $firstName !  <a href="logout.php">Sign Out</a></p> 
-			
-		</div><!-- end of headder -->
-	</div><!-- end of container --> 
-	<h2>Classes</h2><br>
-	<div style="background-color: blue;">
-        
-        $className<br>
-        Upcoming Assignments:<br>
-        $assignmentName
-        $assignmentDate
-        
-    
-    </div>
-    
-    <input value="Add Class" type="button" onclick="">
+	<header>
+		<h2 id="siteTitle">Haggis</h2>
+		<a href="logout.php" class="logout">
+			<input type="button" value="Logout">
+		</a>
+	</header>
+	
+	<div id="content">
+
+		<div class="class">
+			$className
+		</div>
+
+	</div>
+
+	<div id="footer">
+		<div id="copywrite">© 2016 ASAP Media Services</div>
+	</div>
 </body>
 </html>
