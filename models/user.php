@@ -175,7 +175,7 @@ class User {
 			return; // Wrong userID
 		}
 
-		$query = "SELECT * FROM `evaluation` WHERE `evaluatorID` = {$this->userID}";
+		$query = "SELECT * FROM `evaluation` WHERE `target_userID` = {$this->userID}";
 
 		$db = GetDB();
 		$rows = $db->query($query);
