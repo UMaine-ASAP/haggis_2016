@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Haggis - instructor Class</title>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+</head>
+<body>
+	<div id="container">
+		<div id="headder">
+			<h3>Haggis</h3>
+			<p align="right">Welcome $firstName !  <a href="logout.php">Logout</a></p> 
+			
+		</div><!-- end of headder -->
+	</div><!-- end of container div --> 
+	<h2>$className</h2><br>
+
+	<div class="body">
+
+
+		<table style='width:100'><tr><th>Assignments</th></tr>
+
+			<tbody>$assinments</tbody>
+
+		</table>
+
+
+		<table style='width:100'><tr><th>Evaluations</th></tr>
+
+			<tbody>$evaluations</tbody>
+
+		</table>
+
+
+		<table style='width:100'><tr><th>Students</th></tr>
+
+			<tbody>$students</tbody>
+
+		</table>
+
+	</div>
+	
+</body>
+</html>
