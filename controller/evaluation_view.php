@@ -37,7 +37,7 @@
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="1" checked>';
 		}
 		else{
-			$evalDetails .= '<input type="radio" name="c'. $count .'" value="1">';
+			$evalDetails .= '<input type="radio" name="c'. $count .'" value="1" disabled>';
 		}
 //////////////////////////////////////////////////////////
 		$evalDetails .= 'Disagree';
@@ -46,7 +46,7 @@
 		}
 
 		else{
-			$evalDetails .= '<input type="radio" name="c'. $count .'" value="2">';
+			$evalDetails .= '<input type="radio" name="c'. $count .'" value="2" disabled>';
 		}
 //////////////////////////////////////////////////////////
 		$evalDetails .= 'Neutral';
@@ -54,7 +54,7 @@
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="3" checked>';
 		}
 		else{
-			$evalDetails .= '<input type="radio" name="c'. $count .'" value="3">';
+			$evalDetails .= '<input type="radio" name="c'. $count .'" value="3" disabled>';
 		}
 //////////////////////////////////////////////////////////	
 		$evalDetails .= 'Agree';
@@ -62,7 +62,7 @@
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="4" checked>';
 		}
 		else{
-			$evalDetails .= '<input type="radio" name="c'. $count .'" value="4">';
+			$evalDetails .= '<input type="radio" name="c'. $count .'" value="4" disabled>';
 		}
 //////////////////////////////////////////////////////////	
 		$evalDetails .= 'Strongly Agree';
@@ -70,7 +70,7 @@
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="5" checked>';
 		}
 		else{
-			$evalDetails .= '<input type="radio" name="c'. $count .'" value="5">';
+			$evalDetails .= '<input type="radio" name="c'. $count .'" value="5" disabled>';
 		}
 		
 
