@@ -1,0 +1,15 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Create Assignment{% endblock %}
+
+{% block content %}
+<h1>Create an Assignment</h1>
+	<div id="form_div">
+		<center><form method='post' name='create evaluation form'>
+			<p><input type="text" id = "CreateAssignmentBody" name='postAssignmentName' placeholder="Assignment Name"/>
+			<input type="date" id = "CreateAssignmentBody" name='postDueDate' placeholder="Due Date"/></p>
+			<p><input type="text" id="CreateAssignDescription" name='postAssignDescription' placeholder="Description of Assignment"/><p>
+			<!-- <input type="text" id="CreateAssignCriteria" name='postCriteriaDescription' placeholder="Criteria To Add"/><p> -->
+			<input type="submit" id = "CreateAssignButton" name='createAssignmentSubmit' value="Create"></input>
+		</form></center>
+	</div> <!-- end of form div-->
+{% endblock %}

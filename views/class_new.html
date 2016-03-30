@@ -7,26 +7,26 @@
 	<div id="content">
 
 	<div id="courseHeading">
-		{{courseName}}
+		<h2><center><strong>{{courseName}}</strong></center></h2>
 	</div>
 		<div>
-			<form method='post' action="class_new_submit.php" >
+			<center><form method='post' action="class_new.php" >
 				<div>Title of Class</div>
 
 				<input type="hidden" name="courseIdentifier" value="{{courseID}}"></input>
-				<input type="text" name="classTitle"></input><br>
+				<input type="text" name="classTitle" placeholder="Title"></input><br>
 
 				<div>Time of Class</div>
-				<input type="time" name="classTime" ></input><br>
+				<input type="time" name="classTime"></input><br>
 
 				<div>Description of Class</div>
-				<input type="text" name="classDesc" ></input><br>
+				<input type="text" name="classDesc" placeholder="Description"></input><br>
 				
 				<div>Location of Class</div>
-				<input type="text" name="classLoc" ></input><br>
+				<input type="text" name="classLoc" placeholder="Location"></input><br>
 
 				<button id="createClassButton" type="submit" name="createClassSubmit">Create Class</button>
-			</form>
+			</form></center>
 		</div>
 
 	</div>

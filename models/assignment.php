@@ -47,14 +47,14 @@ class Assignment {
 		if($this->assignmentID != -1){
 			$query = "UPDATE `assignment` SET ";
 			$query .= "`title` = '" . $this->title . "', ";
-			$query .= "`description` = '" . $this->description . "', ";
+			$query .= "`description` = '" . $this->description . "' ";
 			$query .= "WHERE `assignmentID` = " . $this->assignmentID;
 
 			$db = GetDB();
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update assignment: " . $this->assignmentID);
+				die("Couldn't update assignment: " . $this->assignmentID . " " . mysqli_error($db));
 			}
 		}
 	}
