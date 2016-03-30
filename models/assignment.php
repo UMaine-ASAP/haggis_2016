@@ -284,6 +284,26 @@ class Assignment {
 		}
 	}
 
+/////////////////////////////////////////////////////////////////// CLASS
+
+	public function GetEvaluations(){
+
+		$query = "SELECT * FROM `assignment_evaluation` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+
+				$e = new Evaluation($row['evaluationID']);
+				$ret[] = $e;
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
 }
 
 /*
