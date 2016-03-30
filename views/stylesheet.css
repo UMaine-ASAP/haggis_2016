@@ -59,12 +59,6 @@ body{
 	margin: 0px auto;
 }
 
-/*Descriptionbox--------------------------------------*/
-#description{
-width: 345px;
-height: 90px;
-
-}
 /*LOGIN--------------------------------------------*/
 
 
@@ -107,3 +101,47 @@ table th{
 	padding: 5px;
 	font-size: 18px;
 }
+
+
+/*CREATE ASSIGNMENT---------------------------------------*/
+
+#CreateAssignDescription{
+	width: 348px;
+	height: 90px;
+	margin-left: 5px;
+}
+#CreateAssignmentBody{
+	margin-left: 5px;
+}
+#CreateAssignmentTitle{
+	margin-left: 50px;
+}
+#CreateAssignButton{
+	margin-left: 292px
+}
+
+/*CREATE EVALUATION---------------------------------------*/
+
+#CreateEvalDescription{
+	width: 348px;
+	height: 90px;
+	margin-left: 5px;
+}
+#CreateEvalName{
+	width: 348px;
+	
+	margin-left: 5px;
+}
+#CreateEvalBody{
+	margin-left: 5px;
+}
+#CreateEvalTitle{
+	margin-left: 50px;
+}
+#CreateEvalButton{
+	margin-left: 113px
+}
+#CreateEvalCriteriaButton{
+	margin-left: 2px
+}
+
