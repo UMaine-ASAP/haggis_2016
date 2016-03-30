@@ -4,13 +4,46 @@
 {% block content %}
 <h2 class="pageTitle">Student Home</h2><br>
 
-<!-- <table>
-	$tableRows
-		Made of many duplicates of seperate html file $tablerow
+<table>
+	<thead><tr><th>Assignments</tr></thead>
+	{% for assigment in assigments %}
+	<tr><td>
+		<form method='post' action='assignment_controller.php'>
+		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.title}}</button>
+		Due: {{assignment.due}}
+		</form>
+	</td></tr>
+    * {{ user.name }}
+	{% else %}
+    	No assignments
+	{% endfor %}
+</table>
 
-</table> -->
+<table>
+	<thead><tr><th>Evaluations To Do</th></tr></thead>
+	{% for evaluation in evaluationsToDo %}
+	<tr><td>
+		<form method='post' action='evaluation_submit.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+    * {{ user.name }}
+	{% else %}
+    	No assignments
+	{% endfor %}
+</table>
 
-$assignmentInfo
-$evaluationsToDo
-$evaluationsReceived
+<table>
+	<thead><tr><th>Evaluations Received</tr></thead>
+	{% for evaluation in evaluations %}
+	<tr><td>
+		<form method='post' action='evaluation_view.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+    * {{ user.name }}
+	{% else %}
+    	No assignments
+	{% endfor %}
+</table>
 {% endblock %}
