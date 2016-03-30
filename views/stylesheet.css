@@ -140,3 +140,12 @@ table th{
 .ratingIndex strong{
 	margin-right: 10px;
 }
+
+#formFloatRight{
+	float:right;
+	margin-top:12px;
+}
+
+#formFloatRight input{
+	margin-right:5px;
+}
