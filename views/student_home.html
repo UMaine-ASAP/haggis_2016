@@ -13,7 +13,7 @@
 		Due: {{assignment.due}}
 		</form>
 	</td></tr>
-    * {{ user.name }}
+    {{ user.name }}
 	{% else %}
 	<tr><td>No Assignments</td></tr>
 	{% endfor %}
@@ -40,7 +40,7 @@
 		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
 		</form>
 	</td></tr>
-    * {{ user.name }}
+    {{ user.name }}
 	{% else %}
 	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
