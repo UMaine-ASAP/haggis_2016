@@ -5,9 +5,10 @@
 	require_once dirname(__FILE__) . "/../models/class.php";
 
 ensureLoggedIn();
-	echo 'Success';
+
 
 	echo $twig->render('instructor_home.html');
 
-    $className .= "hello";
+    $classes = $_SESSION['user']->GetClasses();
+
 ?>

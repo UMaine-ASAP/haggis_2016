@@ -2,16 +2,23 @@
 {% block title %}Haggis - Instructor Home{% endblock %}
 
 {% block content %}
-<h2>Classes</h2><br>
-<div style="background-color: blue;">
+<h2 class="pageTitle">Instructor Home</h2><br>
 
-    $className<br>
-    Upcoming Assignments:<br>
-    $assignmentName
-    $assignmentDate
-
-
-</div>
+<p> Classes </p>
+<table>
+	<thead><tr><th>Assignments</tr></thead>
+	{% for assignment in assignments %}
+	<tr><td>
+		<form method='post' action='assignment_controller.php'>
+		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.title}}</button>
+		Due: {{assignment.due}}
+		</form>
+	</td></tr>
+    * {{ user.name }}
+	{% else %}
+	<tr><td>No Assignments</td></tr>
+	{% endfor %}
+</table>
 
 <input value="Add Class" type="button" onclick="">
 {% endblock %}

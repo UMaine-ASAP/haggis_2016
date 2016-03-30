@@ -7,7 +7,7 @@
 <p>{{ username }}</p>
 <table>
 	<thead><tr><th>Assignments</tr></thead>
-	{% for assigment in assigments %}
+	{% for assignment in assignments %}
 	<tr><td>
 		<form method='post' action='assignment_controller.php'>
 		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.title}}</button>
