@@ -2,15 +2,12 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
-
 	if($_SESSION['user']->userType == 'Student')
 	{
 		header("location:login.php");
 	}
 
-	$course = new Course(1);
-	$courseName = $course->title;
-	$courseIdentifier = $course->courseID;
+	$course = $_POST['courseID'];
 
 	function createClass()
 	{
@@ -18,9 +15,6 @@
 		$classTime = $_POST['classTime'];
 		$classDesc = $_POST['classDesc'];
 		$classLoc = $_POST['classLoc'];
-
-		$course = new Course(1);
-		$courseIdentifier = $course->courseID;
 
 		$class = new Period(0);
 
@@ -33,16 +27,13 @@
 		$class->addUser($_SESSION['user']->userID, $_SESSION['user']->userType);
 	}
 
-	if(isset($_POST['createClassSubmit']))
-	{
-		createClass();
-		header("location:instructor_home.php");
-	}
-
 	//get the html page ready to be displayed
 	$page = file_get_contents(dirname(__FILE__) . '/../views/class_new.html');
 
 	//replace the values in the html with needed sections
-	$page = str_replace('$courseName', $courseName, $page);
-	echo $page;
+	echo $twig->render('class_new.html', [
+		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"courseName"         => $courseName,
+		"courseID"			=> $course
+	]);
 ?>

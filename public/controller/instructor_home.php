@@ -14,9 +14,9 @@
 	$classes = $_SESSION['user']->GetClasses();
 	
 	foreach ($classes as $class) {
-		$count = 0;
 		$assignments = $class->GetAssignments();
 		$titles = array();
+		$course = $class->courseID;
 		foreach($assignments as $a){
 			$titles[] = $a[0]->title;
 		}
@@ -30,7 +30,8 @@
 
 	echo $twig->render('instructor_home.html', [
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
-		"classes"         => $classes_results
+		"classes"         => $classes_results,
+		"courseID"		  => $course
 	]);
 
 ?>

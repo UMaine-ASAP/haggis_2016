@@ -20,8 +20,8 @@
 </form>
 {% endfor %}
 
-<form action='class_new.php'>
-<button type="submit">Add Class</button>
+<form method = 'post' action='class_new.php'>
+<button type="submit" value="{{courseID}}" name="courseID">Add Class</button>
 </form>
 
 <script>
