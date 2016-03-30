@@ -1,15 +1,15 @@
 <?php
-	require_once __DIR__ . "/../system/bootstrap.php";
-
-	//begin session
-	session_start();
+	require_once __DIR__ . "/../../system/bootstrap.php";
 
 	//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
 
 
 
-	echo $twig->render('login.html');
+	if (isset($_GET['message'])) {
+		echo $twig->render('login.html', ['message' => $_GET['message']]);
+	} else {
+		echo $twig->render('login.html');
+	}
 
 	//get the html page ready to be displayed
 	if(isset($_POST['submitLogin'])){	//change submitLogin to the equivalent login.html file
