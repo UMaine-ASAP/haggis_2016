@@ -53,12 +53,30 @@
 			//This may not be a significant way of telling whether or not the evaluation is finished or not.
 			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating. 
 			if($eval->done == 0){
-				$u = new User($eval->target_userID);
+				$e = new Evaluation($eval->evaluationID);
+
+				if($eval->target_userID != 0){
+					$u = new User($eval->target_userID);
+				}
 				$evaluationsToDo .= "<tr><td>"; 
 				$evaluationsToDo .= '<form method="post" action="evaluation_submit.php">';
 				$evaluationsToDo .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID"';
 				$evaluationsToDo .= ' formaction="evaluation_submit.php"> ';
-				$evaluationsToDo .= "Evaluation for {$u->firstName}</button></td></tr>";
+
+				$evaluationsToDo .= $e->GetAssignment()->title." ";
+
+				$type= $e->evaluation_type;
+				if($type=='Peer'){
+					$evaluationsToDo .= "Peer " . $u->firstName;
+				}
+				else{
+					$evaluationsToDo .= $e->GetGroup()->name;
+				}
+				$evaluationsToDo .=  " </button></td></tr>";
+
+				//$evaluationsToDo .= "Evaluation for {$u->firstName}</button></td></tr>";
+
+				//[assignment] [group/peer] evaluation
 			}
 		}
 	}
@@ -72,17 +90,18 @@
 
 	if($rec_evaluations != array()){
 		foreach($rec_evaluations as $eval){
-			$e = new Evaluation($eval->evaluationID);
-			$u = $e->GetUser();
-			$evaluationsReceived .= "<tr><td>"; 
-			$evaluationsReceived .= '<form method="post" action="evaluation_view.php">';
-			$evaluationsReceived .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID" ';
-			$evaluationsReceived .= 'formaction="evaluation_view.php"> ';
+			if($eval->done == 1){
+				$e = new Evaluation($eval->evaluationID);
+				$u = $e->GetUser();
+				$evaluationsReceived .= "<tr><td>"; 
+				$evaluationsReceived .= '<form method="post" action="evaluation_view.php">';
+				$evaluationsReceived .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID" ';
+				$evaluationsReceived .= 'formaction="evaluation_view.php"> ';
 
-			// if($e->evaluation_type == "group")
-			$evaluationsReceived .= $e->GetAssignment()->title." ";
-			$evaluationsReceived .= $e->evaluation_type." evaluation";
-
+				// if($e->evaluation_type == "group")
+				$evaluationsReceived .= $e->GetAssignment()->title." ";
+				$evaluationsReceived .= $e->evaluation_type." evaluation</button></td></tr>";
+			}
 			//[assignment] [group/peer] evaluation
 		}
 	}

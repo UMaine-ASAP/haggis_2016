@@ -50,6 +50,14 @@
 
 	//get the html page ready to be displayed
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
+	$type= $eval->evaluation_type;
+	if($type=='Peer'){
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." ". $type, $page);
+	}
+	else{
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." " . $eval->GetGroup()->name, $page);
+	}
 	$page = str_replace('$evaluationInfo', $evalDetails, $page);
 	echo $page;
+
 ?>
