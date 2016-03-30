@@ -1,11 +1,12 @@
 <?php
+	require_once __DIR__ . "/../system/bootstrap.php";
+
 	//get user file
 	require_once dirname(__FILE__) . "/../models/user.php";
 
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/register.html');
-	echo $page;
-	
+	echo $twig->render('register.html');
+
 
 	if(isset($_POST['submitRegister'])){	//change submitRegister to the equivalent register.html file
 		//create new User object to work with

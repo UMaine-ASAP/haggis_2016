@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../system/bootstrap.php";
 	//get required models to retreive information
 	require_once dirname(__FILE__) . "/../models/user.php";
 	require_once dirname(__FILE__) . "/../models/assignment.php";
@@ -11,7 +12,7 @@
 		}
 
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/cumulative_results.html');
+	echo $twig->render('cumulative_results.html');
 
 
 	// This controller should accept the class.
@@ -24,10 +25,10 @@
 
 
 	// Access a class by id
-	
+
 	// Get assignment
 	// $assignment = new Assignment(1);
-	// Get project submission by user 
+	// Get project submission by user
 
 
 

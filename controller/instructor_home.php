@@ -1,5 +1,5 @@
 <?php
-
+	require_once __DIR__ . "/../system/bootstrap.php";
 	require_once dirname(__FILE__) . "/../models/user.php";
 	require_once dirname(__FILE__) . "/../models/assignment.php";
 	require_once dirname(__FILE__) . "/../models/class.php";
@@ -11,7 +11,7 @@
 		}
 	echo 'Success';
 
-    $page = file_get_contents(dirname(__FILE__) . '/../views/instructor_home.html');
+	echo $twig->render('instructor_home.html');
 
-    $className .= "hello"; 
+    $className .= "hello";
 ?>
