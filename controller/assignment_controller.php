@@ -28,18 +28,16 @@
 			}
 			else
 			{
-				echo $assignmentGlobal->assignmentID . " ";
-				echo $placeHolderID . " ";
-				var_dump($eval);
+				
 			}
 		}
 	}
 
 	receiveEvaluationsForAssignment();
 
-	var_dump($relevantAssignments);
+	// var_dump($relevantAssignments);
 
-	$evaluationsReceived = "<table><thead><tr><th>Evaluations To Do</tr></thead>";
+	$evaluationsReceived = "<table><thead><tr><th>Evaluations Received</tr></thead>";
 
 	if($relevantAssignments != array()){
 		foreach($relevantAssignments as $eval){
