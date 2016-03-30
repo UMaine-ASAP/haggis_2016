@@ -59,6 +59,12 @@ body{
 	margin: 0px auto;
 }
 
+/*Descriptionbox--------------------------------------*/
+#description{
+width: 345px;
+height: 90px;
+
+}
 /*LOGIN--------------------------------------------*/
 
 
