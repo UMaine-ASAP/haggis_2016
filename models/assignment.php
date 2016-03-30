@@ -284,6 +284,38 @@ class Assignment {
 		}
 	}
 
+	public function GetEvaluations(){
+		// if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
+		// 	return; // Wrong assignmentID
+		// }
+
+		$query = "SELECT * FROM `assignment_evaluation` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				/*$query = "SELECT * FROM `class` WHERE `classID` = {$row['classID']}";
+
+				$classs = $db->query($query);
+				if($classs){
+					while($c = $classs->fetch_array(MYSQLI_BOTH)){
+						$ret[] = $c;
+					}
+				}*/
+
+				$c = new Evaluation($row['evaluationID']);
+				$ret[] = $c;
+
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
+
 }
 
 /*
