@@ -20,6 +20,10 @@ header{
 	margin: 15px 10px 10px 5px;
 }
 
+#welcomeMessage{
+	display: inline-block;
+}
+
 header .register, header .logout{
 	display: inline-block;
 	float: right;
