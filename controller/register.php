@@ -1,43 +1,68 @@
 <?php
-	require_once __DIR__ . "/../system/bootstrap.php";
+require_once __DIR__ . "/../system/bootstrap.php";
 
-	//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
+//get user file
+require_once dirname(__FILE__) . "/../models/user.php";
 
-	//get the html page ready to be displayed
-	echo $twig->render('register.html');
+if (isset($_POST['submitRegister'])) {
 
+	// Validate fields
+	$data = $_POST;
 
-	if(isset($_POST['submitRegister'])){	//change submitRegister to the equivalent register.html file
-		//create new User object to work with
-		$user = new User(0);
-
-		//check if the passwords match, needs more checks
-		if($_POST['postPassword1'] == $_POST['postPassword2']){
-
-			//saves info into user object
-			$user->firstName = $_POST['postFirstName'];
-			$user->middleInitial = $_POST['postMiddle'];
-			$user->lastName = $_POST['postLastName'];
-			$user->userType = 'Student';
-			$user->email = $_POST['postEmail'];
-			$user->password = $_POST['postPassword1'];
-		}
-		else{
-			echo "Passwords don't match.<br>";
-		}
-
-		//save user info into database
-		$result = $user->Save();
-
-		//if successful save, means registration worked. check DB for result
-		if($result != FALSE){
-			header("Location: register_success.php");
-		}
-		//else it didn't work, delete empty user from DB and restart
-		else{
-			$user->Delete();
-			echo "Invalid data, try again.<br>";
-		}
+	if ( empty($_POST['postFirstName'])) {
+		$data['message'] = "First name is required.";
+		echo $twig->render('register.html', $data);
+		exit();
 	}
-?>
+
+	if ( empty($_POST['postLastName'])) {
+		$data['message'] = "Last name is required.";
+		echo $twig->render('register.html', $data);
+		exit();
+	}
+
+	if ( empty($_POST['postEmail'])) {
+		$data['message'] = "Email is required.";
+		echo $twig->render('register.html', $data);
+		exit();
+	}
+
+	if (!filter_var($_POST['postEmail'], FILTER_VALIDATE_EMAIL)) {
+		$data['message'] = "Email is invalid.";
+		echo $twig->render('register.html', $data);
+		exit();
+	}
+
+	if (count($_POST['postPassword1']) < 6){
+		$data['message'] = "Passwords must be at least 6 characters long.";
+		echo $twig->render('register.html', $data);
+		exit();
+	}
+
+	if ( empty($_POST['postPassword1']) || empty($_POST['postPassword2']) || $_POST['postPassword1'] != $_POST['postPassword2']){
+		$data['message'] = "Passwords don't match.";
+		echo $twig->render('register.html', $data);
+		exit();
+	}
+
+	//saves info into user object
+	$user = new User(0);
+	$user->firstName = $_POST['postFirstName'];
+	$user->middleInitial = $_POST['postMiddle'];
+	$user->lastName = $_POST['postLastName'];
+	$user->userType = 'Student';
+	$user->email = $_POST['postEmail'];
+	$user->password = $_POST['postPassword1'];
+
+	//if successful save, means registration worked. check DB for result
+	if ($user->Save() == FALSE) {
+		$user->Delete();
+		echo $twig->render('register.html', ['message' => 'Failed to register. Try again.']);
+		exit();
+	}
+
+	// Success!
+	header("location:login.php?message=Registration Successful!");
+} else {
+	echo $twig->render('register.html');
+}

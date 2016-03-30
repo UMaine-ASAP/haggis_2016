@@ -1,10 +1,6 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
-
-// Load .env file
-$dotenv = new Dotenv\Dotenv(__DIR__ . "/..");
-$dotenv->load();
+require_once __DIR__ . "/../system/bootstrap.php";
 
 function GetDB(){
 	$db = new mysqli('localhost', getenv("DB_USERNAME"), getenv("DB_PASSWORD"), getenv("DB_DATABASE"));

@@ -24,7 +24,7 @@ header .register, header .logout{
 	display: inline-block;
 	float: right;
 	margin: 10px 5px 10px 0px;
-	
+
 }
 
 .register input, .logout input{
@@ -50,7 +50,7 @@ body{
 
 #footer{
 	width: 100%;
-	display: block;	
+	display: block;
 }
 
 #footer #copywrite{
@@ -87,6 +87,12 @@ input[name="submitLogin"]{
 	margin-bottom: 5px;
 }
 
+/*Register--------------------------------------------*/
+
+.error {
+	color: red;
+}
+
 /*STUDENT HOME--------------------------------------------*/
 table{
 	border: 1px solid black;
@@ -106,7 +112,7 @@ table th{
 #cumulativeResults table{
 	margin-left: auto;
 	margin-right: auto;
-	
+
 }
 
 #tableContainer{
