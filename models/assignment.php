@@ -224,7 +224,7 @@ class Assignment {
 			return; // Wrong assignmentID
 		}
 
-		$query = "INSERT INTO `assignment_class` (`assignmentID`, `ClassID`) VALUES ({$this->assignmentID}, $classID)";
+		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`) VALUES ({$this->assignmentID}, $classID)";
 
 		$db = GetDB();
 		if($db->query($query) === TRUE){
