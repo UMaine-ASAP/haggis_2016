@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Create Assignment</title>
-	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
-	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
-	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
-</head>
-<body>
+{% extends "base_account.html" %}
+{% block title %}Create Assignment{% endblock %}
+{% block header %}
+<h2 id="siteTitle">Haggis</h2>
+<a href="login.php" class="">
+	<input type="button" value="Login">
+</a>
+{% endblock %}
 
-	<header>
-		<h2 id="siteTitle">Haggis</h2>
-		<a href="create_assignment.php" class="register">
-			<input type="button" value="Logout">
-		</a>
-	</header>
-	<h1 id="CreateAssignmentTitle">Create an Assignment</h1>
-	<center><div id="CreateAssignmentBody">
-		<form method='post' name='create evaluation form'>
-			<p><input type="text" id ="CreateAssignmentBody" name='postAssignmentName' placeholder="Assignment Name"/>
-			<input type="text" id ="CreateAssignmentBody" name='postDueDate' placeholder="Due Date"/></p>
-			<p><input type="text" id="CreateAssignDescription" name='postCriteriaDescription' placeholder="Description"/><p>
-			<input type="submit" id="CreateAssignButton" name='submitevaluation' value="Create"></input>
-		</form>
-	</div></center> <!-- end of form div-->
-	
-</body>
 
-</html>
+{% block content %}
+<h1>Create Assignment</h1>
+<div class='error'>{{message}}</div>
+			<form method='post' name='assignment form'>
+				<p><input type="text" name='postAssignmentName' placeholder="Assignment Name" value="{{postAssignmentName}}"/>
+				<input type="text" name='postDueDate' placeholder="Due Date" value="{{postDueDate}}"/></p>
+				<p><input type="text" name='postDescription' placeholder="Description" value="{{postDescription}}"/></p>
+		
+				<input type="submit" name='submitAssignment' value="Create"></input>
+			</form>
+
+{% endblock %}
+
+
+
+
