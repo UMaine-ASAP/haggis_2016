@@ -2,16 +2,31 @@
 {% block title %}Haggis - Instructor Home{% endblock %}
 
 {% block content %}
-<h2>Classes</h2><br>
-<div style="background-color: blue;">
+<h2 class="pageTitle">Classes</h2><br>
 
-    $className<br>
-    Upcoming Assignments:<br>
-    $assignmentName
-    $assignmentDate
+{% for class in classes %}
+<form method='post' action = 'instructor_class.php' style="cursor:pointer" id="myForm" onclick="goToClass()">
+<input type='hidden' value = "{{class.id}}" name="classID">
+<table>
+	<thead><tr><th>{{class.className}}</tr></thead>
+	<tr><td>Upcoming Assignments:</td></tr>
+	{% for assignment in class.assignmentNames %}
+	<tr><td><ul>
+		<li>{{assignment}}</li>
+	</ul></td></tr>
+	{% endfor %}
+	<tr><td>Class ID: {{class.id}}</td></tr>
+</table>
+</form>
+{% endfor %}
 
+<form method = 'post' action='class_new.php'>
+<button type="submit" value="{{courseID}}" name="courseID">Add Class</button>
+</form>
 
-</div>
-
-<input value="Add Class" type="button" onclick="">
+<script>
+function goToClass(){
+	document.getElementById("myForm").submit();
+}
+</script>
 {% endblock %}

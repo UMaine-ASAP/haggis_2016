@@ -13,6 +13,10 @@ class Period {
 	public $location;
 
 	public function Period($class_id){
+		if($class_id == -1){
+			return;
+		}
+
 		$this->classID = $class_id;
 
 		$db = GetDB();
@@ -64,6 +68,23 @@ class Period {
 			} else {
 				die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
 			}
+		}
+	}
+
+	public function Add(){
+		$query = "INSERT INTO `class` (`classID`, `title`, `courseID`, `time`, `description`, `location`) VALUES (";
+		$query .= "NULL, ";
+		$query .= $this->title . "','";
+		$query .= $this->courseID . "','";
+		$query .= $this->time . "','";
+		$query .= $this->description . "','";
+		$query .= $this->location . "')";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
 		}
 	}
 
