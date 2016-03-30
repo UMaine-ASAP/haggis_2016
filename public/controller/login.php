@@ -1,11 +1,7 @@
 <?php
-	require_once __DIR__ . "/../system/bootstrap.php";
-
-	//begin session
-	session_start();
+	require_once __DIR__ . "/../../system/bootstrap.php";
 
 	//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
 
 
 

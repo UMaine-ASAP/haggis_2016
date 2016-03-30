@@ -20,6 +20,10 @@ header{
 	margin: 15px 10px 10px 5px;
 }
 
+#welcomeMessage{
+	display: inline-block;
+}
+
 header .register, header .logout{
 	display: inline-block;
 	float: right;
@@ -105,6 +109,10 @@ table th{
 	background: #216499;
 	padding: 5px;
 	font-size: 18px;
+}
+
+button[name="evaluationID"]{
+	width: 100%;
 }
 
 /*CUMULATIVE RESULTS--------------------------------------------*/

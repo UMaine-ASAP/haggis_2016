@@ -1,15 +1,9 @@
 <?php
-	//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
-	require_once dirname(__FILE__) . "/../models/criteria.php";
+	require_once __DIR__ . "/../../system/bootstrap.php";
+	ensureLoggedIn();
 
-	session_start();
-	if($_SESSION['sessionCheck'] != 'true'){
-			session_destroy();
-			header("location:login.php");
-		}
 	$page = file_get_contents(dirname(__FILE__) . '/../views/evaluation_view.html');
-	
+
 
 	//get evaluation info
 	$eval = new Evaluation($_POST['evaluationID']);
@@ -56,7 +50,7 @@
 		else{
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="3" disabled>';
 		}
-//////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////
 		$evalDetails .= 'Agree';
 		if($c->rating == 4){
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="4" checked>';
@@ -64,7 +58,7 @@
 		else{
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="4" disabled>';
 		}
-//////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////
 		$evalDetails .= 'Strongly Agree';
 		if($c->rating == 5){
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="5" checked>';
@@ -72,7 +66,7 @@
 		else{
 			$evalDetails .= '<input type="radio" name="c'. $count .'" value="5" disabled>';
 		}
-		
+
 
 		$evalDetails .= '<input type="text" name="'. $count .'comments" value="'.$c->comment.'">';
 		$evalDetails .= '<br><br>';
@@ -86,5 +80,12 @@
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
 	$page = str_replace('$evaluator', $eval->GetUser()->firstName, $page);
 	$page = str_replace('$evaluationInfo', $evalDetails, $page);
+	$type= $eval->evaluation_type;
+	if($type=='Peer'){
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." ". $type, $page);
+	}
+	else{
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." " . $eval->GetGroup()->name, $page);
+	}
 	echo $page;
 ?>

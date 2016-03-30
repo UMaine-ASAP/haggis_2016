@@ -1,15 +1,8 @@
 <?php
-	//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
-	require_once dirname(__FILE__) . "/../models/criteria.php";
-	
-	session_start();
-	if($_SESSION['sessionCheck'] != 'true'){
-			session_destroy();
-			header("location:login.php");
-		}
+	require_once __DIR__ . "/../../system/bootstrap.php";
+	ensureLoggedIn();
 	$page = file_get_contents(dirname(__FILE__) . '/../views/evaluation_submit.html');
-	
+
 
 	//get evaluation info
 	$eval = new Evaluation($_POST['evaluationID']);
@@ -50,6 +43,14 @@
 
 	//get the html page ready to be displayed
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
+	$type= $eval->evaluation_type;
+	if($type=='Peer'){
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." ". $type, $page);
+	}
+	else{
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." " . $eval->GetGroup()->name, $page);
+	}
 	$page = str_replace('$evaluationInfo', $evalDetails, $page);
 	echo $page;
+
 ?>

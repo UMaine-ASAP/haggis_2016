@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../system/bootstrap.php";
+require_once __DIR__ . "/../../system/bootstrap.php";
 
 //get user file
 require_once dirname(__FILE__) . "/../models/user.php";
@@ -33,7 +33,7 @@ if (isset($_POST['submitRegister'])) {
 		exit();
 	}
 
-	if (count($_POST['postPassword1']) < 6){
+	if (strlen($_POST['postPassword1']) < 6){
 		$data['message'] = "Passwords must be at least 6 characters long.";
 		echo $twig->render('register.html', $data);
 		exit();
