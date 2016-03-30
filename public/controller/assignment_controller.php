@@ -97,8 +97,25 @@
 	// $page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
 	// echo $page;
 
+
 	
-	
+
+
+
+
+	//Get id of the assignment on page.
+	$thisAssignmentID = $_POST['assignmentID'];
+	// Get all of this user's evaluations.
+	$allEvaluations = $_SESSION['user']->GetEvaluations();
+	$evaluationsToDo = array();
+	foreach($allEvaluations as $evaluation){
+		// If the eval matches to this assignment id and it isn't done then add it to the todo array.
+		if($evaluation->GetAssignment()->assignmentID == $thisAssignmentID && $evaluation->done == 0){
+			
+			$evaluationsToDo[] = ["id"=>$evaluation->evaluationID, "title" => $evaluation->GetAssignment()->title." ".$evaluation->type."evaluations"];			
+		}
+	}
+
 
 	 $assignment = ["name" => $assignment->title, "description" => $assignment->description];
 	 $user = ["name" => $_SESSION['user']->firstName." ".$_SESSION['user']->lastName];
@@ -108,6 +125,7 @@
 		"assignment"          => $assignment,
 		"user"                => $user,
 		"evaluationsToDo"     => $evaluationsToDo,
+		"evaluationsForThisAssignment"     => $evaluationsToDo,
 		"evaluationsReceived" => $evaluationsReceived
 		]);
 

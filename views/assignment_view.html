@@ -6,11 +6,9 @@
 	
 
 	<h2>{{ assignment.name }}</h2>
-	<p>{{ assignment.description }}</p>
+	<p>{{ assignment.description }}</p> 
 
-	{{ evaluationsToDo }} 
-
-	<!-- <table>
+	<table>
 	<thead><tr><th>Evaluations To Do</th></tr></thead>
 	{% for evaluation in evaluationsToDo %}
 	<tr><td>
@@ -21,9 +19,9 @@
 	{% else %}
 	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
-</table> -->
+</table>
 
 
-	{{ evaluationsReceived }}
+	<!-- {{ evaluationsReceived }} -->
 
 {% endblock %}
