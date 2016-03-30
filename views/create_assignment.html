@@ -10,18 +10,18 @@
 
 	<header>
 		<h2 id="siteTitle">Haggis</h2>
-		<a href="create_evaluation.php" class="register">
+		<a href="login.html" class="register">
 			<input type="button" value="Logout">
 		</a>
 	</header>
-	<h1>Create an Assignment</h1>
+	<h1 id = "CreateAssignmentTitle">Create an Assignment</h1>
 	<div id="form_div">
-		<form method='post' name='create evaluation form'>
-			<p><input type="text" name='postAssignmentName' placeholder="Assignment Name"/>
-			<input type="text" name='postDueDate' placeholder="Due Date"/></p>
-			<p><input type="text" id="description" name='postCriteriaDescription' placeholder="Description"/><p>
-			<input type="submit" name='submitevaluation' value="Create"></input>
-		</form>
+		<center><form method='post' name='create evaluation form'>
+			<p><input type="text" id = "CreateAssignmentBody" name='postAssignmentName' placeholder="Assignment Name"/>
+			<input type="text" id = "CreateAssignmentBody" name='postDueDate' placeholder="Due Date"/></p>
+			<p><input type="text" id="CreateAssignDescription" name='postCriteriaDescription' placeholder="Description"/><p>
+			<input type="submit" id = "CreateAssignButton" name='submitevaluation' value="Create"></input>
+		</form></center>
 	</div> <!-- end of form div-->
 	
 </body>
