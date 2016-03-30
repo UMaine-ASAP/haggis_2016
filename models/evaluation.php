@@ -57,8 +57,7 @@ class Evaluation {
 
 	public function Add(){
 
-			$query = "INSERT INTO `evaluation`(`evaluationID`, `criteriaID`, `rating`, `comment`, `evaluatorID`) VALUES (";
-			$query .= "NULL,'";
+			$query = "INSERT INTO `evaluation`(`criteriaID`, `rating`, `comment`, `evaluatorID`) VALUES (";
 			$query .= $this->criteriaID . "','";
 			$query .= $this->done . "','";
 			$query .= $this->evaluation_type . "','";

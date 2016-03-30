@@ -1,29 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Assignment View</title>
-	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
-	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
-	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
-</head>
-<body>
-	<header>
-		<h2 id="siteTitle">Haggis</h2>
-		<a href="logout.php" class="logout">
-			<input type="button" value="Logout">
-		</a>
-		<div id="welcome">Welcome, $firstName!</div>
-	</header>
-	<div id="content">
-		
-	</div>
+{% extends "base_account.html" %}
+{% block title %}Haggis - Student Home{% endblock %}
 
-	<h1>$assignmentName</h1><br>
-	<h2>$assignmentDescription</h2>
-	<h3>$evaluationsToDo $evaluationsReceived</h3>
+{% block content %}
 
-	<div id="footer">
-		<div id="copywrite">© 2016 ASAP Media Services</div>
-	</div>
-</body>
-</html>
+	
+
+	<h2>{{ assignment.name }}</h2>
+	<p>{{ assignment.description }}</p> 
+
+	<table>
+	<thead><tr><th>Evaluations To Do</th></tr></thead>
+	{% for evaluation in evaluationsToDo %}
+	<tr><td>
+		<form method='post' action='evaluation_submit.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+	{% else %}
+	<tr><td>No Evaluations</td></tr>
+	{% endfor %}
+</table>
+
+<table>
+	<thead><tr><th>Evaluations Received</tr></thead>
+	{% for evaluation in evaluationsReceived %}
+	<tr><td>
+		<form method='post' action='evaluation_view.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+	{% else %}
+	<tr><td>No Evaluations</td></tr>
+	{% endfor %}
+</table>
+
+	<!-- {{ evaluationsReceived }} -->
+
+{% endblock %}

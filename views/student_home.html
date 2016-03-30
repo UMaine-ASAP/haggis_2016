@@ -4,17 +4,16 @@
 {% block content %}
 <h2 class="pageTitle">Student Home</h2><br>
 
-<p>{{ username }}</p>
 <table>
 	<thead><tr><th>Assignments</tr></thead>
-	{% for assigment in assigments %}
+	{% for assignment in assignments %}
 	<tr><td>
 		<form method='post' action='assignment_controller.php'>
 		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.title}}</button>
 		Due: {{assignment.due}}
 		</form>
 	</td></tr>
-    * {{ user.name }}
+    {{ user.name }}
 	{% else %}
 	<tr><td>No Assignments</td></tr>
 	{% endfor %}
@@ -35,13 +34,13 @@
 
 <table>
 	<thead><tr><th>Evaluations Received</tr></thead>
-	{% for evaluation in evaluations %}
+	{% for evaluation in evaluationsReceived %}
 	<tr><td>
 		<form method='post' action='evaluation_view.php'>
 		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
 		</form>
 	</td></tr>
-    * {{ user.name }}
+    {{ user.name }}
 	{% else %}
 	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
