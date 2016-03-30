@@ -1,0 +1,48 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Student Home{% endblock %}
+
+{% block content %}
+<h2 class="pageTitle">Student Home</h2><br>
+
+<table>
+	<thead><tr><th>Assignments</tr></thead>
+	{% for assigment in assigments %}
+	<tr><td>
+		<form method='post' action='assignment_controller.php'>
+		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.title}}</button>
+		Due: {{assignment.due}}
+		</form>
+	</td></tr>
+    * {{ user.name }}
+	{% else %}
+	<tr><td>No Assignments</td></tr>
+	{% endfor %}
+</table>
+
+<table>
+	<thead><tr><th>Evaluations To Do</th></tr></thead>
+	{% for evaluation in evaluationsToDo %}
+	<tr><td>
+		<form method='post' action='evaluation_submit.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+	{% else %}
+	<tr><td>No Evaluations</td></tr>
+	{% endfor %}
+</table>
+
+<table>
+	<thead><tr><th>Evaluations Received</tr></thead>
+	{% for evaluation in evaluations %}
+	<tr><td>
+		<form method='post' action='evaluation_view.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+    * {{ user.name }}
+	{% else %}
+	<tr><td>No Evaluations</td></tr>
+	{% endfor %}
+</table>
+{% endblock %}

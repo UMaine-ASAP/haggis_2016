@@ -1,37 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Sign In</title>
-	<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
-</head>
-<body>
-	<div id="container">
-		<div id="headder">
-			<p><a href="register.php">Register</a></p>
-		</div><!-- end of headder -->
+{% extends "base.html" %}
+{% block title %}Haggis - Sign In{% endblock %}
+{% block header %}
+<h2 id="siteTitle">Haggis</h2>
+<a href="register.php" class="register">
+	<input type="button" value="Register">
+</a>
+{% endblock %}
 
-		<div id="login">
-				<h2>Login</h2>
-				<form method='POST' name='login form'>
-					<input type="text" name='postName' placeholder="Username"/>
-					<p><input type="password" name='postPassword' placeholder="Password"/></p>
-					<input type="submit" name='submitLogin' value="Login"></input>
-				</form>
-				<p><a href="passwordreset.php">forgot your password?</a></p>
-		</div> <!-- end of form div-->
-
-		<div id="footer">
-
-
-		</div><!-- end of footer -->
-	</div><!-- end of container div --> 
-
-
-</body>
-
-
-
-
-
-
-</html>
+{% block content %}
+<div id="loginContainer">
+	<div class='message'>{{ message }}</div>
+	<h2>Login</h2>
+	<form method='POST' name='login form'>
+		<input type="text" name='postName' placeholder="Email"/>
+		<input type="password" name='postPassword' placeholder="Password"/>
+		<a href="passwordreset.php">forgot your password?</a>
+		<input type="submit" name='submitLogin' value="Login"></input>
+	</form>
+</div>
+{% endblock %}

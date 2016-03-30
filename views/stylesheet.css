@@ -1,10 +1,152 @@
-/*haggis stylesheet*/
-body{
-	border-style:solid;
-	border-width:1px;
-	border-color:black;
+/*HEADER--------------------------------------------*/
+
+header{
+	background: #216499;
+	border-bottom: 3px solid black;
+	height: 50px;
+	vertical-align: middle;
+	min-width: 300px;
+	color: white;
 }
 
-#login{
-	align:center;
+#siteTitle{
+	display: inline-block;
+	margin: 10px 0px 10px 5px;
+}
+
+#welcome{
+	display: inline-block;
+	float: right;
+	margin: 15px 10px 10px 5px;
+}
+
+#welcomeMessage{
+	display: inline-block;
+}
+
+header .register, header .logout{
+	display: inline-block;
+	float: right;
+	margin: 10px 5px 10px 0px;
+
+}
+
+.register input, .logout input{
+	border-color: black;
+	background: white;
+	font-style: italic;
+}
+
+
+
+
+/*BODY--------------------------------------------*/
+
+body{
+	font-family: 'Lora', serif;
+}
+
+#content{
+	margin: 5px;
+}
+
+/*FOOTER--------------------------------------------*/
+
+#footer{
+	width: 100%;
+	display: block;
+}
+
+#footer #copywrite{
+	width: 215px;
+	margin: 0px auto;
+}
+
+/*LOGIN--------------------------------------------*/
+
+
+input[name="submitLogin"]{
+	background: #216499;
+	color: white;
+	border-color: black;
+	border-width: 2px;
+	font-size: 18px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 15px;
+
+}
+
+#loginContainer{
+	width: 200px;
+	margin: 0 auto;
+}
+
+#loginContainer h2{
+	color: #216499;
+	font-style: italic;
+}
+
+#loginContainer input{
+	margin-bottom: 5px;
+}
+
+/*Register--------------------------------------------*/
+
+.error {
+	color: red;
+}
+
+/*STUDENT HOME--------------------------------------------*/
+table{
+	border: 1px solid black;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+table th{
+	background: #216499;
+	padding: 5px;
+	font-size: 18px;
+}
+
+/*CUMULATIVE RESULTS--------------------------------------------*/
+
+#cumulativeResults table{
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+#tableContainer{
+	text-align: center;
+	margin: 0 auto;
+}
+
+.tableLocation{
+	text-align: left;
+	margin: 0 0 0 100px;
+
+}
+
+.pageTitle{
+	color: #216499;
+}
+
+#cumulativeResults tbody tr:nth-child(even) {background: #DDD}
+
+#cumulativeResults tbody tr:nth-child(odd) {background: #BBB}
+
+#cumulativeResults tbody td:hover{
+	background: white;
+	cursor: pointer;
+}
+
+#cumulativeResults tbody td{
+	text-align: center;
+}
+
+.ratingIndex strong{
+	margin-right: 10px;
 }
