@@ -43,7 +43,7 @@ class Evaluation {
 			if($evaluation != NULL){
 				$this->criteriaID = $evaluation['criteriaID'];
 				$this->done = $evaluation['done'];
-				$this->comment = $evaluation['comment'];
+				$this->comment = $evaluation['evaluation_type'];
 				$this->target_userID = $evaluation['target_userID'];
 				$this->evaluation_type = $evaluation['evaluation_type'];
 				$this->groupID = $evaluation['groupID'];
@@ -56,7 +56,7 @@ class Evaluation {
 	}
 
 	public function Add(){
-		
+
 			$query = "INSERT INTO `evaluation`(`evaluationID`, `criteriaID`, `rating`, `comment`, `evaluatorID`) VALUES (";
 			$query .= "NULL,'";
 			$query .= $this->criteriaID . "','";
@@ -71,7 +71,7 @@ class Evaluation {
 			} else {
 				die("Couldn't add evaluation: " . $this->evaluationID);
 			}
-		
+
 	}
 
 	public function Save(){
@@ -129,13 +129,13 @@ class Evaluation {
 		else{
 			die("Couldn't find user for evaluationID: " . $this->evaluationID);
 		}
-	}	
+	}
 
 	public function GetAssignment(){
 		$db = GetDB();
 
 		$query =  "SELECT * FROM `assignment_evaluation` WHERE `evaluationID` = {$this->evaluationID}";
-		
+
 		$result = $db->query($query);
 		if($result->num_rows != 0){
 			$assign = $result->fetch_array(MYSQLI_BOTH);
@@ -157,7 +157,7 @@ class Evaluation {
 		if($rows){
 			$ret = Array();
 			while($row = $rows->fetch_array(MYSQLI_BOTH)){
-					
+
 				$u = new Criteria($row['criteriaID']);
 				$ret[] = $u;
 
@@ -172,7 +172,7 @@ class Evaluation {
 		$db = GetDB();
 
 		$query =  "SELECT * FROM `student_group` WHERE `student_groupID` = {$this->groupID}";
-		
+
 		$result = $db->query($query);
 		if($result->num_rows != 0){
 			$assign = $result->fetch_array(MYSQLI_BOTH);
