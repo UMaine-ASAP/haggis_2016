@@ -1,15 +1,7 @@
 <?php
-	//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
-	require_once dirname(__FILE__) . "/../models/class.php";
-	require_once dirname(__FILE__) . "/../models/course.php";
+	require_once __DIR__ . "/../../system/bootstrap.php";
+	ensureLoggedIn();
 
-	session_start();
-	if($_SESSION['sessionCheck'] != 'true')
-	{
-		session_destroy();
-		header("location:login.php");
-	}
 
 	if($_SESSION['user']->userType == 'Student')
 	{
