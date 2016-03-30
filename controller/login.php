@@ -1,13 +1,17 @@
 <?php
+	require_once __DIR__ . "/../system/bootstrap.php";
+
 	//begin session
 	session_start();
 
 	//get user file
 	require_once dirname(__FILE__) . "/../models/user.php";
 
+
+
+	echo $twig->render('login.html');
+
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/login.html');
-	echo $page;
 	if(isset($_POST['submitLogin'])){	//change submitLogin to the equivalent login.html file
 
 		$user = new User(-1); //User with no user id to give
@@ -21,7 +25,7 @@
 				header("location:student_home.php");
 			}
 			else{
-				header("location:instructor_home.php");	
+				header("location:instructor_home.php");
 			}
 		}
 		else {
