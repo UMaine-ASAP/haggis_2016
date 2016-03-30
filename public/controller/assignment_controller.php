@@ -89,7 +89,7 @@
 	//get assignment
 	$assignment = new Assignment($_POST['assignmentID']);
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/assignment_view.html');
+	$page = file_get_contents(dirname(__FILE__) . '/../../views/assignment_view.html');
 	$page = str_replace('$assignmentName', $assignmentGlobal->title, $page);
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
 	$page = str_replace('$assignmentDescription', $assignmentGlobal->description, $page);

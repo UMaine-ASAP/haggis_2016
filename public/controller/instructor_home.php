@@ -1,14 +1,17 @@
 <?php
-	require_once __DIR__ . "/../system/bootstrap.php";
-	require_once dirname(__FILE__) . "/../models/user.php";
-	require_once dirname(__FILE__) . "/../models/assignment.php";
-	require_once dirname(__FILE__) . "/../models/class.php";
-
+	require_once __DIR__ . "/../../system/bootstrap.php";
+ die("here");
 ensureLoggedIn();
 
+	//Build classes/assignments
+	$classes_results = array();
+	$classes = $_SESSION['user']->GetClasses();
+	foreach ($classes as $class) {
+		$classes_results[] = array($class->title,$class->GetAssignments());
+	}
 
-	echo $twig->render('instructor_home.html');
-
-    $classes = $_SESSION['user']->GetClasses();
-
+	echo $twig->render('instructor_home.html', [
+		"username"            => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"classes"     		  => $classes_results
+		]);
 ?>

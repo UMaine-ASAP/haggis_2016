@@ -5,20 +5,18 @@
 <h2 class="pageTitle">Instructor Home</h2><br>
 
 <p> Classes </p>
+{% for class in classes %}
 <table>
-	<thead><tr><th>Assignments</tr></thead>
-	{% for assignment in assignments %}
+	<thead><tr><th>{{class[0]}}</tr></thead>
+	<tr><th>Upcoming Assignments</tr></th>
+	{% for assignment in class[1] %}
 	<tr><td>
-		<form method='post' action='assignment_controller.php'>
-		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.title}}</button>
-		Due: {{assignment.due}}
-		</form>
+		assignment['title']
 	</td></tr>
-    * {{ user.name }}
 	{% else %}
 	<tr><td>No Assignments</td></tr>
 	{% endfor %}
 </table>
-
+{% endfor %}
 <input value="Add Class" type="button" onclick="">
 {% endblock %}
