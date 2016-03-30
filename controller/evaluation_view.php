@@ -86,5 +86,12 @@
 	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
 	$page = str_replace('$evaluator', $eval->GetUser()->firstName, $page);
 	$page = str_replace('$evaluationInfo', $evalDetails, $page);
+	$type= $eval->evaluation_type;
+	if($type=='Peer'){
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." ". $type, $page);
+	}
+	else{
+		$page = str_replace('$evaluationName', $eval->GetAssignment()->title." " . $eval->GetGroup()->name, $page);
+	}
 	echo $page;
 ?>
