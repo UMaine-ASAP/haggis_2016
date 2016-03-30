@@ -89,13 +89,27 @@
 	//get assignment
 	$assignment = new Assignment($_POST['assignmentID']);
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/assignment_view.html');
-	$page = str_replace('$assignmentName', $assignmentGlobal->title, $page);
-	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
-	$page = str_replace('$assignmentDescription', $assignmentGlobal->description, $page);
-	$page = str_replace('$evaluationsToDo', $evaluationsToDo, $page);
-	$page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
-	echo $page;
+	// $page = file_get_contents(dirname(__FILE__) . '/../views/assignment_view.html');
+	// $page = str_replace('$assignmentName', $assignmentGlobal->title, $page);
+	// $page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
+	// $page = str_replace('$assignmentDescription', $assignmentGlobal->description, $page);
+	// $page = str_replace('$evaluationsToDo', $evaluationsToDo, $page);
+	// $page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
+	// echo $page;
+
+	
+	
+
+	 $assignment = ["name" => $assignment->title, "description" => $assignment->description];
+	 $user = ["name" => $_SESSION['user']->firstName." ".$_SESSION['user']->lastName];
+
+
+	echo $twig->render("assignment_view.html", [
+		"assignment"          => $assignment,
+		"user"                => $user,
+		"evaluationsToDo"     => $evaluationsToDo,
+		"evaluationsReceived" => $evaluationsReceived
+		]);
 
 	//echo "assignment to view: " . $_POST['assignmentID'];
 ?>
