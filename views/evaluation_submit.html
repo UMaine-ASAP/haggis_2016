@@ -1,26 +1,46 @@
-<!-- {% extends "base_account.html" %}
+{% extends "base_account.html" %}
 {% block title %}Haggis - Evaluation Submit{% endblock %}
 
-{% block content %} -->
-	<!-- <h1>HOHO</h1> -->
-<!-- {% endblock %} -->
-<!-- <h1>HEHE</h1> -->
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Student Evaluatio Submit</title>
-	<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
-</head>
-<body>
-	<div id="container">
-		<div id="headder">
-			<h3>Haggis</h3>
-			<p align="right">Welcome $firstName !  <a href="logout.php">Logout</a></p> 
-			
+{% block content %}
+<div id="evaluation">
+	<h2>{{ evaluationTitle }}</h2>
+	<form method="post" action="evaluation_submit_request.php">
+		{% for c in criteria %}
+		<div class="criteria">
+			<h4>{{ c.title }}</h4>
+			<input type="text" name="evaluationID" value="{{ evaluation.evaluationID }}" hidden>
+			<p>{{ c.description }}</p>
+			<div class="radio" onclick="unlockComment()">
+				<div class="qualitative">Strongly Agree</div>
+				<input type="radio" name="criteriaRatings[{{ c.criteriaID }}]" value="5">
+			</div>
+			<div class="radio">
+				<div class="qualitative">Agree</div>
+				<input type="radio" name="criteriaRatings[{{ c.criteriaID }}]" value="4">
+			</div>
+			<div class="radio">
+				<div class="qualitative">Neutral</div>
+				<input type="radio" name="criteriaRatings[{{ c.criteriaID }}]" value="3">
+			</div>
+			<div class="radio">
+				<div class="qualitative">Disagree</div>
+				<input type="radio" name="criteriaRatings[{{ c.criteriaID }}]" value="2">
+			</div>
+			<div class="radio">
+				<div class="qualitative">Strongly Disagree</div>
+				<input type="radio" name="criteriaRatings[{{ c.criteriaID }}]" value="1">
+			</div>
+			<!-- <input type="text" name="comment" placeholder="Additional comments."> -->
+			<textarea class="comment" name="criteriaComments[{{ c.criteriaID }}]" cols="60" rows="5" placeholder="Additional comments. (Required)" onKeyup="checkForm()"></textarea>
 		</div>
-	</div>
-	<h2>$evaluationName Evaluation Submission</h2><br>
-	$evaluationInfo
-</body>
-</html> -->
+
+	{% endfor %}
+		<button type="submit" disabled>Submit</button>
+	</form>
+</div>
+<script>
+
+
+	
+</script>
+{% endblock %}

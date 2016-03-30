@@ -154,3 +154,27 @@ button[name="evaluationID"]{
 .ratingIndex strong{
 	margin-right: 10px;
 }
+
+/*EVALUATION--------------------------------------------*/
+#evaluation .criteria .radio{
+	display: inline-block;
+	margin:0 5px 0 5px;
+	text-align: center;
+}
+
+#evaluation .criteria{
+	margin-bottom: 100px;
+}
+
+#evaluation .criteria:last-child{
+	margin-bottom: 200px;
+}
+
+#evaluation .criteria p{
+	margin-bottom: 20px;
+}
+#evaluation .criteria textarea[name="comment"]{
+	margin-top: 20px;
+	display: block;
+	
+}

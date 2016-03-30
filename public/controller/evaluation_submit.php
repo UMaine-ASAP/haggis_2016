@@ -1,16 +1,27 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
+	
+	//get evaluation
+	$eval = new Evaluation($_POST['evaluationID']);
+	
+	//create evaluation title from assignment name, type of eval, and who it targets.
+	$evaluationTitle = $eval->GetAssignment()->title . " " . $eval->evaluation_type." ";
+	if($eval->evaluation_type == "Group"){
+		$evaluationTitle .= $eval->groupID. " Evaluation";
+	}else{
+		$user = new User($eval->target_userID);
+		$evaluationTitle .= "Evaluation- ".$user->firstName." ".$user->lastName;
+	}
+	 
 
-	// echo $twig->render('evaluation_submit.html');
+	//get critera of evaluation.
+	$criteria = $eval->GetCriteria();
 
+	//Go to html view.
+	echo $twig->render('evaluation_submit.html', ["criteria"=>$criteria, "evaluation"=>$eval, "evaluationTitle"=>$evaluationTitle]);
 
-
-	// //get evaluation info
-	// $eval = new Evaluation($_POST['evaluationID']);
-
-	// //get critera set
-	// $criteria = $eval->GetCriteria();
+	
 
 
 	// $evalDetails = "";
@@ -54,5 +65,6 @@
 	// }
 	// $page = str_replace('$evaluationInfo', $evalDetails, $page);
 	// echo $page;
+	
 
 ?>
