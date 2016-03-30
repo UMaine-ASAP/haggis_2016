@@ -1,6 +1,7 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
+	// echo 'Success';
 
 	if($_SESSION['user']->userType == 'Student')
 	{
