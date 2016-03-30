@@ -12,7 +12,6 @@ header{
 #siteTitle{
 	display: inline-block;
 	margin: 10px 0px 10px 5px;
-	
 }
 
 #welcome{
@@ -100,4 +99,44 @@ table th{
 	background: #216499;
 	padding: 5px;
 	font-size: 18px;
+}
+
+/*CUMULATIVE RESULTS--------------------------------------------*/
+
+#cumulativeResults table{
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+#tableContainer{
+	text-align: center;
+	margin: 0 auto;
+}
+
+.tableLocation{
+	text-align: left;
+	margin: 0 0 0 100px;
+
+}
+
+.pageTitle{
+	color: #216499;
+}
+
+#cumulativeResults tbody tr:nth-child(even) {background: #DDD}
+
+#cumulativeResults tbody tr:nth-child(odd) {background: #BBB}
+
+#cumulativeResults tbody td:hover{
+	background: white;
+	cursor: pointer;
+}
+
+#cumulativeResults tbody td{
+	text-align: center;
+}
+
+.ratingIndex strong{
+	margin-right: 10px;
 }

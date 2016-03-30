@@ -1,17 +1,24 @@
 <?php
 require_once dirname(__FILE__) . "/../system/database.php";
 require_once dirname(__FILE__) . "/../models/user.php";
+require_once dirname(__FILE__) . "/../models/assignment.php";
+require_once dirname(__FILE__) . "/../models/criteria.php";
 
 class Evaluation {
 
 	public $evaluationID = -1;
 	public $criteriaID;
 	public $done;
-	public $comment;
+	public $evaluation_type;
 	public $target_userID;
+	public $groupID;
 
 	public function Evaluation($class_id){
 		$this->evaluationID = $class_id;
+
+		if($this->evaluationID == -1){
+			return;
+		}
 
 		$db = GetDB();
 
@@ -37,6 +44,8 @@ class Evaluation {
 				$this->done = $evaluation['done'];
 				$this->comment = $evaluation['comment'];
 				$this->target_userID = $evaluation['target_userID'];
+				$this->evaluation_type = $evaluation['evaluation_type'];
+				$this->groupID = $evaluation['groupID'];
 			} else {
 				die("Couldn't find evaluation: " . $this->evaluationID);
 			}
@@ -45,13 +54,35 @@ class Evaluation {
 		}
 	}
 
+	public function Add(){
+		
+			$query = "INSERT INTO `evaluation`(`evaluationID`, `criteriaID`, `rating`, `comment`, `evaluatorID`) VALUES (";
+			$query .= "NULL,'";
+			$query .= $this->criteriaID . "','";
+			$query .= $this->done . "','";
+			$query .= $this->evaluation_type . "','";
+			$query .= $this->target_userID . "','";
+			$query .= $this->groupID . "')";
+
+			$db = GetDB();
+			if($db->query($query) === TRUE){
+				// Updated succesfully
+			} else {
+				die("Couldn't add evaluation: " . $this->evaluationID);
+			}
+		
+	}
+
 	public function Save(){
 		if($this->evaluationID != -1){
 			$query = "UPDATE `evaluation` SET ";
+
 			$query .= "`criteriaID` = '" . $this->criteriaID . "', ";
 			$query .= "`done` = '" . $this->done . "', ";
-			$query .= "`comment` = '" . $this->comment . "', ";
-			$query .= "`target_userID` = '" . $this->target_userID . "', ";
+			$query .= "`evaluation_type` = '" . $this->evaluation_type . "', ";
+			$query .= "`target_userID` = '" . $this->target_userID . "' ";
+			$query .= "`groupID` = '" . $this->groupID . "' ";
+
 			$query .= "WHERE `evaluationID` = " . $this->evaluationID;
 
 			$db = GetDB();
@@ -99,6 +130,42 @@ class Evaluation {
 		}
 	}	
 
+	public function GetAssignment(){
+		$db = GetDB();
+
+		$query =  "SELECT * FROM `assignment_evaluation` WHERE `evaluationID` = {$this->evaluationID}";
+		
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$assign = $result->fetch_array(MYSQLI_BOTH);
+
+			$assignment = new Assignment($assign['assignmentID']);
+			return $assignment;
+		}
+		else{
+			die("Couldn't find assignment for evaluation: " . $this->evaluationID);
+		}
+	}
+////////////////////////////////////////////////////////////// CRITERIA
+	public function GetCriteria(){
+
+		$query = "SELECT * FROM `evaluation_criteria` WHERE `evaluationID` = {$this->evaluationID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+				$u = new Criteria($row['criteriaID']);
+				$ret[] = $u;
+
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
 }
 
 ?>
