@@ -89,13 +89,68 @@
 	//get assignment
 	$assignment = new Assignment($_POST['assignmentID']);
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/assignment_view.html');
-	$page = str_replace('$assignmentName', $assignmentGlobal->title, $page);
-	$page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
-	$page = str_replace('$assignmentDescription', $assignmentGlobal->description, $page);
-	$page = str_replace('$evaluationsToDo', $evaluationsToDo, $page);
-	$page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
-	echo $page;
+	// $page = file_get_contents(dirname(__FILE__) . '/../views/assignment_view.html');
+	// $page = str_replace('$assignmentName', $assignmentGlobal->title, $page);
+	// $page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
+	// $page = str_replace('$assignmentDescription', $assignmentGlobal->description, $page);
+	// $page = str_replace('$evaluationsToDo', $evaluationsToDo, $page);
+	// $page = str_replace('$evaluationsReceived', $evaluationsReceived, $page);
+	// echo $page;
+
+
+
+	//build received evaluations
+	$evaluationReceived_results = [];
+	$rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();
+	foreach($rec_evaluations as $eval){
+		if($eval->done == 1){
+			$e = new Evaluation($eval->evaluationID);
+
+			$evaluationReceived_results[] = [
+				"id"    => $eval->evaluationID,
+				"title" =>  $e->evaluation_type." Evaluation"
+			];
+		}
+	}
+
+
+
+	//Get id of the assignment on page.
+	$thisAssignmentID = $_POST['assignmentID'];
+	// Get all of this user's evaluations.
+	$allEvaluations = $_SESSION['user']->GetEvaluations();
+	$evaluationsToDo = array();
+	foreach($allEvaluations as $evaluation){
+		// If the eval matches to this assignment id and it isn't done then add it to the todo array.
+		if($evaluation->GetAssignment()->assignmentID == $thisAssignmentID && $evaluation->done == 0){
+			
+			$evaluationTitle = "";
+			if($evaluation->evaluation_type == "Group"){
+				$evaluationTitle .= "Group ".$evaluation->groupID;
+			}else{
+				$targetUser = new User($evaluation->target_userID);	
+				$targetUserName = $targetUser->firstName." ".$targetUser->lastName;					
+				$evaluationTitle .= "Peer- ".$targetUserName;
+			}
+
+			$evaluationsToDo[] = ["id"=>$evaluation->evaluationID, "title" => $evaluationTitle];
+
+			
+		}
+	}
+
+
+	 $assignment = ["name" => $assignment->title, "description" => $assignment->description];
+	 $user = ["name" => $_SESSION['user']->firstName." ".$_SESSION['user']->lastName];
+
+
+	echo $twig->render("assignment_view.html", [
+		"assignment"          => $assignment,
+		"user"                => $user,
+		"evaluationsToDo"     => $evaluationsToDo,
+		"evaluationsForThisAssignment"     => $evaluationsToDo,
+		"evaluationsReceived" => $evaluationReceived_results
+		]);
 
 	//echo "assignment to view: " . $_POST['assignmentID'];
 ?>
