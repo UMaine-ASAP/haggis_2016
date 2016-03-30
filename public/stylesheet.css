@@ -111,6 +111,10 @@ table th{
 	font-size: 18px;
 }
 
+button[name="evaluationID"]{
+	width: 100%;
+}
+
 /*CUMULATIVE RESULTS--------------------------------------------*/
 
 #cumulativeResults table{

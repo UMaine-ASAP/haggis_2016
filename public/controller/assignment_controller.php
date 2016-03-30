@@ -98,8 +98,20 @@
 	// echo $page;
 
 
-	
 
+	//build received evaluations
+	$evaluationReceived_results = [];
+	$rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();
+	foreach($rec_evaluations as $eval){
+		if($eval->done == 1){
+			$e = new Evaluation($eval->evaluationID);
+
+			$evaluationReceived_results[] = [
+				"id"    => $eval->evaluationID,
+				"title" =>  $e->evaluation_type." Evaluation"
+			];
+		}
+	}
 
 
 
@@ -112,7 +124,18 @@
 		// If the eval matches to this assignment id and it isn't done then add it to the todo array.
 		if($evaluation->GetAssignment()->assignmentID == $thisAssignmentID && $evaluation->done == 0){
 			
-			$evaluationsToDo[] = ["id"=>$evaluation->evaluationID, "title" => $evaluation->GetAssignment()->title." ".$evaluation->type."evaluations"];			
+			$evaluationTitle = "";
+			if($evaluation->evaluation_type == "Group"){
+				$evaluationTitle .= "Group ".$evaluation->groupID;
+			}else{
+				$targetUser = new User($evaluation->target_userID);	
+				$targetUserName = $targetUser->firstName." ".$targetUser->lastName;					
+				$evaluationTitle .= "Peer- ".$targetUserName;
+			}
+
+			$evaluationsToDo[] = ["id"=>$evaluation->evaluationID, "title" => $evaluationTitle];
+
+			
 		}
 	}
 
@@ -126,7 +149,7 @@
 		"user"                => $user,
 		"evaluationsToDo"     => $evaluationsToDo,
 		"evaluationsForThisAssignment"     => $evaluationsToDo,
-		"evaluationsReceived" => $evaluationsReceived
+		"evaluationsReceived" => $evaluationReceived_results
 		]);
 
 	//echo "assignment to view: " . $_POST['assignmentID'];

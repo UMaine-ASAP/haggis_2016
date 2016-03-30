@@ -34,7 +34,7 @@
 
 <table>
 	<thead><tr><th>Evaluations Received</tr></thead>
-	{% for evaluation in evaluations %}
+	{% for evaluation in evaluationsReceived %}
 	<tr><td>
 		<form method='post' action='evaluation_view.php'>
 		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>

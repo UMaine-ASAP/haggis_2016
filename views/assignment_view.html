@@ -21,6 +21,18 @@
 	{% endfor %}
 </table>
 
+<table>
+	<thead><tr><th>Evaluations Received</tr></thead>
+	{% for evaluation in evaluationsReceived %}
+	<tr><td>
+		<form method='post' action='evaluation_view.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+	{% else %}
+	<tr><td>No Evaluations</td></tr>
+	{% endfor %}
+</table>
 
 	<!-- {{ evaluationsReceived }} -->
 
