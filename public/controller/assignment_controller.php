@@ -1,10 +1,5 @@
 <?php
-	require_once __DIR__ . "/../system/bootstrap.php";
-
-		//get user file
-	require_once dirname(__FILE__) . "/../models/user.php";
-	require_once dirname(__FILE__) . "/../models/assignment.php";
-
+	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
 	$evaluations = $_SESSION['user']->GetEvaluations();
@@ -26,7 +21,7 @@
 			}
 			else
 			{
-				
+
 			}
 		}
 	}
@@ -40,11 +35,11 @@
 	if($relevantAssignments != array()){
 		foreach($relevantAssignments as $eval){
 			//This may not be a significant way of telling whether or not the evaluation is finished or not.
-			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating. 
+			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating.
 			if($eval->done != 0){
 				$e = new Evaluation($eval->evaluationID);
 				$u = $e->GetUser();
-				$evaluationsReceived .= "<tr><td>"; 
+				$evaluationsReceived .= "<tr><td>";
 				$evaluationsReceived .= '<form method="post" action="evaluation_view.php">';
 				$evaluationsReceived .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID" ';
 				$evaluationsReceived .= 'formaction="evaluation_view.php"> ';
@@ -64,13 +59,13 @@
 	if($relevantAssignments != array()){
 		foreach($relevantAssignments as $eval){
 			//This may not be a significant way of telling whether or not the evaluation is finished or not.
-			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating. 
+			// There should probably be a function to determine if any criteria within the evaluation do not have a filled rating.
 			if($eval->done == 0){
 				$e = new Evaluation($eval->evaluationID);
 				if($eval->target_userID != 0){
 					$u = new User($eval->target_userID);
 				}
-				$evaluationsToDo .= "<tr><td>"; 
+				$evaluationsToDo .= "<tr><td>";
 				$evaluationsToDo .= '<form method="post" action="evaluation_submit.php">';
 				$evaluationsToDo .= '<button type="submit" value="' . $eval->evaluationID . '" name="evaluationID"';
 				$evaluationsToDo .= ' formaction="evaluation_submit.php"> ';
