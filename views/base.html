@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
+	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+	<header>
+		{% block header %}{% endblock %}
+	</header>
+
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+
+	<div id="footer">
+		<div id="copywrite">© 2016 ASAP Media Services</div>
+		{% block footer %}{% endblock %}
+	</div>
+
+</body>
+
+
+</html>

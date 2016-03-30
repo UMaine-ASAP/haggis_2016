@@ -7,9 +7,15 @@ class Criteria {
 	public $title;
 	public $ratingRange;
 	public $description;
+	public $rating;
+	public $comment;
 
 	public function Criteria($criteria_id){
 		$this->criteriaID = $criteria_id;
+
+		if($this->criteriaID == -1){
+			return;
+		}
 
 		$db = GetDB();
 
@@ -34,6 +40,8 @@ class Criteria {
 				$this->title = $criteria['title'];
 				$this->ratingRange = $criteria['ratingRange'];
 				$this->description = $criteria['description'];
+				$this->rating = $criteria['rating'];
+				$this->comment = $criteria['comment'];
 			} else {
 				die("Couldn't find criteria: " . $this->criteriaID);
 			}
@@ -48,6 +56,8 @@ class Criteria {
 			$query .= "`title` = '" . $this->title . "', ";
 			$query .= "`ratingRange` = '" . $this->ratingRange . "', ";
 			$query .= "`description` = '" . $this->description . "', ";
+			$query .= "`rating` = '" . $this->rating . "', ";
+			$query .= "`comment` = '" . $this->comment . "' ";
 			$query .= "WHERE `criteriaID` = " . $this->criteriaID;
 
 			$db = GetDB();
@@ -58,6 +68,20 @@ class Criteria {
 			}
 		}
 	}
+
+	public function SaveResult(){
+		if($this->criteriaID != -1){
+			$query = "UPDATE `criteria` SET `rating` = '".$this->rating."', `comment` = '".$this->comment."'";
+			$query .= " WHERE `criteria`.`criteriaID` = ".$this->criteriaID;
+
+			$db = GetDB();
+			if($db->query($query) === TRUE){
+				// Updated succesfully
+			} else {
+				die("Couldn't update criteria: " . $this->criteriaID);
+			}
+		}
+	}	
 
 	public function Delete(){
 		if(!filter_var($this->criteriaID, FILTER_VALIDATE_INT) === TRUE){

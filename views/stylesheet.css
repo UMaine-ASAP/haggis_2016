@@ -12,8 +12,28 @@ header{
 #siteTitle{
 	display: inline-block;
 	margin: 10px 0px 10px 5px;
-	
 }
+
+#welcome{
+	display: inline-block;
+	float: right;
+	margin: 15px 10px 10px 5px;
+}
+
+header .register, header .logout{
+	display: inline-block;
+	float: right;
+	margin: 10px 5px 10px 0px;
+
+}
+
+.register input, .logout input{
+	border-color: black;
+	background: white;
+	font-style: italic;
+}
+
+
 
 
 /*BODY--------------------------------------------*/
@@ -29,9 +49,8 @@ body{
 /*FOOTER--------------------------------------------*/
 
 #footer{
-	position: fixed;
-	bottom: 0px;
 	width: 100%;
+	display: block;
 }
 
 #footer #copywrite{
@@ -41,18 +60,6 @@ body{
 
 /*LOGIN--------------------------------------------*/
 
-header .register{
-	display: inline-block;
-	float: right;
-	margin: 10px 5px 10px 0px;
-	
-}
-
-.register input{
-	border-color: black;
-	background: white;
-	font-style: italic;
-}
 
 input[name="submitLogin"]{
 	background: #216499;
@@ -78,4 +85,64 @@ input[name="submitLogin"]{
 
 #loginContainer input{
 	margin-bottom: 5px;
+}
+
+/*Register--------------------------------------------*/
+
+.error {
+	color: red;
+}
+
+/*STUDENT HOME--------------------------------------------*/
+table{
+	border: 1px solid black;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+table th{
+	background: #216499;
+	padding: 5px;
+	font-size: 18px;
+}
+
+/*CUMULATIVE RESULTS--------------------------------------------*/
+
+#cumulativeResults table{
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+#tableContainer{
+	text-align: center;
+	margin: 0 auto;
+}
+
+.tableLocation{
+	text-align: left;
+	margin: 0 0 0 100px;
+
+}
+
+.pageTitle{
+	color: #216499;
+}
+
+#cumulativeResults tbody tr:nth-child(even) {background: #DDD}
+
+#cumulativeResults tbody tr:nth-child(odd) {background: #BBB}
+
+#cumulativeResults tbody td:hover{
+	background: white;
+	cursor: pointer;
+}
+
+#cumulativeResults tbody td{
+	text-align: center;
+}
+
+.ratingIndex strong{
+	margin-right: 10px;
 }
