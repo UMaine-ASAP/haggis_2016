@@ -1,6 +1,5 @@
 <?php
-
-	require_once __DIR__ . '/../vendor/autoload.php';
+	require_once __DIR__ . "/../system/bootstrap.php";
 
 	//begin session
 	session_start();
@@ -10,9 +9,7 @@
 
 
 
-	$loader = new Twig_Loader_Filesystem(__DIR__ . '/../views/');
-	$twig = new Twig_Environment($loader);
-	echo $twig->render('login.html', array('name' => 'Fabien'));
+	echo $twig->render('login.html');
 
 	//get the html page ready to be displayed
 	if(isset($_POST['submitLogin'])){	//change submitLogin to the equivalent login.html file

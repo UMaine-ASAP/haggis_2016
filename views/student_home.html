@@ -1,43 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Student Home</title>
-	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
-	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
-	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
-</head>
-<body>
-	<header>
-		<h2 id="siteTitle">Haggis</h2>
-		<a href="logout.php" class="logout">
-			<input type="button" value="Logout">
-		</a>
-		<div id="welcome">Welcome, $firstName!</div>
-				<!-- <p align="right">Welcome $firstName !  <a href="logout.php">Logout</a></p>  -->
-		<!-- <a href="register.php" class="register">
-			<input type="button" value="Register">
-		</a> -->
-	</header>
-	<div id="content">
-		
-	
+{% extends "base_account.html" %}
+{% block title %}Haggis - Student Home{% endblock %}
 
-		<h2 class="pageTitle">Student Home</h2><br>
+{% block content %}
+<h2 class="pageTitle">Student Home</h2><br>
 
-		<!-- <table>
-			$tableRows
-				Made of many duplicates of seperate html file $tablerow
-			
-		</table> -->
+<!-- <table>
+	$tableRows
+		Made of many duplicates of seperate html file $tablerow
 
-		$assignmentInfo
-		$evaluationsToDo
-		$evaluationsReceived
-	</div>
+</table> -->
 
-	<div id="footer">
-		<div id="copywrite">© 2016 ASAP Media Services</div>
-	</div>
-	
-</body>
-</html>
+$assignmentInfo
+$evaluationsToDo
+$evaluationsReceived
+{% endblock %}
