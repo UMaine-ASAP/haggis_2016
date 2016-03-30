@@ -1,5 +1,6 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
+	require_once __DIR__ . "/../../models/course.php";
 	ensureLoggedIn();
 
 	if($_SESSION['user']->userType == 'Student')
@@ -8,6 +9,7 @@
 	}
 
 	$course = $_POST['courseID'];
+	$courseName = $course->title;
 
 	function createClass()
 	{
@@ -28,7 +30,7 @@
 	}
 
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/class_new.html');
+	// $page = file_get_contents(dirname(__FILE__) . '/../views/class_new.html');
 
 	//replace the values in the html with needed sections
 	echo $twig->render('class_new.html', [
