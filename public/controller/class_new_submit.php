@@ -13,14 +13,14 @@
 	$classLoc = $_POST['classLoc'];
 	$courseIdentifier = $_POST['courseIdentifier'];
 
-	$class = new Period(-1);
+	$class = new Period(0);
 
 	$class->title = $className;
 	$class->courseID = $courseIdentifier;
 	$class->time = $classTime;
 	$class->description = $classDesc;
 	$class->location = $classLoc;
-	$class->Add();
+	$class->Save();
 
 	// var_dump($class);
 	$class->addUser($_SESSION['user']->userID, $_SESSION['user']->userType);

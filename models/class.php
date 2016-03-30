@@ -72,7 +72,7 @@ class Period {
 	}
 
 	public function Add(){
-		$query = "INSERT INTO `projecteval`.`class` (`classID`, `title`, `courseID`, `time`, `description`, `location`) VALUES (";
+		$query = "INSERT INTO `class` (`classID`, `title`, `courseID`, `time`, `description`, `location`) VALUES (";
 		$query .= "NULL, ";
 		$query .= $this->title . "','";
 		$query .= $this->courseID . "','";
