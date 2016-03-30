@@ -15,6 +15,7 @@
 
 	//get user's classes
 	$classes = $_SESSION['user']->GetClasses();
+	// Clicking on a class should pass the class id.
 
 	//get assignments for each class
 	$assignments = Array();
