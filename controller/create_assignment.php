@@ -20,24 +20,25 @@
 	$courseName = $course->title;
 	$courseIdentifier = $course->courseID;
 
-	function createClass()
+	function createAssignment()
 	{
-		$AssignmentName = $_POST['AssignmentTitle'];
-		$AssignmentDueDate = $_POST['AssignmentDueDate'];
-		
 
-		$course = new Course(1);
-		$courseIdentifier = $course->courseID;
-
-		$class = new Period(0);
-
-		$class->title = $AssignmentName;
-		$class->time = $classTime;
-		$class->description = $AssignmentDesc;
-
-		$class->Save();
-		$class->addUser($_SESSION['user']->userID, $_SESSION['user']->userType);
 	}
+	$AssignmentName = $_POST['postDueDate'];
+	$AssignmentDueDate = $_POST['AssignmentDueDate'];
+	
+
+	$course = new Course(1);
+	$courseIdentifier = $course->courseID;
+
+	$class = new Period(0);
+
+	$class->title = $AssignmentName;
+	$class->time = $classTime;
+	$class->description = $AssignmentDesc;
+
+	$class->Save();
+	$class->addUser($_SESSION['user']->userID, $_SESSION['user']->userType);
 
 	if(isset($_POST['createAssignmentSubmit']))
 	{
