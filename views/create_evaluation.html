@@ -19,12 +19,39 @@
 		<form method='post' name='create evaluation form'>
 			<p><input type="text" id ="CreateEvalBody" name='postEvaluationName' placeholder="Evaluation Name"/>
 			<input type="text" id ="CreateEvalBody" name='postDueDate' placeholder="Due Date"/></p>
+			</form>
+
+		<form method='post' name='criteria'>
 			<p><input type="text" id ="CreateEvalName" name='postEvaluationCriteria' placeholder="Criteria Name"/>
-			<p><input type="text" id="CreateEvalDescription" name='postCriteriaDescription' placeholder="Description"/><p>
-			<input type="submit" id="CreateEvalCriteriaButton" name='submitevaluation' value="Add Another Criteria"></input>
+			<p><input type="text" id="CreateEvalDescription" name='postCriteriaDescription' placeholder="Description"/><p></form>
+
+		<script type="text/javascript">
+
+		generateFeild();
+
+		function generateFeild(){
+
+			alert("Its working!");
+ 		 	var newCriteria = document.createElement("input");
+		    newCriteria.setAttribute('placeholder', 'Criteria Name');
+		    newCriteria.name = 'criteria[]';
+
+		    var newDesc = document.createElement("textarea");
+		    newDesc.setAttribute('placeholder', 'Description');
+		    newDesc.name = 'description[]';
+
+		    document.getElementById("criteria").appendChild(newCriteria);
+		    document.getElementById("criteria").appendChild(newDesc);
+
+		}
+		</script>
+
+
+		<form method='post' name='input'>
+			<input type="button" onclick="generateField()" value="Add Another Criteria" />
 			<input type="submit" id="CreateEvalButton" name='submitevaluation' value="Create"></input>
-		</form>
-	</div></center> <!-- end of form div-->
+		
+		</div></center> <!-- end of form div-->
 	
 </body>
 
