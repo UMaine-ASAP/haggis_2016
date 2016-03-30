@@ -4,6 +4,7 @@
 {% block content %}
 <h2 class="pageTitle">Student Home</h2><br>
 
+<p>{{ username }}</p>
 <table>
 	<thead><tr><th>Assignments</tr></thead>
 	{% for assigment in assigments %}
@@ -15,7 +16,7 @@
 	</td></tr>
     * {{ user.name }}
 	{% else %}
-    	No assignments
+	<tr><td>No Assignments</td></tr>
 	{% endfor %}
 </table>
 
@@ -27,9 +28,8 @@
 		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
 		</form>
 	</td></tr>
-    * {{ user.name }}
 	{% else %}
-    	No assignments
+	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
 </table>
 
@@ -43,7 +43,7 @@
 	</td></tr>
     * {{ user.name }}
 	{% else %}
-    	No assignments
+	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
 </table>
 {% endblock %}

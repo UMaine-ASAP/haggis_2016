@@ -1,13 +1,10 @@
 <?php
+	require_once __DIR__ . "/../system/bootstrap.php";
 	require_once dirname(__FILE__) . "/../models/evaluation.php";
 	require_once dirname(__FILE__) . "/../models/criteria.php";
 	require_once dirname(__FILE__) . "/../models/user.php";
 
-	session_start();
-	if($_SESSION['sessionCheck'] != 'true'){
-			session_destroy();
-			header("location:login.php");
-	}
+	ensureLoggedIn();
 
 	$evaluation = new Evaluation($_SESSION['evaluation']);
 	$count = $_SESSION['count'];

@@ -1,27 +1,24 @@
 <?php
-
 require_once __DIR__ . "/../system/bootstrap.php";
-require_once __DIR__ . "/../models/user.php";
-require_once __DIR__ . "/../models/assignment.php";
-require_once __DIR__ . "/../models/class.php";
 
 ensureLoggedIn();
 
 //Build assignments
-$assigments_results = array();
+$assignments_results = array();
 
 $classes = $_SESSION['user']->GetClasses();
 $assignments = Array();
 foreach ($classes as $class) {
 	$assignments[] = $class->GetAssignments();
 }
-
-foreach ($assigments[0] as $assigment) {
-	$assigments_results[] = [
-		"id"    => $assignment[0]->assignmentID,
-		"title" => $assignment[0]->title,
-		"due"   => $assignment[1]
-	];
+if ($assignments != array() ) {
+	foreach ($assignments[0] as $assignment) {
+		$assignments_results[] = [
+			"id"    => $assignment[0]->assignmentID,
+			"title" => $assignment[0]->title,
+			"due"   => $assignment[1]
+		];
+	}
 }
 
 //build evaluations to do
@@ -45,7 +42,7 @@ foreach($evaluations as $eval) {
 		}
 
 		$evaluationTodo_results[] = [
-			"id"    => $eval->evaluationId,
+			"id"    => $eval->evaluationID,
 			"title" => $title
 		];
 	}
@@ -68,7 +65,8 @@ foreach($rec_evaluations as $eval){
 
 // render
 echo $twig->render('student_home.html', [
-	"assignments"         => $assigments_results,
+	"username"            => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+	"assignments"         => $assignments_results,
 	"evaluationsToDo"     => $evaluationTodo_results,
 	"evaluationsReceived" => $evaluationReceived_results
 	]);
