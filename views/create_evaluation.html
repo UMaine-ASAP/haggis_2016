@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create Evaluation</title>
+	<link rel="stylesheet" type="text/css" href="../views/normalize.css"/>
+	<link rel="stylesheet" type="text/css" href="../views/stylesheet.css"/>
+	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+	<header>
+		<h2 id="siteTitle">Haggis</h2>
+		<a href="create_evaluation.php" class="register">
+			<input type="button" value="Logout">
+		</a>
+	</header>
+	<h1 id="CreateEvalTitle">Create an Evaluation</h1>
+	<center><div id="CreateEvalBody">
+		<form method='post' name='create evaluation form'>
+			<p><input type="text" id ="CreateEvalBody" name='postEvaluationName' placeholder="Evaluation Name"/>
+			<input type="text" id ="CreateEvalBody" name='postDueDate' placeholder="Due Date"/></p>
+			<p><input type="text" id ="CreateEvalName" name='postEvaluationCriteria' placeholder="Criteria Name"/>
+			<p><input type="text" id="CreateEvalDescription" name='postCriteriaDescription' placeholder="Description"/><p>
+			<input type="submit" id="CreateEvalCriteriaButton" name='CreateCriteria' value="Add Another Criteria"></input>
+			<input type="submit" id="CreateEvalButton" name='submitevaluation' value="Create"></input>
+		</form>
+	</div></center> <!-- end of form div-->
+	
+</body>
+
+</html>
