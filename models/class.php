@@ -197,6 +197,38 @@ class Period {
 			}
 	}
 
+	public function getDueDate()
+	{
+		$query =  "SELECT * FROM `assignment_class` WHERE `assignmentID` = {$this->assignmentID}";
+
+			$db = GetDB();
+			$rows = $db->query($query);
+			if($rows){
+				$ret = Array();
+				while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+					$ret[] = $row['dueDate'];
+
+				}
+				return $ret;
+			} else {
+				return Array();
+			}
+	}
+
+	public function setDueDate($assignmentIdentifier, $dueDate)
+	{
+
+		$query = "INSERT INTO `assignment_class` (`classID`, `assignmentID`, `dueDate`) VALUES ({$this->classID}, $assignmentIdentifier, '$dueDate')";
+
+			$db = GetDB();
+			if($db->query($query) === TRUE){
+				// Created succesfully
+			} else {
+				die("Couldn't add due date to assignment: " . $this->assignmentID . " Because of this error " . mysqli_error($db));
+			}
+	}
+
 }
 
 

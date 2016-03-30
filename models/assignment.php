@@ -9,7 +9,6 @@ class Assignment {
 	public $assignmentID = -1;
 	public $title;
 	public $description;
-	public $dueDate;
 
 	public function Assignment($assignment_id){
 		$this->assignmentID = $assignment_id;
@@ -36,7 +35,6 @@ class Assignment {
 			if($assignment != NULL){
 				$this->title = $assignment['title'];
 				$this->description = $assignment['description'];
-				$this->dueDate = $assignment['dueDate'];
 			} else {
 				die("Couldn't find assignment: " . $this->assignmentID);
 			}
@@ -49,8 +47,7 @@ class Assignment {
 		if($this->assignmentID != -1){
 			$query = "UPDATE `assignment` SET ";
 			$query .= "`title` = '" . $this->title . "', ";
-			$query .= "`description` = '" . $this->description . "', ";
-			$query .= "`dueDate` = '" . $this->dueDate . "' ";
+			$query .= "`description` = '" . $this->description . "' ";
 			$query .= "WHERE `assignmentID` = " . $this->assignmentID;
 
 			$db = GetDB();
