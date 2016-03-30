@@ -284,10 +284,9 @@ class Assignment {
 		}
 	}
 
+/////////////////////////////////////////////////////////////////// CLASS
+
 	public function GetEvaluations(){
-		// if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
-		// 	return; // Wrong assignmentID
-		// }
 
 		$query = "SELECT * FROM `assignment_evaluation` WHERE `assignmentID` = {$this->assignmentID}";
 
@@ -296,19 +295,8 @@ class Assignment {
 		if($rows){
 			$ret = Array();
 			while($row = $rows->fetch_array(MYSQLI_BOTH)){
-				
-				/*$query = "SELECT * FROM `class` WHERE `classID` = {$row['classID']}";
-
-				$classs = $db->query($query);
-				if($classs){
-					while($c = $classs->fetch_array(MYSQLI_BOTH)){
-						$ret[] = $c;
-					}
-				}*/
-
-				$c = new Evaluation($row['evaluationID']);
-				$ret[] = $c;
-
+				$e = new Evaluation($row['evaluationID']);
+				$ret[] = $e;
 			}
 			return $ret;
 		} else {
