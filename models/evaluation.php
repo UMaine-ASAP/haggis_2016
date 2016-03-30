@@ -43,7 +43,7 @@ class Evaluation {
 			if($evaluation != NULL){
 				$this->criteriaID = $evaluation['criteriaID'];
 				$this->done = $evaluation['done'];
-				//$this->comment = $evaluation['comment'];
+				$this->comment = $evaluation['evaluation_type'];
 				$this->target_userID = $evaluation['target_userID'];
 				$this->evaluation_type = $evaluation['evaluation_type'];
 				$this->groupID = $evaluation['groupID'];
@@ -118,7 +118,7 @@ class Evaluation {
 
 		$query =  "SELECT * FROM `user_evaluation` WHERE `evaluationID` = {$this->evaluationID}";
 
-
+		
 		$result = $db->query($query);
 		if($result->num_rows != 0){
 			$user = $result->fetch_array(MYSQLI_BOTH);
