@@ -7,7 +7,7 @@
 {% for class in classes %}
 <form method='post' action = 'instructor_class.php' style="cursor:pointer" id="myForm" onclick="goToClass()">
 <input type='hidden' value = "{{class.id}}" name="classID">
-<center><table>
+<table>
 	<thead><tr><th>{{class.className}}</tr></thead>
 	<tr><td>Upcoming Assignments:</td></tr>
 	{% for assignment in class.assignmentNames %}
@@ -16,7 +16,7 @@
 	</ul></td></tr></b>
 	{% endfor %}
 	<tr><td>Class ID: {{class.id}}</td></tr>
-</table></center>
+</table>
 </form>
 {% endfor %}
 
