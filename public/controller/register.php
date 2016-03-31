@@ -42,18 +42,15 @@ if (isset($_POST['submitRegister'])) {
 		exit();
 	}
 
-<<<<<<< HEAD
+
 	if ( empty($_POST['classID'])) {
 		$data['message'] = "Class ID is required.";
-=======
-	if ( empty($_POST['postClassCode'])) {
-		$data['message'] = "Class code is required.";
->>>>>>> master
+
+
 		echo $twig->render('register.html', $data);
 		exit();
 	}
 
-<<<<<<< HEAD
 
 	// Create 10 character salt.
 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -66,9 +63,6 @@ if (isset($_POST['submitRegister'])) {
     //Combine salt with entered password then hash.
 	$hashedPassword = hash("sha512", $_POST["postPassword1"].$salt,false);	
 
-
-=======
->>>>>>> master
 	//saves info into user object
 	$user = new User(0);
 	$user->firstName = $_POST['postFirstName'];
