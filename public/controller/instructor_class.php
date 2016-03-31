@@ -37,7 +37,7 @@
 				$target = "Peer " . $u->firstName;
 			} 
 			else {
-				$target = $eval->GetGroup()->name;
+				$target = "Group";//$eval->GetGroup()->name;
 			}
 
 			if($eval->done == 0){

@@ -30,14 +30,14 @@ foreach($evaluations as $eval) {
 	if($eval->done == 0){
 		$e = new Evaluation($eval->evaluationID);
 
-		$title = $e->getAssignment()->title." ";
+		$title = $e->GetAssignment()->title." ";
 		if ($e->evaluation_type=='Peer'){
 			if($eval->target_userID != 0){
 				$u = new User($eval->target_userID);
 			}
 			$title .= "Peer " . $u->firstName;
 		} else {
-			$title .= $e->GetGroup()->name;
+			$title .= "Group ";//$e->GetGroup()->name;
 		}
 
 		$evaluationTodo_results[] = [

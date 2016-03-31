@@ -3,8 +3,6 @@
 
 {% block content %}
 
-	
-
 	<h2>{{ assignmentName }}</h2>
 	<p>{{ assignmentDescription }}</p> 
 
@@ -24,16 +22,13 @@
 			   <tr align="right">
 			   	<td>
 				    {% if evalsDone == 0 %}
-				    {% if evalsTotal > 0 and assignmentKey == TRUE %}
-				    <form method="post" action="evaluation_create.php">
-				    <button type="submit" value="{{ evaluationData }}" name="postEditMasterEval">Edit Evaluation</button>
-				    </form>
-				    {% endif %}
-				    {% if assignmentKey == TRUE and evalsTotal > 0 %}
-				    <form method="post" action="instructor_assignment_assignAssignment.php">
-			   		<button type="submit" value="{{assignmentID}}" name="assignmentID">Assign Evaluation</button>		
+				   
+				    {% if evalsTotal > 0 %}
+				    <form method="post" action="instructor_assign.php">
+			   		<button type="submit" value="{{evaluationID}}" name="evaluationID">Assign Evaluation</button>		
 			   		</form>
 			   		{% endif %}
+
 				    {% endif %}
 				    {% if evalsTotal > 0 %}
 			   		<form method="post" action="cumulative_results.php">

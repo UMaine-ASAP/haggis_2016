@@ -116,6 +116,18 @@ class Criteria {
 		}
 	}
 
+	public function AddSelection($selection){
+		$query = "INSERT INTO `criteria_selection` (`criteriaID`, `selectionID`) VALUES ";
+		$query .="({$this->criteriaID}," .$selection.")";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Created succesfully
+		} else {
+			die("Couldn't add selection to criteria: " . $this->criteriaID);
+		}
+	}
+
 	public function GetCriteriaRating($evaluationID){
 		$db = GetDB();
 
