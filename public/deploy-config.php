@@ -15,7 +15,7 @@ define( 'DUMP_POSTDATA', false );
 define( 'AUTH_KEY', 'as123zcoiu213nm' );
 
 # Where is your git binary, and what command would you like to run?
-define( 'GIT_COMMAND', '/usr/local/bin/git pull' );
+define( 'GIT_COMMAND', '/usr/bin/git pull' );
 
 # Do we want to do IP verification?
 define( 'VERIFY_IP', false );
