@@ -21,7 +21,6 @@
 			   {% endif %}
 			   <tr align="right">
 			   	<td>
-				    {% if evalsDone == 0 %}
 				   
 				    {% if evalsTotal > 0 %}
 				    <form method="post" action="instructor_assign.php">
@@ -29,7 +28,6 @@
 			   		</form>
 			   		{% endif %}
 
-				    {% endif %}
 				    {% if evalsTotal > 0 %}
 			   		<form method="post" action="cumulative_results.php">
 			   		<button type="submit" value="{{ assignmentID }}" name="postViewResults">View Results</button>
