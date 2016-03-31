@@ -80,7 +80,7 @@ class Evaluation {
 			$query .= "`criteriaID` = '" . $this->criteriaID . "', ";
 			$query .= "`done` = '" . $this->done . "', ";
 			$query .= "`evaluation_type` = '" . $this->evaluation_type . "', ";
-			$query .= "`target_userID` = '" . $this->target_userID . "' ";
+			$query .= "`target_userID` = '" . $this->target_userID . "', ";
 			$query .= "`groupID` = '" . $this->groupID . "' ";
 
 			$query .= "WHERE `evaluationID` = " . $this->evaluationID;
@@ -89,7 +89,7 @@ class Evaluation {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update evaluation: " . $this->evaluationID);
+				die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db));
 			}
 		}
 	}
