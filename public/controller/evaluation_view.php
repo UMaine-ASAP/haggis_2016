@@ -34,7 +34,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 1,
-				 	'comments' => $co;
+				 	'comments' => $co
 				 ];
 				break;
 			case 2:
@@ -47,7 +47,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 2,
-				 	'comments' => $co;
+				 	'comments' => $co
 				 ];
 				break;
 			case 3:
@@ -60,7 +60,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 3,
-				 	'comments' => $co;
+				 	'comments' => $co
 				 ];
 				break;
 			case 4:
@@ -73,7 +73,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 4,
-				 	'comments' => $co;
+				 	'comments' => $co
 				 ];
 				break;
 			case 5:
@@ -86,7 +86,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 5,
-				 	'comments' => $co;
+				 	'comments' => $co
 				 ];
 				break;
 			default:
@@ -99,7 +99,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 'disabled',
-				 	'comments' => $co;
+				 	'comments' => $co
 				 ];
 				break;
 		 // $criteria_results[] = [
