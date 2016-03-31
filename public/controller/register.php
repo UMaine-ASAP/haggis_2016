@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . "/../../system/bootstrap.php";
 
-//get user file
-require_once dirname(__FILE__) . "/../models/user.php";
-
 if (isset($_POST['submitRegister'])) {
 
 	// Validate fields
@@ -45,6 +42,16 @@ if (isset($_POST['submitRegister'])) {
 		exit();
 	}
 
+	if ( empty($_POST['classID'])) {
+		$data['message'] = "Class ID is required.";
+		echo $twig->render('register.html', $data);
+		exit();
+	}
+
+
+	
+
+
 	//saves info into user object
 	$user = new User(0);
 	$user->firstName = $_POST['postFirstName'];
@@ -53,6 +60,11 @@ if (isset($_POST['submitRegister'])) {
 	$user->userType = 'Student';
 	$user->email = $_POST['postEmail'];
 	$user->password = $_POST['postPassword1'];
+
+	$class = new Period($_POST["classID"]);
+	$class->AddUser($user->userID, $user->userType);
+
+
 
 	//if successful save, means registration worked. check DB for result
 	if ($user->Save() == FALSE) {

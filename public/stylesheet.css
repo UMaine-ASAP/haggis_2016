@@ -97,6 +97,25 @@ input[name="submitLogin"]{
 	color: red;
 }
 
+form[name="register form"] input{
+	display: block;
+	margin-bottom: 10px;
+	width: 200px;
+
+}
+
+#registerContainer{
+	width: 180px;
+	height: 400px;
+    margin: 0 auto;
+}
+
+input[name=submitRegister]{
+	margin-left: auto;
+	margin-top: 20px;
+	margin-bottom: 80px;
+	}
+
 /*STUDENT HOME--------------------------------------------*/
 table{
 	border: 1px solid black;
