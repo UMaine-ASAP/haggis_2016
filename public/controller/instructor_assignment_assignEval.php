@@ -53,3 +53,4 @@
 	$_SESSION['assignmentID'] = $_POST['assignmentID'];
 
 	header("location:instructor_assignment.php");
+?>
