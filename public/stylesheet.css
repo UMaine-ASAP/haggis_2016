@@ -22,6 +22,7 @@ header{
 
 #welcomeMessage{
 	display: inline-block;
+
 }
 
 header .register, header .logout{
@@ -178,5 +179,11 @@ button[name="evaluationID"]{
 #instructorClassPageStudent{
 	margin-left: 150px;
 	margin-bottom: 20px;
+}
+/*INSTRUCTOR HOME------------------------------------------*/
+
+#instructorHomeButton{
+	margin-top: 10px;
+	margin-left: 640px;
 }
 
