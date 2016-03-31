@@ -304,6 +304,17 @@ class Assignment {
 		}
 	}
 
+	public function AddEvaluation($evaluation){
+		$query = "INSERT INTO `assignment_evaluation` (`assignmentID`, `evaluationID`) VALUES ";
+		$query .="({$this->assignmentID}," .$evaluation.")";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Created succesfully
+		} else {
+			die("Couldn't add evaluation to assignment: " . $this->assignmentID);
+		}
+	}
 }
 
 /*

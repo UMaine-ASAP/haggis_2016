@@ -29,7 +29,7 @@
 		$target = "";
 
 		foreach($evals as $eval){
-
+			$user = $eval->GetUser();
 			if ($eval->evaluation_type=='Peer'){
 				if($eval->target_userID != 0){
 					$u = new User($eval->target_userID);
@@ -37,14 +37,14 @@
 				$target = "Peer " . $u->firstName;
 			} 
 			else {
-				$target = $eval->GetGroup()->name;
+				$target = "Group";//$eval->GetGroup()->name;
 			}
 
 			if($eval->done == 0){
-				$target .= " - INCOMPLETE"; 
+				$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
 			}
 			else{
-				$target .= " - SUBMITTED";
+				$target .= " - SUBMITTED - " . $user->firstName . " " . $user->lastName;
 			}
 
 			$e[] = [

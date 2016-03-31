@@ -2,12 +2,10 @@
 {% block title %}Haggis - Assignment{% endblock %}
 
 {% block content %}
-
 	
-
 	<h2>{{ assignmentName }}</h2>
 	<p>{{ assignmentDescription }}</p> 
-
+	
 	<table>
 
 		<thead><tr><th align="left">Evaluations</th></tr></thead>
@@ -17,23 +15,20 @@
 			   	{% else %}
 			   <td>
 			   <form method="post" action="evaluation_create.php">
-			   <button type="submit" name="postCreateMasterEval">Create</button>
+			   <button type="submit" name="postCreateMasterEval">Create Evaluation</button>
 			   </form>
 			   </td>
 			   {% endif %}
 			   <tr align="right">
 			   	<td>
 				    {% if evalsDone == 0 %}
-				    {% if evalsTotal > 0 and assignmentKey == TRUE %}
-				    <form method="post" action="evaluation_create.php">
-				    <button type="submit" value="{{ evaluationData }}" name="postEditMasterEval">Edit</button>
-				    </form>
-				    {% endif %}
-				    {% if assignmentKey == TRUE and evalsTotal > 0 %}
-				    <form method="post" action="instructor_assignment_assignAssignment.php">
-			   		<button type="submit" value="{{assignmentID}}" name="assignmentID">Assign</button>		
+				   
+				    {% if evalsTotal > 0 %}
+				    <form method="post" action="instructor_assign.php">
+			   		<button type="submit" value="{{evaluationID}}" name="evaluationID">Assign Evaluation</button>		
 			   		</form>
 			   		{% endif %}
+
 				    {% endif %}
 				    {% if evalsTotal > 0 %}
 			   		<form method="post" action="cumulative_results.php">
@@ -42,10 +37,6 @@
 			   		{% endif %}
 			   	</td>
 			   </tr>
-			   	<form method="post" action="instructor_assignment_assignAssignment.php">
-			   	<tr><td><input type="date" name="dueDate"></input></td></tr>
-			    <tr align="right"><td><button type="submit" value="{{ assignmentID }}" name="assignmentID">Assign Assignment</button></td></tr>
-			   	</form>
 
 			   </form>
 		</tbody>

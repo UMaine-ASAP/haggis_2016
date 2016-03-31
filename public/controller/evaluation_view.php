@@ -5,13 +5,13 @@
 	$eval = new Evaluation($_POST['evaluationID']);
 	
 	//create evaluation title from assignment name, type of eval, and who it targets.
-	$evaluationTitle = $eval->GetAssignment()->title . " " . $eval->evaluation_type." ";
-	if($eval->evaluation_type == "Group"){
-		$evaluationTitle .= $eval->groupID. " Evaluation";
-	}else{
-		$user = new User($eval->target_userID);
-		$evaluationTitle .= "Evaluation- ".$user->firstName." ".$user->lastName;
-	}
+	$evaluationTitle = $eval->GetAssignment()->title . " Evaluation ";
+	// if($eval->evaluation_type == "Group"){
+	// 	$evaluationTitle .= $eval->groupID. " Evaluation";
+	// }else{
+	// 	$user = new User($eval->target_userID);
+	// 	$evaluationTitle .= "Evaluation- ".$user->firstName." ".$user->lastName;
+	// }
 	 
 
 	//get critera of evaluation.

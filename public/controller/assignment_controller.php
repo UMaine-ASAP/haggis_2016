@@ -3,7 +3,7 @@
 	ensureLoggedIn();
 
 
-	
+	$_SESSION['assignmentID'] = $_POST['assignmentID'];
 	//build received evaluations
 	$evaluationReceived_results = [];
 	$rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();

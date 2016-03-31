@@ -76,8 +76,6 @@ class Evaluation {
 	public function Save(){
 		if($this->evaluationID != -1){
 			$query = "UPDATE `evaluation` SET ";
-
-			$query .= "`criteriaID` = '" . $this->criteriaID . "', ";
 			$query .= "`done` = '" . $this->done . "', ";
 			$query .= "`evaluation_type` = '" . $this->evaluation_type . "', ";
 			$query .= "`target_userID` = '" . $this->target_userID . "', ";
@@ -176,6 +174,18 @@ class Evaluation {
 			// Updated succesfully
 		} else {
 			die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db));
+		}
+	}
+
+	public function AddCriteria($criteria){
+		$query = "INSERT INTO `evaluation_criteria` (`evaluationID`, `criteriaID`) VALUES ";
+		$query .="({$this->evaluationID}," .$criteria.")";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Created succesfully
+		} else {
+			die("Couldn't add criteria to evaluation: " . $this->evaluationID);
 		}
 	}
 
