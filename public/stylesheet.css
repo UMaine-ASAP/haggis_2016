@@ -25,14 +25,14 @@ header{
 
 }
 
-header .register, header .logout{
+header .register, header .logout, header .login{
 	display: inline-block;
 	float: right;
 	margin: 10px 5px 10px 0px;
 
 }
 
-.register input, .logout input{
+.register input, .logout input, .login input{
 	border-color: black;
 	background: white;
 	font-style: italic;
@@ -93,6 +93,10 @@ input[name="submitLogin"]{
 
 #loginContainer input{
 	margin-bottom: 5px;
+}
+
+.login{
+
 }
 
 /*Register--------------------------------------------*/
