@@ -4,9 +4,74 @@
 {% block content %}
 <div id="evaluation">
 	<h2>{{ evaluationTitle }}</h2>
-	<form method="post" action="evaluation_submit_request.php">
-		{% for c in criteria %}
-		<div class="criteria">
+	<form method="post" id="submitEvaluation" action="evaluation_submit_request.php">
+		
+
+		<table>
+			<tbody>
+					
+				<tr>
+					<th>Intuitive Interface Navigation</th>
+					<td>Very Intuitive. Navigation supported learning and entertainment.</td>
+					<td>Some good ideas embedded in Navigation/Interface</td>
+					<td>Interface/Nav supported the project goals</td>
+					<td>Some Instructions on how to navigate the project</td>
+					<td>Interface confusing. Difficult to navigate</td>
+
+				</tr>
+				<tr>
+					<th>Narrative Objectives</th>
+					<td>The project shows an exceptional amount of thoughtfulness and Narrative</td>
+					<td>The project shows a good amount of thoughtfulness and Narrative</td>
+					<td>The project shows a moderate amount of Narrative</td>
+					<td>The project shows a small amount of Narrative</td>
+					<td>Narrative Objectives showed little thought</td>
+				</tr>
+
+				<tr>
+					<th>Creativity</th>
+					<td>The project shows an exceptional amount of thoughtfulness and creativity</td>
+					<td>The project shows a good amount of thoughtfulness and creativity</td>
+					<td>The project shows a moderate amount of creativity</td>
+					<td>The project shows a small amount of creativity</td>
+					<td>The project shows little thought or creativity</td>
+				</tr>
+
+				<tr>
+					<th>Critical Thinking</th>
+					<td>The project shows a great amount of critical thinking. The project shows a deep understanding about the themes and meanings presented</td>
+					<td>The project shows a good ability to think critically about the meanings presented in the project ideas and themes</td>
+					<td>The project shows a moderate ability to think critically about meanngs presented in the project’s ideas and themes</td>
+					<td>The project Shows a small amount of critical thinking about deeper meanings presented in the project ideas</td>
+					<td>The project shows meaningful thought about narrative</td>
+				</tr>
+				<tr>
+					<th>Interaction</th>
+					<td>The project shows an outstanding and deep interaction</td>
+					<td>The project shows a solid amount of interaction</td>
+					<td>The project shows a moderate amount of interaction</td>
+					<td>The project shows a minimal amount of interaction</td>
+					<td>The project shows a complete lack interaction</td>
+				</tr>
+				<tr>
+					<th>Bonus</th>
+					<td>The project shows 4 or more bonus criteria </td>
+					<td>The project shows 3 bonus criteria</td>
+					<td>The project shows 2 bonus criteria</td>
+					<td>The project shows 1 bonus criteria</td>
+					<td>The project has no bonus criteria</td>
+				</tr>   
+ 
+ 				<tr>
+ 					<th>Comments</th>
+ 					<td><textarea name="comment" form="submitEvaluation">Enter text here...</textarea></td>  
+ 
+			
+			</tbody>
+		</table>
+		
+
+		<!-- <div class="criteria">
 			<h4>{{ c.title }}</h4>
 			<input type="text" name="evaluationID" value="{{ evaluation.evaluationID }}" hidden>
 			<p>{{ c.description }}</p>
@@ -30,12 +95,11 @@
 				<div class="qualitative">Strongly Disagree</div>
 				<input type="radio" name="criteriaRatings[{{ c.criteriaID }}]" value="1">
 			</div>
-			<!-- <input type="text" name="comment" placeholder="Additional comments."> -->
 			<textarea class="comment" name="criteriaComments[{{ c.criteriaID }}]" cols="60" rows="5" placeholder="Additional comments. (Required)" onKeyup="checkForm()"></textarea>
-		</div>
+		</div> -->
 
-	{% endfor %}
-		<button type="submit" disabled>Submit</button>
+	
+		<button type="submit" >Submit</button>
 	</form>
 </div>
 <script>

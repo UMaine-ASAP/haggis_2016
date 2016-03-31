@@ -12,19 +12,21 @@
 	$criteriaComments = $_POST["criteriaComments"];
 
 
-	//Set rating for each criteria.
-	foreach ($criteriaRatings as $criteriaID => $value) {
-		$criteria = new Criteria($criteriaID);
-		$criteria->rating = $value;
-		$criteria->Save();
-	}
+	// //Set rating for each criteria.
+	// foreach ($criteriaRatings as $criteriaID => $value) {
+	// 	$criteria = new Criteria($criteriaID);
+	// 	$criteria->rating = $value;
+	// 	$criteria->Save();
+	// }
 
-	//Set comment for each criteria.
-	foreach ($criteriaComments as $criteriaID => $value) {
-		$criteria = new Criteria($criteriaID);
-		$criteria->comment = $value;
-		$criteria->Save();
-	}
+	// // //Set comment for each criteria.
+	// foreach ($criteriaComments as $criteriaID => $value) {
+	// 	$criteria = new Criteria($criteriaID);
+	// 	$criteria->comment = $value;
+	// 	$criteria->Save();
+	// }
+
+	
 	
 
 	// $count = $_SESSION['count'];
