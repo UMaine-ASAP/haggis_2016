@@ -110,7 +110,7 @@ class User {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete user: " . $this->userID);
+			die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db));
 		}
 	}
 

@@ -22,6 +22,7 @@ header{
 
 #welcomeMessage{
 	display: inline-block;
+
 }
 
 header .register, header .logout{
@@ -36,7 +37,10 @@ header .register, header .logout{
 	background: white;
 	font-style: italic;
 }
+.table{
 
+	width: 200px;
+}
 
 
 
@@ -155,6 +159,7 @@ button[name="evaluationID"]{
 	margin-right: 10px;
 }
 
+<<<<<<< HEAD
 /*EVALUATION--------------------------------------------*/
 #evaluation .criteria .radio{
 	display: inline-block;
@@ -178,3 +183,36 @@ button[name="evaluationID"]{
 	display: block;
 	
 }
+=======
+/*INSTRUCTOR CLASS------------------------------------------*/
+
+#instructorClassTables{
+	margin: 10px;
+}
+
+#instructorClassPage{
+	margin-left: 150px;
+}
+
+#instructorClassTablesEval{
+	margin-left: 20px;
+	margin-bottom: 5px;
+	margin-right:20px;
+}
+
+#instructorClasspPageAssign{
+	
+}
+
+#instructorClassPageStudent{
+	margin-left: 150px;
+	margin-bottom: 20px;
+}
+/*INSTRUCTOR HOME------------------------------------------*/
+
+#instructorHomeButton{
+	margin-top: 10px;
+	
+}
+
+>>>>>>> master

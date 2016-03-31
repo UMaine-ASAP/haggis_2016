@@ -216,21 +216,21 @@ class Assignment {
 
 /////////////////////////////////////////////////////////////////// CLASS
 
-	public function AddClass($classID){
-		if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
-			return; // Wrong assignmentID
-		}
-		if(!filter_var($classID, FILTER_VALIDATE_INT) === TRUE){
-			return; // Wrong assignmentID
-		}
-
-		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`) VALUES ({$this->assignmentID}, $classID)";
+	public function AddClass($classID, $dueDate){
+		// if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
+		// 	return; // Wrong assignmentID
+		// }
+		// if(!filter_var($classID, FILTER_VALIDATE_INT) === TRUE){
+		// 	return; // Wrong assignmentID
+		// }
+		// $queryPart = "DATE_FORMAT($dueDate, '%Y %m %d')";
+		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`, `dueDate`) VALUES ({$this->assignmentID}, $classID, $dueDate) ";
 
 		$db = GetDB();
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add class to assignment: " . $this->assignmentID);
+			die("Couldn't add class to assignment: " . $this->assignmentID . " " . mysqli_error($db));
 		}
 	}
 
@@ -295,7 +295,6 @@ class Assignment {
 		if($rows){
 			$ret = Array();
 			while($row = $rows->fetch_array(MYSQLI_BOTH)){
-
 				$e = new Evaluation($row['evaluationID']);
 				$ret[] = $e;
 			}
@@ -304,6 +303,7 @@ class Assignment {
 			return Array();
 		}
 	}
+
 }
 
 /*

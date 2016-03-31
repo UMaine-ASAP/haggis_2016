@@ -1,0 +1,68 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Assignment{% endblock %}
+
+{% block content %}
+
+	
+
+	<h2>{{ assignmentName }}</h2>
+	<p>{{ assignmentDescription }}</p> 
+
+	<table>
+
+		<thead><tr><th align="left">Evaluations</th></tr></thead>
+		<tbody>
+				{% if evalsTotal > 0 %}
+			   <td>Evaluations Complete: {{ evalsDone }} / {{ evalsTotal }}</td>
+			   	{% else %}
+			   <td>
+			   <form method="post" action="evaluation_create.php">
+			   <button type="submit" name="postCreateMasterEval">Create</button>
+			   </form>
+			   </td>
+			   {% endif %}
+			   <tr align="right">
+			   	<td>
+				    {% if evalsDone == 0 %}
+				    {% if evalsTotal > 0 and assignmentKey == TRUE %}
+				    <form method="post" action="evaluation_create.php">
+				    <button type="submit" value="{{ evaluationData }}" name="postEditMasterEval">Edit</button>
+				    </form>
+				    {% endif %}
+				    {% if assignmentKey == TRUE and evalsTotal > 0 %}
+				    <form method="post" action="instructor_assignment_assignAssignment.php">
+			   		<button type="submit" value="{{assignmentID}}" name="assignmentID">Assign</button>		
+			   		</form>
+			   		{% endif %}
+				    {% endif %}
+				    {% if evalsTotal > 0 %}
+			   		<form method="post" action="cumulative_results.php">
+			   		<button type="submit" value="{{ assignmentID }}" name="postViewResults">View Results</button>
+			   		</form>
+			   		{% endif %}
+			   	</td>
+			   </tr>
+			   	<form method="post" action="instructor_assignment_assignAssignment.php">
+			   	<tr><td><input type="date" name="dueDate"></input></td></tr>
+			    <tr align="right"><td><button type="submit" value="{{ assignmentID }}" name="assignmentID">Assign Assignment</button></td></tr>
+			   	</form>
+
+			   </form>
+		</tbody>
+	
+	</table>
+
+<!-- <table>
+	<thead><tr><th>Evaluations Received</tr></thead>
+	{% for evaluation in evaluationsReceived %}
+	<tr><td>
+		<form method='post' action='evaluation_view.php'>
+		<button type="submit" value="{{evaluation.id}}" name="evaluationID">{{evaluation.title}}</button>
+		</form>
+	</td></tr>
+	{% else %}
+	<tr><td>No Evaluations</td></tr>
+	{% endfor %}
+</table> -->
+
+{% endblock %}
