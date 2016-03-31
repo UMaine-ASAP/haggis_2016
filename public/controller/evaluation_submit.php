@@ -1,7 +1,7 @@
 <?php
+	ini_set('display_errors',1);  error_reporting(E_ALL);
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
-	
 	//get evaluation
 	$eval = new Evaluation($_POST['evaluationID']);
 	
@@ -16,55 +16,29 @@
 	 
 
 	//get critera of evaluation.
+	$criteria_results = array();
 	$criteria = $eval->GetCriteria();
 
+	foreach($criteria as $c){
+		$s = $c->GetSelections();
+
+		 $criteria_results[] = [
+		 	'id' => $c->criteriaID,
+		 	'criteriaTitle' => $c->title,
+		 	'v1' => $s[0]->description,
+		 	'v2' => $s[1]->description,
+		 	'v3' => $s[2]->description,
+		 	'v4' => $s[3]->description,
+		 	'v5' => $s[4]->description
+		 ];
+	}
 	//Go to html view.
-	echo $twig->render('evaluation_submit.html', ["criteria"=>$criteria, "evaluation"=>$eval, "evaluationTitle"=>$evaluationTitle]);
-
-	
-
-
-	// $evalDetails = "";
-	// $evalDetails .= '<div id="evaluation">';
-
-	// $count = 0;
-	// $evalDetails .= '<form method="get" action="evaluation_submit_request.php">';
-
-	// //create section for each criteria
-	// foreach($criteria as $c){
-	// 	$count++;
-	// 	$_SESSION['criteria' . $count] = $c->criteriaID;
-	// 	$evalDetails .= '<h3>'.$c->title.'</h3>';
-	// 	$evalDetails .= '<div>'.$c->description.'</div>';
-	// 	$evalDetails .= 'Strongly Disagree';
-	// 	$evalDetails .= '<input type="radio" name="c'. $count .'" value="1">';
-	// 	$evalDetails .= 'Disagree';
-	// 	$evalDetails .= '<input type="radio" name="c'. $count .'" value="2">';
-	// 	$evalDetails .= 'Neutral';
-	// 	$evalDetails .= '<input type="radio" name="c'. $count .'" value="3">';
-	// 	$evalDetails .= 'Agree';
-	// 	$evalDetails .= '<input type="radio" name="c'. $count .'" value="4">';
-	// 	$evalDetails .= 'Strongly Agree';
-	// 	$evalDetails .= '<input type="radio" name="c'. $count .'" value="5">';
-	// 	$evalDetails .= '<input type="text" name="'. $count .'comments" placeholder="Comments">';
-	// 	$evalDetails .= '<br><br>';
-	// }
-	// $evalDetails .= '<input type="submit" value="submit"></form>';
-
-	// $_SESSION['evaluation'] = $_POST['evaluationID'];
-	// $_SESSION['count'] = $count;
-
-	// //get the html page ready to be displayed
-	// $page = str_replace('$firstName', $_SESSION['user']->firstName, $page);
-	// $type= $eval->evaluation_type;
-	// if($type=='Peer'){
-	// 	$page = str_replace('$evaluationName', $eval->GetAssignment()->title." ". $type, $page);
-	// }
-	// else{
-	// 	$page = str_replace('$evaluationName', $eval->GetAssignment()->title." " . $eval->GetGroup()->name, $page);
-	// }
-	// $page = str_replace('$evaluationInfo', $evalDetails, $page);
-	// echo $page;
-	
+	echo $twig->render('evaluation_submit.html', [
+		"username"              => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"evaluationTitle"		=>$evaluationTitle,
+		"criteria"				=>$criteria_results, 
+		"evaluationID"			=>$eval->evaluationID
+		
+	]);
 
 ?>

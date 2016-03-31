@@ -95,6 +95,26 @@ class Criteria {
 		}
 	}
 
+	public function GetSelections(){
+
+		$query = "SELECT * FROM `criteria_selection` WHERE `criteriaID` = {$this->criteriaID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				$s = new Selection($row['selectionID']);
+			
+				$ret[] = $s;
+
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
 }
 
 ?>

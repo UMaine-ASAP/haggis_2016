@@ -1,5 +1,5 @@
 <?php
-require_once dirdescription(__FILE__) . "/../system/database.php";
+require_once dirname(__FILE__) . "/../system/database.php";
 
 class Selection {
 
@@ -7,6 +7,7 @@ class Selection {
 	public $description;
 
 	public function Selection($selection_id){
+
 		$this->selectionID = $selection_id;
 
 		$db = GetDB();
