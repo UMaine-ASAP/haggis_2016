@@ -1,18 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Evaluation View</title>
-	<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
-</head>
-<body>
-	<div id="container">
-		<div id="headder">
-			<h3>Haggis</h3>
-			<p align="right">Welcome $firstName !  <a href="logout.php">Logout</a></p> 
-			
-		</div><!-- end of headder -->
-	</div><!-- end of container div --> 
-	<h2>$evaluationName Evaluation</h2><br>
-	$evaluationInfo
-</body>
-</html>
+{% extends "base_account.html" %}
+{% block title %}Haggis - Evaluation Submit{% endblock %}
+
+{% block content %}
+<div id="evaluation">
+	<h2>{{ evaluationTitle }}</h2>
+	<form method="post" id="submitEvaluation" action="{{action}}">
+		<table border="1">
+			<tbody>
+				{% for c in criteria %}
+					<tr>
+						<th>{{c.criteriaTitle}}</th>
+						{% if c.checked == 1 %}
+						<td><input type="radio" checked><br>{{c.v1}}</td>
+						{% else %}
+						<td><input type="radio" disabled><br>{{c.v1}}</td>
+						{% endif %}
+						{% if c.checked == 2 %}
+						<td><input type="radio" checked><br>{{c.v2}}</td>
+						{% else %}
+						<td><input type="radio" disabled><br>{{c.v2}}</td>
+						{% endif %}						
+						{% if c.checked == 3 %}
+						<td><input type="radio" checked><br>{{c.v3}}</td>
+						{% else %}
+						<td><input type="radio" disabled><br>{{c.v3}}</td>
+						{% endif %}						
+						{% if c.checked == 4 %}
+						<td><input type="radio" checked><br>{{c.v4}}</td>
+						{% else %}
+						<td><input type="radio" disabled><br>{{c.v4}}</td>
+						{% endif %}						
+						{% if c.checked == 5 %}
+						<td><input type="radio" nchecked><br>{{c.v5}}</td>
+						{% else %}
+						<td><input type="radio" disabled><br>{{c.v5}}</td>
+						{% endif %}						
+						<input type="hidden" name="id[{{c.count}}]" value="{{c.id}}">
+						<td><input type="text" name="comments[{{c.count}}]" value="{{c.comments}}"></td>  	
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<button type="submit" >Home</button>
+	</form>
+</div>
+{% endblock %}

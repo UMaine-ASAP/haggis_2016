@@ -69,3 +69,4 @@ echo $twig->render('student_home.html', [
 	"evaluationsToDo"     => $evaluationTodo_results,
 	"evaluationsReceived" => $evaluationReceived_results
 	]);
+?>
