@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . "/../system/bootstrap.php";
-
-//begin session
-session_start();
+require_once __DIR__ . "/../../system/bootstrap.php";
 
 echo $twig->render('assign_students_to_evaluations.html', [
 	"professorName"=>"Mike Scott",
