@@ -37,7 +37,10 @@ header .register, header .logout{
 	background: white;
 	font-style: italic;
 }
+.table{
 
+	width: 200px;
+}
 
 
 
@@ -173,7 +176,7 @@ button[name="evaluationID"]{
 }
 
 #instructorClasspPageAssign{
-	margin-left: 420px;
+	
 }
 
 #instructorClassPageStudent{
@@ -184,6 +187,6 @@ button[name="evaluationID"]{
 
 #instructorHomeButton{
 	margin-top: 10px;
-	margin-left: 640px;
+	
 }
 
