@@ -8,7 +8,7 @@
 		header("location:login.php");
 	}
 
-		//Build assignments
+	//Build assignments
 	$classes_results = array();
 	$assignment_results = array();
 
