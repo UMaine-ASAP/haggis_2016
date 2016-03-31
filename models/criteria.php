@@ -123,6 +123,20 @@ class Criteria {
 			die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
 	}
+	public function GetCriteriaComments($evaluationID){
+	$db = GetDB();
+
+	$query =  "SELECT * FROM `evaluation_criteria` WHERE `criteriaID` = {$this->criteriaID} AND `evaluationID` = ".$evaluationID;
+
+	$result = $db->query($query);
+	if($result->num_rows != 0){
+		$r = $result->fetch_array(MYSQLI_BOTH);
+		return $r['comments'];
+	}
+	else{
+		die("Couldn't find group for evaluation: " . $this->evaluationID);
+	}
+	}
 }
 
 ?>

@@ -31,14 +31,14 @@ foreach($evaluations as $eval) {
 		$e = new Evaluation($eval->evaluationID);
 
 		$title = $e->GetAssignment()->title." ";
-		if ($e->evaluation_type=='Peer'){
-			if($eval->target_userID != 0){
-				$u = new User($eval->target_userID);
-			}
-			$title .= "Peer " . $u->firstName;
-		} else {
-			$title .= "Group ";//$e->GetGroup()->name;
-		}
+		// if ($e->evaluation_type=='Peer'){
+		// 	if($eval->target_userID != 0){
+		// 		$u = new User($eval->target_userID);
+		// 	}
+		// 	$title .= "Peer " . $u->firstName;
+		// } else {
+		// 	$title .= "Group ";//$e->GetGroup()->name;
+		// }
 
 		$evaluationTodo_results[] = [
 			"id"    => $eval->evaluationID,
