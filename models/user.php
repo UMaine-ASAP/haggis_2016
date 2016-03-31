@@ -12,6 +12,7 @@ class User {
 	public $userType;
 	public $email;
 	public $password;
+	public $salt;
 
 	public function User($user_id){
 		//check to see if valid user_id
@@ -47,6 +48,7 @@ class User {
 				$this->userType = $user['userType'];
 				$this->email = $user['email'];
 				$this->password = $user['password'];
+				$this->salt = $user['salt'];
 			} else {
 				die("Couldn't find user: " . $this->userID);
 			}
@@ -59,8 +61,15 @@ class User {
 		$db = GetDB();
 
 		//query for the user in the database using credentials
-		$query = "SELECT * FROM `user` WHERE `email` = '" .  $email . "' AND `password` = '" .  $password . "';";
+		$query = "SELECT `password`, `salt` FROM `user` WHERE `email` = '".$email."';";
 		$result = $db->query($query);
+		$credentials = $result->fetch_array(MYSQLI_BOTH);
+
+		$query = "SELECT * FROM `user` WHERE `email` = '" .  $email . "' AND `password` = '" .  hash("sha512",$password.$credentials["salt"],false) . "';";
+		$result = $db->query($query);
+
+		// $query = "SELECT * FROM `user` WHERE `email` = '" .  $email . "' AND `password` = '" .  $password . "';";
+		// $result = $db->query($query);
 
 		//if the result isn't empty
 		if($result->num_rows != 0){
@@ -84,7 +93,8 @@ class User {
 			$query .= "`middleInitial` = '" . $this->middleInitial . "', ";
 			$query .= "`userType` = '" . $this->userType . "', ";
 			$query .= "`email` = '" . $this->email . "', ";
-			$query .= "`password` = '" . $this->password . "' ";
+			$query .= "`password` = '" . $this->password . "', ";
+			$query .= "`salt` = '" . $this->salt . "' ";
 			$query .= "WHERE `userID` = " . $this->userID;
 
 			$db = GetDB();
