@@ -5,8 +5,8 @@
 <h2 class="pageTitle">Classes</h2><br>
 
 <div id ="instructorClassPage"><h2>{{className}}</h2></div>
-<table id = "instructorClasspPageAssign">
-	<thead><tr><th>Assignments</tr></thead>
+<center><table id = "instructorClasspPageAssign" class="table">
+	<thead><tr><th class="table">Assignments</tr></thead>
 
 	{% for assignment in assignments %}
 		<tr><td>
@@ -23,8 +23,8 @@
 
 </table>
 
-<table id= "instructorClasspPage">
-	<thead><tr><th>Evaluations</tr></thead>
+<table id= "instructorClasspPage" class="table">
+	<thead><tr><th class="table">Evaluations</tr></thead>
 
 	{% for eval in evaluations %}
 
@@ -46,8 +46,8 @@
 
 </table>
 
-<table id="instructorClassStudent">
-	<thead><tr><th>Students</tr></thead>
+<table id="instructorClassStudent" class="table">
+	<thead><tr><th class="table">Students</tr></thead>
 
 	{% for student in students %}
 
@@ -55,6 +55,6 @@
 
 	{% endfor %}
 
-</table><p>
+</table><p></center>
 
 {% endblock %}
