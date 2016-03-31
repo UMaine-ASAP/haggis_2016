@@ -17,7 +17,7 @@
 			   	{% else %}
 			   <td>
 			   <form method="post" action="evaluation_create.php">
-			   <button type="submit" name="postCreateMasterEval">Create</button>
+			   <button type="submit" name="postCreateMasterEval">Create Evaluation</button>
 			   </form>
 			   </td>
 			   {% endif %}
@@ -26,12 +26,12 @@
 				    {% if evalsDone == 0 %}
 				    {% if evalsTotal > 0 and assignmentKey == TRUE %}
 				    <form method="post" action="evaluation_create.php">
-				    <button type="submit" value="{{ evaluationData }}" name="postEditMasterEval">Edit</button>
+				    <button type="submit" value="{{ evaluationData }}" name="postEditMasterEval">Edit Evaluation</button>
 				    </form>
 				    {% endif %}
 				    {% if assignmentKey == TRUE and evalsTotal > 0 %}
 				    <form method="post" action="instructor_assignment_assignAssignment.php">
-			   		<button type="submit" value="{{assignmentID}}" name="assignmentID">Assign</button>		
+			   		<button type="submit" value="{{assignmentID}}" name="assignmentID">Assign Evaluation</button>		
 			   		</form>
 			   		{% endif %}
 				    {% endif %}
@@ -42,10 +42,6 @@
 			   		{% endif %}
 			   	</td>
 			   </tr>
-			   	<form method="post" action="instructor_assignment_assignAssignment.php">
-			   	<tr><td><input type="date" name="dueDate"></input></td></tr>
-			    <tr align="right"><td><button type="submit" value="{{ assignmentID }}" name="assignmentID">Assign Assignment</button></td></tr>
-			   	</form>
 
 			   </form>
 		</tbody>
