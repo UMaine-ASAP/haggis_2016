@@ -1,0 +1,60 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Instructor Home{% endblock %}
+
+{% block content %}
+<h2 class="pageTitle">Classes</h2><br>
+
+<div><h2>{{className}}</h2></div>
+<table>
+	<thead><tr><th>Assignments</tr></thead>
+
+	{% for assignment in assignments %}
+		<tr><td>
+		<form method='post' action='instructor_assignment.php'>
+		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.name}}</button>
+		</form>
+		</tr></td>
+
+		<tr><td><ul>
+			<li>Due Date: {{assignment.dueDate}}</li>
+		</ul></td></tr>
+
+	{% endfor %}
+
+</table>
+
+<table>
+	<thead><tr><th>Evaluations</tr></thead>
+
+	{% for eval in evaluations %}
+
+		<tr><td>{{eval.name}}</td></tr>
+
+		{% for e in eval.assigned %}
+			<tr><td><ul>
+			<li>
+				<form method='post' action='evaluation_view.php'>
+				<button type="submit" value="{{e.id}}" name="evaluationID">
+					{{e.target}}
+				</button>
+			</form>
+			</li>
+			</ul></td></tr>
+		{% endfor %}
+
+	{% endfor %}
+
+</table>
+
+<table>
+	<thead><tr><th>Students</tr></thead>
+
+	{% for student in students %}
+
+		<tr><td>{{student}}</td></tr>
+
+	{% endfor %}
+
+</table>
+
+{% endblock %}
