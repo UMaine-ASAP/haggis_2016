@@ -8,6 +8,9 @@ require_once __DIR__ . "/../models/assignment.php";
 require_once __DIR__ . "/../models/class.php";
 require_once __DIR__ . "/../models/criteria.php";
 require_once __DIR__ . "/../models/evaluation.php";
+require_once __DIR__ . "/../models/student_group.php";
+require_once __DIR__ . "/../models/selection.php";
+
 
 // Load .env file
 $dotenv = new Dotenv\Dotenv(__DIR__ . "/..");

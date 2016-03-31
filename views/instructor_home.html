@@ -7,21 +7,21 @@
 {% for class in classes %}
 <form method='post' action = 'instructor_class.php' style="cursor:pointer" id="myForm" onclick="goToClass()">
 <input type='hidden' value = "{{class.id}}" name="classID">
-<table>
+<center><table>
 	<thead><tr><th>{{class.className}}</tr></thead>
 	<tr><td>Upcoming Assignments:</td></tr>
 	{% for assignment in class.assignmentNames %}
-	<tr><td><ul>
-		<li>{{assignment}}</li>
-	</ul></td></tr>
+	<tr><td><ul><b>
+		{{assignment}}
+	</ul></td></tr></b>
 	{% endfor %}
 	<tr><td>Class ID: {{class.id}}</td></tr>
-</table>
+</table></center>
 </form>
 {% endfor %}
 
 <form method = 'post' action='class_new.php'>
-<button type="submit" value="{{courseID}}" name="courseID">Add Class</button>
+<button type="submit" id="instructorHomeButton" value="{{courseID}}" name="courseID">Add Class</button>
 </form>
 
 <script>

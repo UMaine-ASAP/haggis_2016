@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Haggis - Student Evaluatio Submit</title>
-	<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
-</head>
-<body>
-	<div id="container">
-		<div id="headder">
-			<h3>Haggis</h3>
-			<p align="right">Welcome $firstName !  <a href="logout.php">Logout</a></p> 
-			
-		</div><!-- end of headder -->
-	</div><!-- end of container div --> 
-	<h2>$evaluationName Evaluation Submission</h2><br>
-	$evaluationInfo
-</body>
-</html>
+{% extends "base_account.html" %}
+{% block title %}Haggis - Evaluation Submit{% endblock %}
+
+{% block content %}
+<div id="evaluation">
+	<h2>{{ evaluationTitle }}</h2>
+	<form method="post" id="submitEvaluation" action="evaluation_submit_request.php">
+		<table border="1">
+			<tbody>
+				{% for c in criteria %}
+					<tr>
+						<th>{{c.criteriaTitle}}</th>
+						<td><input type="radio" name="selected[{{c.count}}]" value="1"><br>{{c.v1}}</td>
+						<td><input type="radio" name="selected[{{c.count}}]" value="2"><br>{{c.v2}}</td>						
+						<td><input type="radio" name="selected[{{c.count}}]" value="3"><br>{{c.v3}}</td>
+						<td><input type="radio" name="selected[{{c.count}}]" value="4"><br>{{c.v4}}</td>
+						<td><input type="radio" name="selected[{{c.count}}]" value="5"><br>{{c.v5}}</td>
+						<input type="hidden" name="id[{{c.count}}]" value="{{c.id}}">
+						<td><input type="text" name="comments[{{c.count}}]" placeholder="Comments"></td>  	
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<button type="submit" >Submit</button>
+	</form>
+</div>
+{% endblock %}

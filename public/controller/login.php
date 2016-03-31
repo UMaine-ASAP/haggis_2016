@@ -1,10 +1,6 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
 
-	//get user file
-
-
-
 	if (isset($_GET['message'])) {
 		echo $twig->render('login.html', ['message' => $_GET['message']]);
 	} else {

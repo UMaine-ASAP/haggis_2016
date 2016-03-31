@@ -2,15 +2,17 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
-	$evaluation = new Evaluation($_SESSION['evaluation']);
-	$count = $_SESSION['count'];
-
-	for ($i = 1; $i<=$count; $i++){
-		$criteria = new Criteria($_SESSION['criteria' . $i]);
-		$criteria->rating = $_GET['c'.$i];
-	 	$criteria->comment = $_GET[$i. 'comments'];
-		$criteria->SaveResult();
+	var_dump($_POST);
+	//Get evaluation according to ID.
+    $evaluation = new Evaluation($_SESSION["evaluationID"]);
+    
+	for ($i = 1; $i<=$_SESSION['count']; $i++){
+		$criteriaID = $_POST['id'][$i];
+		$rating = $_POST['selected'][$i];
+		$comments = $_POST['comments'][$i];
+		$evaluation->SaveCriteria($criteriaID,$rating,$comments);
 	}
+
 	$evaluation->done = 1;
 	$evaluation->Save();
 	header("location:student_home.php");
