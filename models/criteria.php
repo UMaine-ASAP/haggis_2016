@@ -5,7 +5,6 @@ class Criteria {
 
 	public $criteriaID = -1;
 	public $title;
-	public $ratingRange;
 	public $description;
 	public $rating;
 	public $comment;
@@ -38,7 +37,6 @@ class Criteria {
 
 			if($criteria != NULL){
 				$this->title = $criteria['title'];
-				$this->ratingRange = $criteria['ratingRange'];
 				$this->description = $criteria['description'];
 				$this->rating = $criteria['rating'];
 				$this->comment = $criteria['comment'];
@@ -54,7 +52,6 @@ class Criteria {
 		if($this->criteriaID != -1){
 			$query = "UPDATE `criteria` SET ";
 			$query .= "`title` = '" . $this->title . "', ";
-			$query .= "`ratingRange` = '" . $this->ratingRange . "', ";
 			$query .= "`description` = '" . $this->description . "', ";
 			$query .= "`rating` = '" . $this->rating . "', ";
 			$query .= "`comment` = '" . $this->comment . "' ";

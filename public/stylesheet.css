@@ -22,6 +22,7 @@ header{
 
 #welcomeMessage{
 	display: inline-block;
+
 }
 
 header .register, header .logout{
@@ -154,3 +155,35 @@ button[name="evaluationID"]{
 .ratingIndex strong{
 	margin-right: 10px;
 }
+
+/*INSTRUCTOR CLASS------------------------------------------*/
+
+#instructorClassTables{
+	margin: 10px;
+}
+
+#instructorClassPage{
+	margin-left: 150px;
+}
+
+#instructorClassTablesEval{
+	margin-left: 20px;
+	margin-bottom: 5px;
+	margin-right:20px;
+}
+
+#instructorClasspPageAssign{
+	margin-left: 420px;
+}
+
+#instructorClassPageStudent{
+	margin-left: 150px;
+	margin-bottom: 20px;
+}
+/*INSTRUCTOR HOME------------------------------------------*/
+
+#instructorHomeButton{
+	margin-top: 10px;
+	margin-left: 640px;
+}
+
