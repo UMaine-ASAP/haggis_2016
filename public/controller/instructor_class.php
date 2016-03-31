@@ -40,6 +40,13 @@
 				$target = $eval->GetGroup()->name;
 			}
 
+			if($eval->done == 0){
+				$target .= " - INCOMPLETE"; 
+			}
+			else{
+				$target .= " - SUBMITTED";
+			}
+
 			$e[] = [
 				'target'		 => $target,
 				'id'			 => $eval->evaluationID

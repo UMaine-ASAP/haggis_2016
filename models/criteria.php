@@ -115,6 +115,21 @@ class Criteria {
 			return Array();
 		}
 	}
+
+	public function GetCriteriaRating($evaluationID){
+		$db = GetDB();
+
+		$query =  "SELECT * FROM `evaluation_criteria` WHERE `criteriaID` = {$this->criteriaID} AND `evaluationID` = ".$evaluationID;
+
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$r = $result->fetch_array(MYSQLI_BOTH);
+			return $r['rating'];
+		}
+		else{
+			die("Couldn't find group for evaluation: " . $this->evaluationID);
+		}
+	}
 }
 
 ?>
