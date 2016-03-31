@@ -49,7 +49,16 @@ if (isset($_POST['submitRegister'])) {
 	}
 
 
-	
+	// Create 10 character salt.
+	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $salt = '';
+    for ($i = 0; $i < 10; $i++) {
+        $salt .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    //Combine salt with entered password then hash.
+	$hashedPassword = hash("sha512", $_POST["postPassword1"].$salt,false);	
 
 
 	//saves info into user object
@@ -59,7 +68,8 @@ if (isset($_POST['submitRegister'])) {
 	$user->lastName = $_POST['postLastName'];
 	$user->userType = 'Student';
 	$user->email = $_POST['postEmail'];
-	$user->password = $_POST['postPassword1'];
+	$user->password = $hashedPassword;
+	$user->salt = $salt;
 
 	$class = new Period($_POST["classID"]);
 	$class->AddUser($user->userID, $user->userType);
