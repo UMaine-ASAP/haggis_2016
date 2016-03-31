@@ -24,20 +24,27 @@
 			   <tr align="right">
 			   	<td>
 				    {% if evalsDone == 0 %}
+				    {% if evalsTotal > 0 and assignmentKey == TRUE %}
 				    <form method="post" action="evaluation_create.php">
 				    <button type="submit" value="{{ evaluationData }}" name="postEditMasterEval">Edit</button>
 				    </form>
-				    <form method="post" action="instructor_assignment.php">
-			   		<button type="submit" name="postAssignMasterEval">Assign</button>		
-			   		</form>
 				    {% endif %}
-			   		<form method="post" action="cumulative_results.php">
-			   		<button type="submit" name="postViewResults">View Results</button>		
+				    {% if assignmentKey == TRUE and evalsTotal > 0 %}
+				    <form method="post" action="instructor_assignment_assignAssignment.php">
+			   		<button type="submit" value="{{assignmentID}}" name="assignmentID">Assign</button>		
 			   		</form>
+			   		{% endif %}
+				    {% endif %}
+				    {% if evalsTotal > 0 %}
+			   		<form method="post" action="cumulative_results.php">
+			   		<button type="submit" value="{{ assignmentID }}" name="postViewResults">View Results</button>
+			   		</form>
+			   		{% endif %}
 			   	</td>
 			   </tr>
-			   	<form>
-			    <tr align="right"><td><button type="submit" name="postAssignAssignment">Assign Assignment</button></td></tr>
+			   	<form method="post" action="instructor_assignment_assignAssignment.php">
+			   	<tr><td><input type="date" name="dueDate"></input></td></tr>
+			    <tr align="right"><td><button type="submit" value="{{ assignmentID }}" name="assignmentID">Assign Assignment</button></td></tr>
 			   	</form>
 
 			   </form>

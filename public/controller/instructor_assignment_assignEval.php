@@ -2,16 +2,12 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
-	if(isset($_POST['assignmentID']))
-		$assignmentID = $_POST['assignmentID'];
-	else
-		$assignmentID = $_SESSION['assignmentID'];
-	
+	$assignmentID = $_POST['assignmentID'];
 	$assignmentWorking = new Assignment($assignmentID);
 	$assignmentName = $assignmentWorking->title;
 	$assignmentDescription = $assignmentWorking->description;
 
-	
+	// $masterEval = new Evaluation(0);
 
 	$evaluationsTotal = $assignmentWorking->GetEvaluations();
 
@@ -33,37 +29,27 @@
 	$allEvaluationsInstructor = $instructor->GetEvaluations();
 	$allEvaluationsAssignment = $assignmentWorking->GetEvaluations();
 
-	$blankEval = new Evaluation(0);
+	
 
 	foreach ($allEvaluationsInstructor as $eval)
 	{
-
-		$matchedEval = $blankEval;
 		foreach ($allEvaluationsAssignment as $evalCompared) {
 			if($eval->evaluationID == $evalCompared->evaluationID)
 				$matchedEval = $eval;
 		}
 	}
 
-	if(isset($_SESSION['assignmentKey']))
-		if($_SESSION['assignmentKey'] == $matchedEval->evaluationID)
-			$pushAssignmentButton = FALSE;
-		else
-		{
-			$pushAssignmentButton = TRUE;
-		}
-	else
-		$pushAssignmentButton = TRUE;
+	
+	$usersInClassAssignment = $assignmentWorking->GetClasses()[0]->GetUsers();
+	foreach ($usersInClassAssignment as $user) {
+		if($user->userType == 'Student')
+			$studentsInClassAssignment[] = $user;
+	}
+	
+	foreach ($studentsInClassAssignment as $student) {
+		$student->AddEvaluation($matchedEval->evaluationID);
+	}
+	$_SESSION['assignmentKey'] = $matchedEval->evaluationID;
+	$_SESSION['assignmentID'] = $_POST['assignmentID'];
 
-	echo $twig->render("instructor_assignment.html",
-		[
-			"assignmentName" => $assignmentName,
-			"assignmentDescription" => $assignmentDescription,
-			"evalsDone" => $evalsDone,
-			"evalsTotal" => $evalsTotal,
-			"evaluationData" => $matchedEval->evaluationID,
-			"assignmentID" => $assignmentID,
-			"assignmentKey" => $pushAssignmentButton
-		]);
-
-?>
+	header("location:instructor_assignment.php");
