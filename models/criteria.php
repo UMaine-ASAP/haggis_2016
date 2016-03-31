@@ -6,8 +6,6 @@ class Criteria {
 	public $criteriaID = -1;
 	public $title;
 	public $description;
-	public $rating;
-	public $comment;
 
 	public function Criteria($criteria_id){
 		$this->criteriaID = $criteria_id;
@@ -38,8 +36,6 @@ class Criteria {
 			if($criteria != NULL){
 				$this->title = $criteria['title'];
 				$this->description = $criteria['description'];
-				$this->rating = $criteria['rating'];
-				$this->comment = $criteria['comment'];
 			} else {
 				die("Couldn't find criteria: " . $this->criteriaID);
 			}
@@ -52,9 +48,7 @@ class Criteria {
 		if($this->criteriaID != -1){
 			$query = "UPDATE `criteria` SET ";
 			$query .= "`title` = '" . $this->title . "', ";
-			$query .= "`description` = '" . $this->description . "', ";
-			$query .= "`rating` = '" . $this->rating . "', ";
-			$query .= "`comment` = '" . $this->comment . "' ";
+			$query .= "`description` = '" . $this->description . "' ";
 			$query .= "WHERE `criteriaID` = " . $this->criteriaID;
 
 			$db = GetDB();
@@ -66,19 +60,6 @@ class Criteria {
 		}
 	}
 
-	public function SaveResult(){
-		if($this->criteriaID != -1){
-			$query = "UPDATE `criteria` SET `rating` = '".$this->rating."', `comment` = '".$this->comment."'";
-			$query .= " WHERE `criteria`.`criteriaID` = ".$this->criteriaID;
-
-			$db = GetDB();
-			if($db->query($query) === TRUE){
-				// Updated succesfully
-			} else {
-				die("Couldn't update criteria: " . $this->criteriaID);
-			}
-		}
-	}	
 
 	public function Delete(){
 		if(!filter_var($this->criteriaID, FILTER_VALIDATE_INT) === TRUE){

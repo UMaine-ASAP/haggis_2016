@@ -1,4 +1,5 @@
 <?php
+
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	// echo 'Success';
@@ -30,28 +31,29 @@
 
 		foreach($evals as $eval){
 			$user = $eval->GetUser();
-			if ($eval->evaluation_type=='Peer'){
-				if($eval->target_userID != 0){
-					$u = new User($eval->target_userID);
+			if($user->userType == 'Student'){
+				if ($eval->evaluation_type=='Peer'){
+					if($eval->target_userID != 0){
+						$u = new User($eval->target_userID);
+					}
+					$target = "Peer " . $u->firstName;
+				} 
+				else {
+					$target = "Group";//$eval->GetGroup()->name;
 				}
-				$target = "Peer " . $u->firstName;
-			} 
-			else {
-				$target = "Group";//$eval->GetGroup()->name;
-			}
 
-			if($eval->done == 0){
-				$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
-			}
-			else{
-				$target .= " - SUBMITTED - " . $user->firstName . " " . $user->lastName;
-			}
+				if($eval->done == 0){
+					$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
+				}
+				else{
+					$target .= " - SUBMITTED - " . $user->firstName . " " . $user->lastName;
+				}
 
-			$e[] = [
-				'target'		 => $target,
-				'id'			 => $eval->evaluationID
-			];
-		
+				$e[] = [
+					'target'		 => $target,
+					'id'			 => $eval->evaluationID
+				];
+			}
 		}
 
 		$evaluation_results[] = [
