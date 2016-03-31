@@ -2,10 +2,15 @@
 {% block title %}Haggis - Student Home{% endblock %}
 
 {% block content %}
-<h2 class="pageTitle">Student Home</h2><br>
 
-<table>
-	<thead><tr><th>Assignments</tr></thead>
+<div class="content"><h2 class="pageTitle">Student Home</h2><br></span></div>
+
+
+<div class="content">
+
+
+<table class="table">
+	<thead><tr><th class="table">Assignments</tr></thead>
 	{% for assignment in assignments %}
 	<tr><td>
 		<form method='post' action='assignment_controller.php'>
@@ -19,8 +24,10 @@
 	{% endfor %}
 </table>
 
-<table>
-	<thead><tr><th>Evaluations To Do</th></tr></thead>
+
+
+<table class="table">
+	<thead><tr><th class="table">Evaluations To Do</th></tr></thead>
 	{% for evaluation in evaluationsToDo %}
 	<tr><td>
 		<form method='post' action='evaluation_submit.php'>
@@ -32,8 +39,8 @@
 	{% endfor %}
 </table>
 
-<table>
-	<thead><tr><th>Evaluations Received</tr></thead>
+<table class="table">
+	<thead><tr><th class="table">Evaluations Received</tr></thead>
 	{% for evaluation in evaluationsReceived %}
 	<tr><td>
 		<form method='post' action='evaluation_view.php'>
@@ -45,4 +52,5 @@
 	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
 </table>
+</div>
 {% endblock %}
