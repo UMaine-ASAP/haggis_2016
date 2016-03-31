@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . "/../../system/bootstrap.php";
 
-//get user file
-require_once dirname(__FILE__) . "/../../models/user.php";
-
 if (isset($_POST['submitRegister'])) {
 
 	// Validate fields

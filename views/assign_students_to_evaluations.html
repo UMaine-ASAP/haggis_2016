@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Assign Users{% endblock %}
+{% block header %}
+<h2 id="siteTitle">Haggis</h2>
+Welcome, <b>{{professorName}} <!--I should be set beside the logout button -->
+<!--THE A LINK IS DONE POORL, but it works ;) --> 
+<a href="logout.php" class="register">
+	<input type="button" value="logout">
+</a>
+{% endblock %}
+
+{% block content %}
+<div id="container">
+	<h1>{{title}}</h1>
+	<p>{{description}}</p>
+	<table id="assignUsers">
+	{% for student in students %}
+		<tr>
+			<td>{{ loop.index }}</td>
+			<td><input type="text" placeholder="{{student.firstName}}"/></td>
+			<td><input type="text" placeholder="{{student.MI}}"/></td>
+			<td><input type="text" placeholder="{{student.lastName}}"/></td>
+		</tr>
+	{% endfor %}
+	</table>
+	</br>
+	</br>
+	<div id = "addStudentButton">
+		<input type="button" value="Add Student"/>
+		<input type="button" value="Assign"/>
+	</div><!--end of addStudentButton div -->
+</div><!--end of container -->
+{% endblock %}
