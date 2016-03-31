@@ -29,8 +29,8 @@
 		$target = "";
 
 		foreach($evals as $eval){
+			$user = $eval->GetUser();
 			if($user->userType == 'Student'){
-				$user = $eval->GetUser();
 				if ($eval->evaluation_type=='Peer'){
 					if($eval->target_userID != 0){
 						$u = new User($eval->target_userID);
