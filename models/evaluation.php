@@ -205,6 +205,53 @@ class Evaluation {
 			die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
 	}
+
+	public function AddChildEvaluation($childID){
+		$query = "INSERT INTO `evaluation_parent` (`parentID`, `childID`) VALUES ";
+		$query .="({$this->evaluationID}," .$childID.")";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Created succesfully
+		} else {
+			die("Couldn't add child to parent evaluation: " . $this->evaluationID);
+		}
+	}
+
+	public function GetChildEvaluations(){
+
+		$query = "SELECT * FROM `evaluation_parent` WHERE `parentID` = {$this->evaluationID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				$e = new Evaluation($row['childID']);
+				$ret[] = $e;
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
+
+	public function GetParentEvaluation(){
+		$db = GetDB();
+
+		$query =  "SELECT * FROM `evaluation_parent` WHERE `childID` = {$this->evaluationID}";
+
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$eval = $result->fetch_array(MYSQLI_BOTH);
+
+			$eval = new Evaluation($eval['parentID']);
+			return $eval;
+		}
+		else{
+			die("Couldn't find parent for evaluation: " . $this->evaluationID);
+		}
+	}
 }
 
 ?>

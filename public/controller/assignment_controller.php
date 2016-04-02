@@ -56,6 +56,7 @@
 
 
 	echo $twig->render("assignment_view.html", [
+		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"assignment"          => $assignment,
 		"user"                => $user,
 		"evaluationsToDo"     => $evaluationsToDo,

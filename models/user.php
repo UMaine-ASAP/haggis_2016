@@ -253,6 +253,23 @@ class User {
 			}
 	}
 
+	public function GetGroup(){
+		$db = GetDB();
+		$query = "SELECT * FROM `student_group_user` WHERE `userID` = {$this->userID}";
+
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$group = $result->fetch_array(MYSQLI_BOTH);
+
+			$group = new Student_Group ($group['student_groupID']);
+			return $group;
+		}
+		else{
+			return FALSE;
+			die("Couldn't find group for userID: " . $this->userID);
+		}
+	}
+
 }
 
 

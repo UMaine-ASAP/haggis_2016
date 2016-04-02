@@ -1,18 +1,18 @@
 <?php
-	ini_set('display_errors',1);  
-	error_reporting(E_ALL);
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	//get evaluation
-	$eval = new Evaluation($_POST['evaluationID']);
-	
+	$assignment = new Assignment($_SESSION['assignmentID']);
+	$eval = $assignment->GetEvaluation();
+
 	//create evaluation title from assignment name, type of eval, and who it targets.
-	$evaluationTitle = $eval->GetAssignment()->title . " " . $eval->evaluation_type." ";
-	if($eval->evaluation_type == "Group"){
-		$evaluationTitle .= $eval->groupID. " Evaluation";
+	$evaluationTitle = $assignment->title . " - ";
+	if(!empty($_POST['group_target'])){
+		$group = new Student_Group($_POST['group_target']);
+		$evaluationTitle .= "Group " . $group->groupNumber . " Evaluation";
 	}else{
-		$user = new User($eval->target_userID);
-		$evaluationTitle .= "Evaluation- ".$user->firstName." ".$user->lastName;
+		$user = new User($_POST['peer_target']);
+		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Peer Evaluation";
 	}
 	 
 
@@ -35,7 +35,14 @@
 		 ];
 	}
 	$_SESSION['count'] = $count;
-	$_SESSION['evaluationID'] = $_POST['evaluationID'];
+	$_SESSION['evaluationID'] = $eval->evaluationID;
+
+	if(!empty($_POST['group_target'])){
+		$_SESSION['group_target'] = $_POST['group_target'];
+	}
+	else{
+		$_SESSION['peer_target'] = $_POST['peer_target'];
+	}
 	//Go to html view.
 	echo $twig->render('evaluation_submit.html', [
 		"username"              => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,

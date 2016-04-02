@@ -10,8 +10,8 @@
 
 		<thead><tr><th align="left">Evaluations</th></tr></thead>
 		<tbody>
-				{% if evalsTotal > 0 %}
-			   <td>Evaluations Complete: {{ evalsDone }} / {{ evalsTotal }}</td>
+				{% if evalsTotal >= 0 %}
+			   <td>Evaluations Complete: {{ evalsTotal }}</td>
 			   	{% else %}
 			   <td>
 			   <form method="post" action="evaluation_create.php">
@@ -21,18 +21,19 @@
 			   {% endif %}
 			   <tr align="right">
 			   	<td>
-				   
-				    {% if evalsTotal > 0 %}
-				    <form method="post" action="instructor_assign.php">
-			   		<button type="submit" value="{{evaluationID}}" name="evaluationID">Assign Evaluation</button>		
-			   		</form>
-			   		{% endif %}
+			   
+			    {% if evalsTotal >= 0 %}
+			    <form method="post" action="evaluation_view.php">
+		   		<button type="submit" value="{{evaluationID}}" name="evaluationID">View Criteria</button>		
+		   		</form>
+		   		{% endif %}
 
-				    {% if evalsTotal > 0 %}
-			   		<form method="post" action="cumulative_results.php">
-			   		<button type="submit" value="{{ assignmentID }}" name="postViewResults">View Results</button>
-			   		</form>
-			   		{% endif %}
+			    {% if evalsTotal > 0 %}
+		   		<form method="post" action="cumulative_results.php">
+		   		<button type="submit" value="{{ assignmentID }}" name="postViewResults">View Results</button>
+		   		</form>
+		   		{% endif %}
+
 			   	</td>
 			   </tr>
 
