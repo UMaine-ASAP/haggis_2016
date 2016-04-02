@@ -1,0 +1,35 @@
+ {% extends "base_account.html" %}
+{% block title %}Haggis - Evaluation Create{% endblock %}
+
+{% block content %}
+<div id="evaluation">
+	<h2>Create New Evaluation</h2>
+	<form method="post" id="submitEvaluation" action="evaluation_create_request.php">
+		<input type="text" name='postEvaluationTitle' placeholder="Evaluation Title"><br><br>
+		<input type="radio" name="evaluationType" value="Group">Group Evaluation<br>
+		<input type="radio" name="evaluationType" value="Peer">Peer Evaluation<br><br>
+		<div id="criteria" data-id="0">
+			<input type="text" name='postCriteriaTitle[]' placeholder="Criteria Title"><br>
+			<input type="text" name='postOptionOne[]' placeholder="Option 1"><br>
+			<input type="text" name='postOptionTwo[]' placeholder="Option 2"><br>
+			<input type="text" name='postOptionThree[]' placeholder="Option 3"><br>
+			<input type="text" name='postOptionFour[]' placeholder="Option 4"><br>
+			<input type="text" name='postOptionFive[]' placeholder="Option 5"><br><br>	
+		</div>
+
+
+		<input type="button" name='postAddCriteria' value="Add a Criteria"></input>
+
+		<button type="submit">Create</button>
+	</form>
+</div>
+
+<script>
+	
+$(document).on("click", "input[name='postAddCriteria']", function(){
+	var newCriteria = $("#criteria").clone().insertAfter("#criteria");
+});
+	
+</script>
+
+{% endblock %}

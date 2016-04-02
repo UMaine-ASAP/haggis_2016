@@ -1,4 +1,6 @@
 <?php
+	ini_set('display_errors',1);  
+	error_reporting(E_ALL);
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	// echo 'Success';
@@ -29,28 +31,30 @@
 		$target = "";
 
 		foreach($evals as $eval){
-
-			if ($eval->evaluation_type=='Peer'){
-				if($eval->target_userID != 0){
-					$u = new User($eval->target_userID);
+			$s = $eval->GetUser();
+			if($s->userType == 'Student'){
+				if ($eval->evaluation_type=='Peer'){
+					if($eval->target_userID != 0){
+						$u = new User($eval->target_userID);
+					}
+					$target = $s->firstName . " " . $s->lastName." Peer "; //. $u->firstName;
+				} 
+				else {
+					$target = $s->firstName . " " . $s->lastName." Group";//$eval->GetGroup()->name;
 				}
-				$target = "Peer " . $u->firstName;
-			} 
-			else {
-				$target = $eval->GetGroup()->name;
-			}
 
-			if($eval->done == 0){
-				$target .= " - INCOMPLETE"; 
-			}
-			else{
-				$target .= " - SUBMITTED";
-			}
+				if($eval->done == 0){
+					$target .= " - INCOMPLETE"; 
+				}
+				else{
+					$target .= " - SUBMITTED";
+				}
 
-			$e[] = [
-				'target'		 => $target,
-				'id'			 => $eval->evaluationID
-			];
+				$e[] = [
+					'target'		 => $target,
+					'id'			 => $eval->evaluationID
+				];
+			}
 		
 		}
 
