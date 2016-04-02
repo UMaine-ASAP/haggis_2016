@@ -1,6 +1,8 @@
 <?php
+
 	ini_set('display_errors',1);  
 	error_reporting(E_ALL);
+
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	// echo 'Success';
@@ -31,23 +33,27 @@
 		$target = "";
 
 		foreach($evals as $eval){
-			$s = $eval->GetUser();
-			if($s->userType == 'Student'){
+
+			$user = $eval->GetUser();
+			if($user->userType == 'Student'){
+
 				if ($eval->evaluation_type=='Peer'){
 					if($eval->target_userID != 0){
 						$u = new User($eval->target_userID);
 					}
-					$target = $s->firstName . " " . $s->lastName." Peer "; //. $u->firstName;
+
+					$target = "Peer " . $u->firstName;
 				} 
 				else {
-					$target = $s->firstName . " " . $s->lastName." Group";//$eval->GetGroup()->name;
+					$target = "Group";//$eval->GetGroup()->name;
 				}
 
 				if($eval->done == 0){
-					$target .= " - INCOMPLETE"; 
+					$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
 				}
 				else{
-					$target .= " - SUBMITTED";
+					$target .= " - SUBMITTED - " . $user->firstName . " " . $user->lastName;
+
 				}
 
 				$e[] = [
@@ -55,7 +61,7 @@
 					'id'			 => $eval->evaluationID
 				];
 			}
-		
+
 		}
 
 		$evaluation_results[] = [

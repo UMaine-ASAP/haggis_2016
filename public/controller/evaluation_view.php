@@ -5,13 +5,13 @@
 	$eval = new Evaluation($_POST['evaluationID']);
 	
 	//create evaluation title from assignment name, type of eval, and who it targets.
-	$evaluationTitle = $eval->GetAssignment()->title . " " . $eval->evaluation_type." ";
-	if($eval->evaluation_type == "Group"){
-		$evaluationTitle .= $eval->groupID. " Evaluation";
-	}else{
-		$user = new User($eval->target_userID);
-		$evaluationTitle .= "Evaluation- ".$user->firstName." ".$user->lastName;
-	}
+	$evaluationTitle = $eval->GetAssignment()->title . " Evaluation ";
+	// if($eval->evaluation_type == "Group"){
+	// 	$evaluationTitle .= $eval->groupID. " Evaluation";
+	// }else{
+	// 	$user = new User($eval->target_userID);
+	// 	$evaluationTitle .= "Evaluation- ".$user->firstName." ".$user->lastName;
+	// }
 	 
 
 	//get critera of evaluation.
@@ -22,6 +22,7 @@
 		$s = $c->GetSelections();
 
 		$v = intval($c->GetCriteriaRating($eval->evaluationID));
+		$co = $c->GetCriteriaComments($eval->evaluationID);
 		switch($v){
 			case 1:
 				$criteria_results[] = [
@@ -33,7 +34,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 1,
-				 	'comments' => $c->comments
+				 	'comments' => $co
 				 ];
 				break;
 			case 2:
@@ -46,7 +47,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 2,
-				 	'comments' => $c->comments
+				 	'comments' => $co
 				 ];
 				break;
 			case 3:
@@ -59,7 +60,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 3,
-				 	'comments' => $c->comments
+				 	'comments' => $co
 				 ];
 				break;
 			case 4:
@@ -72,7 +73,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 4,
-				 	'comments' => $c->comments
+				 	'comments' => $co
 				 ];
 				break;
 			case 5:
@@ -85,7 +86,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 5,
-				 	'comments' => $c->comments
+				 	'comments' => $co
 				 ];
 				break;
 			default:
@@ -98,7 +99,7 @@
 				 	'v4' => $s[3]->description,
 				 	'v5' => $s[4]->description,
 				 	'checked' => 'disabled',
-				 	'comments' => $c->comments
+				 	'comments' => $co
 				 ];
 				break;
 		 // $criteria_results[] = [
