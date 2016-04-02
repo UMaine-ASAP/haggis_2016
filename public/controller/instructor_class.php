@@ -1,5 +1,8 @@
 <?php
 
+	ini_set('display_errors',1);  
+	error_reporting(E_ALL);
+
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	// echo 'Success';
@@ -9,7 +12,8 @@
 		header("location:login.php");
 	}
 
-	$class = new Period($_POST['classID']);
+	$_SESSION['classID'] = $_POST['classID'];
+	$class = new Period($_SESSION['classID']);
 	//Build assignments
 	$assignment_results = array();
 	$assignments = $class->GetAssignments();
@@ -25,28 +29,33 @@
 	$evaluation_results = array();
 
 	foreach($assignments as $a){
-		$evals = $a[0]->GetEvaluations();
+		$parent_eval = $a[0]->GetEvaluation();
 		$e = array();
 		$target = "";
+		$evals = $parent_eval->GetChildEvaluations();
 
 		foreach($evals as $eval){
+
 			$user = $eval->GetUser();
 			if($user->userType == 'Student'){
+
 				if ($eval->evaluation_type=='Peer'){
 					if($eval->target_userID != 0){
 						$u = new User($eval->target_userID);
 					}
+
 					$target = "Peer " . $u->firstName;
 				} 
 				else {
-					$target = "Group";//$eval->GetGroup()->name;
+					$target = "Group " . $eval->GetGroup()->groupNumber;
 				}
 
 				if($eval->done == 0){
 					$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
 				}
 				else{
-					$target .= " - SUBMITTED - " . $user->firstName . " " . $user->lastName;
+					$target .= " - SUBMITTED BY- " . $user->firstName . " " . $user->lastName;
+
 				}
 
 				$e[] = [
@@ -54,6 +63,7 @@
 					'id'			 => $eval->evaluationID
 				];
 			}
+
 		}
 
 		$evaluation_results[] = [

@@ -5,7 +5,7 @@ class Student_Group {
 
 	public $student_groupID = -1;
 	public $assignmentID;
-	public $name;
+	public $groupNumber;
 
 	public function Student_Group($id){
 		$this->student_groupID = $id;
@@ -35,7 +35,7 @@ class Student_Group {
 
 			if($group != NULL){
 				$this->assignmentID = $group['assignmentID'];
-				$this->name = $group['name'];
+				$this->groupNumber = $group['groupNumber'];
 			} else {
 				die("Couldn't find group: " . $this->criteriaID);
 			}
@@ -48,7 +48,7 @@ class Student_Group {
 		if($this->student_groupID != -1){
 			$query = "UPDATE `student_group` SET ";
 			$query .= "`assignmentID` = '" . $this->assignmentID . "', ";
-			$query .= "`name` = '" . $this->name . "' ";
+			$query .= "`groupNumber` = '" . $this->groupNumber . "' ";
 			$query .= "WHERE `student_groupID` = " . $this->student_groupID;
 
 			$db = GetDB();
@@ -88,7 +88,46 @@ class Student_Group {
 			die("Couldn't delete group: " . $this->student_groupID);
 		}
 	}
+	public function GetUsers(){
 
+		$query = "SELECT * FROM `student_group_user` WHERE `student_groupID` = {$this->student_groupID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				$u = new User($row['userID']);
+				$ret[] = $u;
+
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
+
+	public function GetOtherGroups(){
+
+		$query = "SELECT * FROM `student_group` WHERE `assignmentID` = {$this->assignmentID} AND ";
+		$query .= "`student_groupID` <> {$this->student_groupID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				$u = new Student_Group($row['student_groupID']);
+				$ret[] = $u;
+
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
 }
 
 ?>

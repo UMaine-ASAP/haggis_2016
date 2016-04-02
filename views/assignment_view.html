@@ -18,6 +18,15 @@
 	{% else %}
 	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
+	<tr>
+		<td>
+			<form action="student_create_evaluation.php" method="post">
+				<!-- Sends eval ID over so the next page can figure out what eval to have the user fill out after
+				they select who they want to evaluate.  -->
+				<button type="submit" value="144" name="evaluationID">Create Evaluation</button>
+			</form>
+		</td>
+	</tr>
 </table>
 
 <table>

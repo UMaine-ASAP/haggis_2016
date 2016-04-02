@@ -304,6 +304,28 @@ class Assignment {
 		}
 	}
 
+	public function GetEvaluation(){
+		$db = GetDB();
+		$query = "SELECT * FROM `assignment_evaluation` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$result = $db->query($query);
+		if($result->num_rows != 0){
+			$eval = $result->fetch_array(MYSQLI_BOTH);
+
+			$eval = new Evaluation ($eval['evaluationID']);
+			return $eval;
+		}
+		else{
+			die("Couldn't find user for evaluationID: " . $this->evaluationID);
+		}
+	}
+
+
+	public function CreateChildEvaluation($parentEvaluationID){
+		// $query = 
+	}
+
+
 	public function AddEvaluation($evaluation){
 		$query = "INSERT INTO `assignment_evaluation` (`assignmentID`, `evaluationID`) VALUES ";
 		$query .="({$this->assignmentID}," .$evaluation.")";

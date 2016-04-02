@@ -5,42 +5,43 @@
 <div id="evaluation">
 	<h2>{{ evaluationTitle }}</h2>
 	<form method="post" id="submitEvaluation" action="{{action}}">
+		{% for c in criteria %}
 		<table border="1">
 			<tbody>
-				{% for c in criteria %}
-					<tr>
-						<th>{{c.criteriaTitle}}</th>
-						{% if c.checked == 1 %}
-						<td><input type="radio" checked><br>{{c.v1}}</td>
-						{% else %}
-						<td><input type="radio" disabled><br>{{c.v1}}</td>
-						{% endif %}
-						{% if c.checked == 2 %}
-						<td><input type="radio" checked><br>{{c.v2}}</td>
-						{% else %}
-						<td><input type="radio" disabled><br>{{c.v2}}</td>
-						{% endif %}						
-						{% if c.checked == 3 %}
-						<td><input type="radio" checked><br>{{c.v3}}</td>
-						{% else %}
-						<td><input type="radio" disabled><br>{{c.v3}}</td>
-						{% endif %}						
-						{% if c.checked == 4 %}
-						<td><input type="radio" checked><br>{{c.v4}}</td>
-						{% else %}
-						<td><input type="radio" disabled><br>{{c.v4}}</td>
-						{% endif %}						
-						{% if c.checked == 5 %}
-						<td><input type="radio" nchecked><br>{{c.v5}}</td>
-						{% else %}
-						<td><input type="radio" disabled><br>{{c.v5}}</td>
-						{% endif %}						
-						<input type="hidden" name="id[{{c.count}}]" value="{{c.id}}">
-						<td><input type="text" name="comments[{{c.count}}]" value="{{c.comments}}"></td>  	
-					</tr>
-				{% endfor %}
+				<tr>
+					<th width="100" style="color:white">{{c.criteriaTitle}}</th>
+					{% if c.checked == 1 %}
+					<td width="200"><input type="radio" checked> 1.<br>{{c.v1}}</td>
+					{% else %}
+					<td width="200"><input type="radio" disabled> 1.<br>{{c.v1}}</td>
+					{% endif %}
+					{% if c.checked == 2 %}
+					<td width="200"><input type="radio" checked> 2.<br>{{c.v2}}</td>
+					{% else %}
+					<td width="200"><input type="radio" disabled> 2.<br>{{c.v2}}</td>
+					{% endif %}						
+					{% if c.checked == 3 %}
+					<td width="200"><input type="radio" checked> 3.<br>{{c.v3}}</td>
+					{% else %}
+					<td width="200"><input type="radio" disabled> 3.<br>{{c.v3}}</td>
+					{% endif %}						
+					{% if c.checked == 4 %}
+					<td width="200"><input type="radio" checked> 4.<br>{{c.v4}}</td>
+					{% else %}
+					<td width="200"><input type="radio" disabled> 4.<br>{{c.v4}}</td>
+					{% endif %}						
+					{% if c.checked == 5 %}
+					<td width="200"><input type="radio" checked> 5.<br>{{c.v5}}</td>
+					{% else %}
+					<td width="200"><input type="radio" disabled> 5.<br>{{c.v5}}</td>
+					{% endif %}						
+					<input type="hidden" name="id[{{c.count}}]" value="{{c.id}}">
+				</tr>
 			</tbody>
 		</table>
+		<textarea name="comments[{{c.count}}]" form ="submitEvaluation" rows="5" cols="100" placeholder="Empty" disabled>{{c.comments}}</textarea>
+		{% endfor %}
+		<br>
 		<button type="submit" >Home</button>
 	</form>
 </div>
