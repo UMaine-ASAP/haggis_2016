@@ -1,0 +1,15 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Student Create Evaluation{% endblock %}
+
+{% block content %}
+<!-- Needs to use twig to populate with groups/users.  -->
+<form action="">
+<select name="target">
+	<option value="test">test</option>
+</select>
+<!-- When they submit it will next go to the submit_eval controller and show eval id = 144 (the one you made) and have
+the user fill it out. When they hit submit it makes a new eval with a eval_parent id from itself to 144.
+You might have to work this last part out a bit I haven't entirely thought it through. -->
+<button type="submit"></button>
+</form>
+{% endblock %}

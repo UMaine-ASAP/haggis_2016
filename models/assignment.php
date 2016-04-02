@@ -304,6 +304,10 @@ class Assignment {
 		}
 	}
 
+	public function CreateChildEvaluation($parentEvaluationID){
+		// $query = 
+	}
+
 }
 
 /*
