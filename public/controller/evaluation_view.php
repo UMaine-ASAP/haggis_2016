@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	//get evaluation
@@ -15,7 +12,7 @@ error_reporting(E_ALL);
 	//create evaluation title from assignment name, type of eval, and who it targets.
 	if(!empty($_SESSION['assignmentID'])){
 		$assignment = new Assignment($_SESSION['assignmentID']);
-		$evaluationTitle = $assignmentID->title;
+		$evaluationTitle = $assignment->title;
 	}
 	else{
 		$evaluationTitle = $eval->GetParentEvaluation()->GetAssignment()->title;
@@ -23,9 +20,12 @@ error_reporting(E_ALL);
 
 	if($eval->evaluation_type == "Group"){
 		$evaluationTitle .= " - Group ". $eval->GetGroup()->groupNumber. " Evaluation";
-	}else{
+	}else if($eval->evaluation_type == "Peer"){
 		$user = new User($eval->target_userID);
 		$evaluationTitle .= " - " . $user->firstName." ".$user->lastName." Peer Evaluation";
+	}
+	else{
+		$evaluationTitle .= " - Criteria";
 	}
 	 
 
