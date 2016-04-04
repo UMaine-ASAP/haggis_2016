@@ -29,46 +29,49 @@
 	$evaluation_results = array();
 
 	foreach($assignments as $a){
-		$parent_eval = $a[0]->GetEvaluation();
+
+		$parent_evals = $a[0]->GetEvaluations();
 		$e = array();
 		$target = "";
-		$evals = $parent_eval->GetChildEvaluations();
 
-		foreach($evals as $eval){
-
-			$user = $eval->GetUser();
-			if($user->userType == 'Student'){
-
-				if ($eval->evaluation_type=='Peer'){
-					if($eval->target_userID != 0){
-						$u = new User($eval->target_userID);
+		foreach($parent_evals as $parent_eval){
+			$evals = $parent_eval->GetChildEvaluations();
+	
+			foreach($evals as $eval){
+	
+				$user = $eval->GetUser();
+				if($user->userType == 'Student'){
+	
+					if ($eval->evaluation_type=='Peer'){
+						if($eval->target_userID != 0){
+							$u = new User($eval->target_userID);
+						}
+	
+						$target = "Peer " . $u->firstName;
+					} 
+					else {
+						$target = "Group " . $eval->GetGroup()->groupNumber;
 					}
-
-					$target = "Peer " . $u->firstName;
-				} 
-				else {
-					$target = "Group " . $eval->GetGroup()->groupNumber;
+	
+					if($eval->done == 0){
+						$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
+					}
+					else{
+						$target .= " - SUBMITTED BY- " . $user->firstName . " " . $user->lastName;
+	
+					}
+	
+					$e[] = [
+						'target'		 => $target,
+						'id'			 => $eval->evaluationID
+					];
 				}
-
-				if($eval->done == 0){
-					$target .= " - INCOMPLETE - " . $user->firstName . " " . $user->lastName; 
-				}
-				else{
-					$target .= " - SUBMITTED BY- " . $user->firstName . " " . $user->lastName;
-
-				}
-
-				$e[] = [
-					'target'		 => $target,
-					'id'			 => $eval->evaluationID
-				];
+	
 			}
-
 		}
-
 		$evaluation_results[] = [
-			'name'			 => $a[0]->title,
-			'assigned'		 => $e
+				'name'			 => $a[0]->title,
+				'assigned'		 => $e
 		];
 	}
 

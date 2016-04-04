@@ -24,7 +24,13 @@
 			   
 			    {% if evalsTotal >= 0 %}
 			    <form method="post" action="evaluation_view.php">
-		   		<button type="submit" value="{{evaluationID}}" name="evaluationID">View Criteria</button>		
+		   		<button type="submit" value="{{groupEvaluationID}}" name="evaluationID">View Group Criteria</button>		
+		   		</form>
+		   		{% endif %}
+
+		   		{% if evalsTotal >= 0 %}
+			    <form method="post" action="evaluation_view.php">
+		   		<button type="submit" value="{{peerEvaluationID}}" name="evaluationID">View Peer Criteria</button>		
 		   		</form>
 		   		{% endif %}
 

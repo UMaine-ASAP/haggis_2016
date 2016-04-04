@@ -186,11 +186,10 @@ class User {
 		}
 
 		$query = "SELECT * FROM `evaluation` WHERE `target_userID` = {$this->userID}";
-
+		$ret = Array();
 		$db = GetDB();
 		$rows = $db->query($query);
 		if($rows){
-			$ret = Array();
 			while($row = $rows->fetch_array(MYSQLI_BOTH)){
 				
 				/*
@@ -208,10 +207,30 @@ class User {
 				$ret[] = $e;
 
 			}
-			return $ret;
-		} else {
-			return Array();
+			
+		} 
+
+		$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$this->GetGroup()->student_groupID}";
+		$rows = $db->query($query);
+		if($rows){
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				/*
+				$query = "SELECT * FROM `evaluation` WHERE `evaluationID` = {$row['evaluationID']}";
+
+				$evaluationes = $db->query($query);
+				if($evaluationes){
+					while($evaluation = $evaluationes->fetch_array(MYSQLI_BOTH)){
+						$ret[] = $evaluation;
+					}
+				}
+				*/
+
+				$e = new Evaluation($row['evaluationID']);
+				$ret[] = $e;
+			}
 		}
+		return $ret;
 	}
 
 	public function RemoveEvaluation($evaluationID){

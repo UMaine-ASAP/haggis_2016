@@ -3,16 +3,18 @@
 	ensureLoggedIn();
 	//get evaluation
 	$assignment = new Assignment($_SESSION['assignmentID']);
-	$eval = $assignment->GetEvaluation();
+	$evals = $assignment->GetEvaluations();
 
 	//create evaluation title from assignment name, type of eval, and who it targets.
 	$evaluationTitle = $assignment->title . " - ";
 	if(!empty($_POST['group_target'])){
 		$group = new Student_Group($_POST['group_target']);
 		$evaluationTitle .= "Group " . $group->groupNumber . " Evaluation";
+		$eval = $evals[0];
 	}else{
 		$user = new User($_POST['peer_target']);
 		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Peer Evaluation";
+		$eval = $evals[1];
 	}
 	 
 
