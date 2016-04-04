@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 require_once __DIR__ . "/../../system/bootstrap.php";
 
 ensureLoggedIn();
@@ -57,7 +59,7 @@ foreach($rec_evaluations as $eval){
 		$e = new Evaluation($eval->evaluationID);
 		$evaluationReceived_results[] = [
 			"id"    => $eval->evaluationID,
-			"title" => $e->GetAssignment()->title . "- " . $e->evaluation_type
+			"title" => $e->GetParentEvaluation()->GetAssignment()->title . " - " . $e->evaluation_type
 		];
 	}
 }

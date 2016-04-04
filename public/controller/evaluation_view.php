@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	//get evaluation
@@ -20,9 +18,9 @@ ini_set('display_errors', '1');
 		$evaluationTitle = $eval->GetParentEvaluation()->GetAssignment()->title;
 	}
 
-	if($eval->evaluation_type == "Group" and $eval->groupNumber != 0){
+	if($eval->evaluation_type == "Group" and intval($eval->groupID) > 0){
 		$evaluationTitle .= " - Group ". $eval->GetGroup()->groupNumber. " Evaluation";
-	}else if($eval->evaluation_type == "Peer" and $eval->target_userID != 0){
+	}else if($eval->evaluation_type == "Peer" and intval($eval->target_userID) > 0){
 		$user = new User($eval->target_userID);
 		$evaluationTitle .= " - " . $user->firstName." ".$user->lastName." Peer Evaluation";
 	}
@@ -37,10 +35,9 @@ ini_set('display_errors', '1');
 	//get critera of evaluation.
 	$criteria_results = array();
 	$criteria = $eval->GetCriteria();
-	$count = 0;
+
 	foreach($criteria as $c){
 		$s = $c->GetSelections();
-		$count = count($s);
 
 		$v = intval($c->GetCriteriaRating($eval->evaluationID));
 		$co = $c->GetCriteriaComments($eval->evaluationID);
@@ -48,12 +45,12 @@ ini_set('display_errors', '1');
 			case 1:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title
-				 ];
-				 for($i = 1; $i < $count+1; $i++){
-				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
-				 }
-				 $criteria_results[] = [
+				 	'criteriaTitle' => $c->title,
+				 	'v1' => $s[0]->description,
+				 	'v2' => $s[1]->description,
+				 	'v3' => $s[2]->description,
+				 	'v4' => $s[3]->description,
+				 	'v5' => $s[4]->description,
 				 	'checked' => 1,
 				 	'comments' => $co
 				 ];
@@ -61,12 +58,12 @@ ini_set('display_errors', '1');
 			case 2:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title
-				 ];
-				 for($i = 1; $i < $count+1; $i++){
-				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
-				 }
-				 $criteria_results[] = [
+				 	'criteriaTitle' => $c->title,
+				 	'v1' => $s[0]->description,
+				 	'v2' => $s[1]->description,
+				 	'v3' => $s[2]->description,
+				 	'v4' => $s[3]->description,
+				 	'v5' => $s[4]->description,
 				 	'checked' => 2,
 				 	'comments' => $co
 				 ];
@@ -74,12 +71,12 @@ ini_set('display_errors', '1');
 			case 3:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title
-				 ];
-				 for($i = 1; $i < $count+1; $i++){
-				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
-				 }
-				 $criteria_results[] = [
+				 	'criteriaTitle' => $c->title,
+				 	'v1' => $s[0]->description,
+				 	'v2' => $s[1]->description,
+				 	'v3' => $s[2]->description,
+				 	'v4' => $s[3]->description,
+				 	'v5' => $s[4]->description,
 				 	'checked' => 3,
 				 	'comments' => $co
 				 ];
@@ -87,12 +84,12 @@ ini_set('display_errors', '1');
 			case 4:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title
-				 ];
-				 for($i = 1; $i < $count+1; $i++){
-				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
-				 }
-				 $criteria_results[] = [
+				 	'criteriaTitle' => $c->title,
+				 	'v1' => $s[0]->description,
+				 	'v2' => $s[1]->description,
+				 	'v3' => $s[2]->description,
+				 	'v4' => $s[3]->description,
+				 	'v5' => $s[4]->description,
 				 	'checked' => 4,
 				 	'comments' => $co
 				 ];
@@ -100,12 +97,12 @@ ini_set('display_errors', '1');
 			case 5:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title
-				 ];
-				 for($i = 1; $i < $count+1; $i++){
-				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
-				 }
-				 $criteria_results[] = [
+				 	'criteriaTitle' => $c->title,
+				 	'v1' => $s[0]->description,
+				 	'v2' => $s[1]->description,
+				 	'v3' => $s[2]->description,
+				 	'v4' => $s[3]->description,
+				 	'v5' => $s[4]->description,
 				 	'checked' => 5,
 				 	'comments' => $co
 				 ];
@@ -113,13 +110,13 @@ ini_set('display_errors', '1');
 			default:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title
-				 ];
-				 for($i = 1; $i < $count+1; $i++){
-				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
-				 }
-				 $criteria_results[] = [
-				 	'checked' => 0,
+				 	'criteriaTitle' => $c->title,
+				 	'v1' => $s[0]->description,
+				 	'v2' => $s[1]->description,
+				 	'v3' => $s[2]->description,
+				 	'v4' => $s[3]->description,
+				 	'v5' => $s[4]->description,
+				 	'checked' => 'disabled',
 				 	'comments' => $co
 				 ];
 				break;
@@ -132,15 +129,155 @@ ini_set('display_errors', '1');
 	else{
 		$action = 'instructor_home.php';
 	}
-
 	echo $twig->render('evaluation_view.html', [
-		"username"              =>$_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"username"              => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"evaluationTitle"		=>$evaluationTitle,
 		"criteria"				=>$criteria_results, 
 		"evaluationID"			=>$eval->evaluationID,
-		"action"				=>$action,
-		"count"					=>$count
+		"action"				=> $action
 		
 	]);
+
+	// require_once __DIR__ . "/../../system/bootstrap.php";
+	// ensureLoggedIn();
+	// //get evaluation
+
+	// if(empty($_POST['evaluationID'])){
+	// 	die('evaluationID not given');
+	// }
+
+	// $eval = new Evaluation($_POST['evaluationID']);
+	
+	// //create evaluation title from assignment name, type of eval, and who it targets.
+	// if(!empty($_SESSION['assignmentID'])){
+	// 	$assignment = new Assignment($_SESSION['assignmentID']);
+	// 	$evaluationTitle = $assignment->title;
+	// }
+	// else{
+	// 	$evaluationTitle = $eval->GetParentEvaluation()->GetAssignment()->title;
+	// }
+
+	// if($eval->evaluation_type == "Group" and $eval->groupNumber != 0){
+	// 	$evaluationTitle .= " - Group ". $eval->GetGroup()->groupNumber. " Evaluation";
+	// }else if($eval->evaluation_type == "Peer" and $eval->target_userID != 0){
+	// 	$user = new User($eval->target_userID);
+	// 	$evaluationTitle .= " - " . $user->firstName." ".$user->lastName." Peer Evaluation";
+	// }
+	// else if($eval->evaluation_type == "Group"){
+	// 	$evaluationTitle .= " - Group Criteria";
+	// }
+	// else{
+	// 	$evaluationTitle .= " - Peer Criteria";
+	// }
+	 
+
+	// //get critera of evaluation.
+	// $criteria_results = array();
+	// $criteria = $eval->GetCriteria();
+	// $count = 0;
+	// foreach($criteria as $c){
+	// 	$s = $c->GetSelections();
+	// 	$count = count($s);
+
+	// 	$v = intval($c->GetCriteriaRating($eval->evaluationID));
+	// 	$co = $c->GetCriteriaComments($eval->evaluationID);
+	// 	switch($v){
+	// 		case 1:
+	// 			$criteria_results[] = [
+	// 			 	'id' => $c->criteriaID,
+	// 			 	'criteriaTitle' => $c->title
+	// 			 ];
+	// 			 for($i = 1; $i < $count+1; $i++){
+	// 			 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+	// 			 }
+	// 			 $criteria_results[] = [
+	// 			 	'checked' => 1,
+	// 			 	'comments' => $co
+	// 			 ];
+	// 			break;
+	// 		case 2:
+	// 			$criteria_results[] = [
+	// 			 	'id' => $c->criteriaID,
+	// 			 	'criteriaTitle' => $c->title
+	// 			 ];
+	// 			 for($i = 1; $i < $count+1; $i++){
+	// 			 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+	// 			 }
+	// 			 $criteria_results[] = [
+	// 			 	'checked' => 2,
+	// 			 	'comments' => $co
+	// 			 ];
+	// 			break;
+	// 		case 3:
+	// 			$criteria_results[] = [
+	// 			 	'id' => $c->criteriaID,
+	// 			 	'criteriaTitle' => $c->title
+	// 			 ];
+	// 			 for($i = 1; $i < $count+1; $i++){
+	// 			 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+	// 			 }
+	// 			 $criteria_results[] = [
+	// 			 	'checked' => 3,
+	// 			 	'comments' => $co
+	// 			 ];
+	// 			break;
+	// 		case 4:
+	// 			$criteria_results[] = [
+	// 			 	'id' => $c->criteriaID,
+	// 			 	'criteriaTitle' => $c->title
+	// 			 ];
+	// 			 for($i = 1; $i < $count+1; $i++){
+	// 			 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+	// 			 }
+	// 			 $criteria_results[] = [
+	// 			 	'checked' => 4,
+	// 			 	'comments' => $co
+	// 			 ];
+	// 			break;
+	// 		case 5:
+	// 			$criteria_results[] = [
+	// 			 	'id' => $c->criteriaID,
+	// 			 	'criteriaTitle' => $c->title
+	// 			 ];
+	// 			 for($i = 1; $i < $count+1; $i++){
+	// 			 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+	// 			 }
+	// 			 $criteria_results[] = [
+	// 			 	'checked' => 5,
+	// 			 	'comments' => $co
+	// 			 ];
+	// 			break;
+	// 		default:
+	// 			$criteria_results[] = [
+	// 			 	'id' => $c->criteriaID,
+	// 			 	'criteriaTitle' => $c->title
+	// 			 ];
+	// 			 for($i = 1; $i < $count+1; $i++){
+	// 			 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+	// 			 }
+	// 			 $criteria_results[] = [
+	// 			 	'checked' => 0,
+	// 			 	'comments' => $co
+	// 			 ];
+	// 			break;
+	// 	}
+	// }
+	// //Go to html view.
+	// if($_SESSION['user']->userType == 'Student'){
+	// 	$action = 'student_home.php';
+	// }
+	// else{
+	// 	$action = 'instructor_home.php';
+	// }
+
+	// echo $twig->render('evaluation_view.html', [
+	// 	"username"              =>$_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+	// 	"evaluationTitle"		=>$evaluationTitle,
+	// 	"criteria"				=>$criteria_results, 
+	// 	"evaluationID"			=>$eval->evaluationID,
+	// 	"action"				=>$action,
+	// 	"count"					=>$count
+		
+	// ]);
 
 ?>
