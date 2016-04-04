@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 	//get evaluation
@@ -18,23 +20,27 @@
 		$evaluationTitle = $eval->GetParentEvaluation()->GetAssignment()->title;
 	}
 
-	if($eval->evaluation_type == "Group"){
+	if($eval->evaluation_type == "Group" and $eval->groupNumber != 0){
 		$evaluationTitle .= " - Group ". $eval->GetGroup()->groupNumber. " Evaluation";
-	}else if($eval->evaluation_type == "Peer"){
+	}else if($eval->evaluation_type == "Peer" and $eval->target_userID != 0){
 		$user = new User($eval->target_userID);
 		$evaluationTitle .= " - " . $user->firstName." ".$user->lastName." Peer Evaluation";
 	}
+	else if($eval->evaluation_type == "Group"){
+		$evaluationTitle .= " - Group Criteria";
+	}
 	else{
-		$evaluationTitle .= " - Criteria";
+		$evaluationTitle .= " - Peer Criteria";
 	}
 	 
 
 	//get critera of evaluation.
 	$criteria_results = array();
 	$criteria = $eval->GetCriteria();
-
+	$count = 0;
 	foreach($criteria as $c){
 		$s = $c->GetSelections();
+		$count = count($s);
 
 		$v = intval($c->GetCriteriaRating($eval->evaluationID));
 		$co = $c->GetCriteriaComments($eval->evaluationID);
@@ -42,12 +48,12 @@
 			case 1:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title,
-				 	'v1' => $s[0]->description,
-				 	'v2' => $s[1]->description,
-				 	'v3' => $s[2]->description,
-				 	'v4' => $s[3]->description,
-				 	'v5' => $s[4]->description,
+				 	'criteriaTitle' => $c->title
+				 ];
+				 for($i = 1; $i < $count+1; $i++){
+				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+				 }
+				 $criteria_results[] = [
 				 	'checked' => 1,
 				 	'comments' => $co
 				 ];
@@ -55,12 +61,12 @@
 			case 2:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title,
-				 	'v1' => $s[0]->description,
-				 	'v2' => $s[1]->description,
-				 	'v3' => $s[2]->description,
-				 	'v4' => $s[3]->description,
-				 	'v5' => $s[4]->description,
+				 	'criteriaTitle' => $c->title
+				 ];
+				 for($i = 1; $i < $count+1; $i++){
+				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+				 }
+				 $criteria_results[] = [
 				 	'checked' => 2,
 				 	'comments' => $co
 				 ];
@@ -68,12 +74,12 @@
 			case 3:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title,
-				 	'v1' => $s[0]->description,
-				 	'v2' => $s[1]->description,
-				 	'v3' => $s[2]->description,
-				 	'v4' => $s[3]->description,
-				 	'v5' => $s[4]->description,
+				 	'criteriaTitle' => $c->title
+				 ];
+				 for($i = 1; $i < $count+1; $i++){
+				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+				 }
+				 $criteria_results[] = [
 				 	'checked' => 3,
 				 	'comments' => $co
 				 ];
@@ -81,12 +87,12 @@
 			case 4:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title,
-				 	'v1' => $s[0]->description,
-				 	'v2' => $s[1]->description,
-				 	'v3' => $s[2]->description,
-				 	'v4' => $s[3]->description,
-				 	'v5' => $s[4]->description,
+				 	'criteriaTitle' => $c->title
+				 ];
+				 for($i = 1; $i < $count+1; $i++){
+				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+				 }
+				 $criteria_results[] = [
 				 	'checked' => 4,
 				 	'comments' => $co
 				 ];
@@ -94,12 +100,12 @@
 			case 5:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title,
-				 	'v1' => $s[0]->description,
-				 	'v2' => $s[1]->description,
-				 	'v3' => $s[2]->description,
-				 	'v4' => $s[3]->description,
-				 	'v5' => $s[4]->description,
+				 	'criteriaTitle' => $c->title
+				 ];
+				 for($i = 1; $i < $count+1; $i++){
+				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+				 }
+				 $criteria_results[] = [
 				 	'checked' => 5,
 				 	'comments' => $co
 				 ];
@@ -107,27 +113,16 @@
 			default:
 				$criteria_results[] = [
 				 	'id' => $c->criteriaID,
-				 	'criteriaTitle' => $c->title,
-				 	'v1' => $s[0]->description,
-				 	'v2' => $s[1]->description,
-				 	'v3' => $s[2]->description,
-				 	'v4' => $s[3]->description,
-				 	'v5' => $s[4]->description,
-				 	'checked' => 'disabled',
+				 	'criteriaTitle' => $c->title
+				 ];
+				 for($i = 1; $i < $count+1; $i++){
+				 	$criteria_results[] = ['v{$i}' => $s[$i-1]->description];
+				 }
+				 $criteria_results[] = [
+				 	'checked' => 0,
 				 	'comments' => $co
 				 ];
 				break;
-		 // $criteria_results[] = [
-		 // 	'id' => $c->criteriaID,
-		 // 	'criteriaTitle' => $c->title,
-		 // 	'v1' => $s[0]->description,
-		 // 	'v2' => $s[1]->description,
-		 // 	'v3' => $s[2]->description,
-		 // 	'v4' => $s[3]->description,
-		 // 	'v5' => $s[4]->description,
-		 // 	'checked' => $c->rating,
-		 // 	'comments' => $c->comments
-		 // ];
 		}
 	}
 	//Go to html view.
@@ -137,12 +132,14 @@
 	else{
 		$action = 'instructor_home.php';
 	}
+
 	echo $twig->render('evaluation_view.html', [
-		"username"              => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"username"              =>$_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"evaluationTitle"		=>$evaluationTitle,
 		"criteria"				=>$criteria_results, 
 		"evaluationID"			=>$eval->evaluationID,
-		"action"				=> $action
+		"action"				=>$action,
+		"count"					=>$count
 		
 	]);
 

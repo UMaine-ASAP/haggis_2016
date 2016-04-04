@@ -7,7 +7,7 @@
 		$_SESSION['assignmentID'] =  $_POST['assignmentID'];
 		$assignmentID = $_POST['assignmentID'];
 		$assignment = new Assignment($assignmentID);
-		$master_evaluation = $assignment->GetEvaluation();
+		$master_evaluations = $assignment->GetEvaluations();
 	}
 	else
 		$assignmentID = $_SESSION['assignmentID'];
@@ -15,8 +15,10 @@
 
 	$evalsTotal = -1; // will allow for creation of parent evaluation if this is -1
 	//get all child evaluations done and count how many
-	$all_evals = $master_evaluation->GetChildEvaluations();
-	$evalsTotal = count($all_evals);
+	$all_group_evals = $master_evaluations[0]->GetChildEvaluations();
+	$all_peer_evals = $master_evaluations[1]->GetChildEvaluations();
+	$evalsTotal = count($all_group_evals);
+	$evalsTotal += count($all_peer_evals);
 
 	$instructor = $_SESSION['user']->userID;
 
@@ -27,7 +29,8 @@
 			"assignmentDescription" => $assignment->description,
 			"evalsTotal" => $evalsTotal,
 			"assignmentID" => $_SESSION['assignmentID'],
-			"evaluationID" => $master_evaluation->evaluationID
+			"groupEvaluationID" => $master_evaluations[0]->evaluationID,
+			"peerEvaluationID" => $master_evaluations[1]->evaluationID
 		]);
 
 ?>

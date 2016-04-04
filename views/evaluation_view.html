@@ -10,7 +10,17 @@
 			<tbody>
 				<tr>
 					<th width="100" style="color:white">{{c.criteriaTitle}}</th>
-					{% if c.checked == 1 %}
+
+					{% for i in 1..count %}
+						{% set value = 'c.v' ~ i %}
+						{% if c.checked == count %}
+						<td width="200"><input type="radio" checked> 1.<br>{{#{value}}}</td>
+						{% else %}
+						<td width="200"><input type="radio" disabled> 1.<br>{{value}}</td>
+						{% endif %}
+					{% endfor %}
+
+					<!-- {% if c.checked == 1 %}
 					<td width="200"><input type="radio" checked> 1.<br>{{c.v1}}</td>
 					{% else %}
 					<td width="200"><input type="radio" disabled> 1.<br>{{c.v1}}</td>
@@ -34,7 +44,7 @@
 					<td width="200"><input type="radio" checked> 5.<br>{{c.v5}}</td>
 					{% else %}
 					<td width="200"><input type="radio" disabled> 5.<br>{{c.v5}}</td>
-					{% endif %}						
+					{% endif %}						 -->
 					<input type="hidden" name="id[{{c.count}}]" value="{{c.id}}">
 				</tr>
 			</tbody>
