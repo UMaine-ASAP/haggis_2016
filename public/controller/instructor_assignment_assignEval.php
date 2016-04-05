@@ -52,4 +52,8 @@
 		$_SESSION['assignmentKey'] = $matchedEval->evaluationID;
 		$_SESSION['assignmentID'] = $_POST['assignmentID'];
 	}
+	$_SESSION['assignmentKey'] = $matchedEval->evaluationID;
+	$_SESSION['assignmentID'] = $_POST['assignmentID'];
+
 	header("location:instructor_assignment.php");
+?>
