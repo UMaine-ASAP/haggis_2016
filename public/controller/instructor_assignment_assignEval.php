@@ -29,8 +29,6 @@
 	$allEvaluationsInstructor = $instructor->GetEvaluations();
 	$allEvaluationsAssignment = $assignmentWorking->GetEvaluations();
 
-	
-
 	foreach ($allEvaluationsInstructor as $eval)
 	{
 		foreach ($allEvaluationsAssignment as $evalCompared) {
@@ -46,10 +44,12 @@
 			$studentsInClassAssignment[] = $user;
 	}
 	
-	foreach ($studentsInClassAssignment as $student) {
-		$student->AddEvaluation($matchedEval->evaluationID);
+	if(isset($matchedEval))
+	{
+		foreach ($studentsInClassAssignment as $student) {
+			$student->AddEvaluation($matchedEval->evaluationID);
+		}
+		$_SESSION['assignmentKey'] = $matchedEval->evaluationID;
+		$_SESSION['assignmentID'] = $_POST['assignmentID'];
 	}
-	$_SESSION['assignmentKey'] = $matchedEval->evaluationID;
-	$_SESSION['assignmentID'] = $_POST['assignmentID'];
-
 	header("location:instructor_assignment.php");

@@ -37,6 +37,8 @@
 
 	$classIDWorking = $similarClass;
 
+	var_dump($_POST['dueDate']);
+
 	$month = substr($_POST['dueDate'], 5,2);
 	$day = substr($_POST['dueDate'], 8,2);
 	$year = substr($_POST['dueDate'], 0, 4);

@@ -34,11 +34,10 @@
 	$allEvaluationsAssignment = $assignmentWorking->GetEvaluations();
 
 	$blankEval = new Evaluation(0);
-
+	
+	$matchedEval = $blankEval;
 	foreach ($allEvaluationsInstructor as $eval)
 	{
-
-		$matchedEval = $blankEval;
 		foreach ($allEvaluationsAssignment as $evalCompared) {
 			if($eval->evaluationID == $evalCompared->evaluationID)
 				$matchedEval = $eval;
