@@ -13,8 +13,18 @@
 the user fill it out. When they hit submit it makes a new eval with a eval_parent id from itself to 144.
 You might have to work this last part out a bit I haven't entirely thought it through. -->
 <button type="submit">Evaluate Peer</button>
-</form><br>
+</form><br><br>
 
+{% for peer_eval in peer_evals %}
+Evaluated {{peer_eval.name}} 
+<form method='post' action='evaluation_edit.php'>
+	<input type='hidden' value='{{peer_eval.id}}' name='evaluationID'>
+	<button type="submit">Edit</button>
+</form>
+{% endfor %}
+
+
+<br><br>
 <form method= 'post' action="evaluation_submit.php">
 <select name="group_target">
 	{% for group in groups %}
@@ -23,5 +33,14 @@ You might have to work this last part out a bit I haven't entirely thought it th
 </select>
 
 <button type="submit">Evaluate Group</button>
-</form><br>
+</form><br><br>
+
+{% for group_eval in group_evals %}
+Evaluated {{group_eval.number}} 
+<form method='post' action='evaluation_edit.php'>
+	<input type='hidden' value='{{group_eval.id}}' name='evaluationID'>
+	<button type="submit">Edit</button>
+</form>
+{% endfor %}
+
 {% endblock %}

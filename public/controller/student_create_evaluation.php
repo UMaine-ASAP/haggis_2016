@@ -8,7 +8,9 @@
 	$user = $_SESSION['user'];
 	$group = $user->GetGroup();
 	$peer_results = array();
+	$group_results = array();
 
+	//get peers in the same group as user
 	if($group != FALSE){
 		$group_users = $group->GetUsers();
 		foreach($group_users as $u){
@@ -21,8 +23,7 @@
 		}
 	}
 
-	$group_results = array();
-
+	//get other groups besides this user's group
 	if($group != FALSE){
 		$other_groups = $group->GetOtherGroups();
 		foreach($other_groups as $g){
@@ -39,6 +40,8 @@
 	echo $twig->render("student_create_evaluation.html",[
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"peers"		 	  => $peer_results,
-		"groups"		  => $group_results
+		"groups"		  => $group_results,
+		"peer_evals"	  => $peer_eval_results,
+		"group_evals"	  => $group_eval_results
 		]);
 ?>
