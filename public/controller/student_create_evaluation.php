@@ -6,9 +6,11 @@
 	$_SESSION['assignmentID'] = $_POST['assignmentID'];
 	//Get the peers in the user's group
 	$user = $_SESSION['user'];
+	$evaluations_made = $user->GetEvaluations();
 	$group = $user->GetGroup();
 	$peer_results = array();
 	$group_results = array();
+
 
 	//get peers in the same group as user
 	if($group != FALSE){
