@@ -6,12 +6,20 @@
 	$_SESSION['assignmentID'] = $_POST['assignmentID'];
 	//Get the peers in the user's group
 	$user = $_SESSION['user'];
+
 	$evaluations_made = $user->GetEvaluations();
+	// $evaluations_made_IDs = array();
+	// foreach($evaluations_made as $e){
+	// 	$evaluations_made_IDs[] = $e->evaluationID;
+	// }
+
 	$group = $user->GetGroup();
 	$peer_results = array();
 	$group_results = array();
+	$peer_eval_results = array();
+	$group_eval_results = array();
 
-
+	$group_users = array();
 	//get peers in the same group as user
 	if($group != FALSE){
 		$group_users = $group->GetUsers();
@@ -25,6 +33,24 @@
 		}
 	}
 
+	//get submitted evaluations for peers in this assignment
+	foreach($group_users as $u){
+		$peer_received_evals = $u->GetReceivedEvaluations();
+		foreach($peer_received_evals as $peer_eval){
+			$result = array_search($peer_eval, $evaluations_made);
+			if(gettype($result) == 'integer'){
+				if($evaluations_made[$result]->GetAssignment() == $peer_eval->GetAssignment()){
+					$peer_eval_results[] = [
+						"name" => $u->firstName." ".$u->lastName,
+						"id"   => $peer_eval->evaluationID
+					];
+				}
+			}
+		}
+	}
+
+
+	$other_groups = array();
 	//get other groups besides this user's group
 	if($group != FALSE){
 		$other_groups = $group->GetOtherGroups();
@@ -33,6 +59,23 @@
 				"number" => $g->groupNumber,
 				"groupID" => $g->student_groupID
 			];
+		}
+	}
+
+	//get submitted evaluations for groups in this assignment
+	foreach($other_groups as $g){
+		$group_received_evals = $g->GetReceivedEvaluations();
+
+		foreach($group_received_evals as $group_eval){
+			$result = array_search($group_eval, $evaluations_made);
+			if(gettype($result) == 'integer'){
+				if($evaluations_made[$result]->GetAssignment() == $group_eval->GetAssignment()){
+					$group_eval_results[] = [
+						"number" => $g->groupNumber,
+						"id"   => $group_eval->evaluationID
+					];
+				}
+			}
 		}
 	}
 

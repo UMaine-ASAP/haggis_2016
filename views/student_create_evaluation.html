@@ -36,7 +36,7 @@ Evaluated {{peer_eval.name}}
 </form><br><br>
 
 {% for group_eval in group_evals %}
-Evaluated {{group_eval.number}} 
+Evaluated Group {{group_eval.number}} 
 <form method='post' action='evaluation_edit.php'>
 	<input type='hidden' value='{{group_eval.id}}' name='evaluationID'>
 	<button type="submit">Edit</button>
