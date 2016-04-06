@@ -37,5 +37,8 @@
 	$parent_eval = new Evaluation($_SESSION['evaluationID']);
 	$parent_eval->AddChildEvaluation($new_eval->evaluationID);
 
+    $assignment = new Assignment($_SESSION['assignmentID']);
+    $assignment->AddEvaluation($new_eval->evaluationID);
+
 	header("location:student_home.php");
 ?>
