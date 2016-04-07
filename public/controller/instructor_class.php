@@ -1,11 +1,7 @@
 <?php
 
-	ini_set('display_errors',1);  
-	error_reporting(E_ALL);
-
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
-	// echo 'Success';
 
 	if($_SESSION['user']->userType == 'Student')
 	{
@@ -88,7 +84,8 @@
 		"className"       => $class->title,
 		"assignments"	  => $assignment_results,
 		"evaluations"	  => $evaluation_results,
-		"students"		  => $student_results
+		"students"		  => $student_results,
+		"classID"	 	  => $_SESSION['classID']
 	]);
 
 ?>

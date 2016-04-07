@@ -47,7 +47,7 @@ class Assignment {
 		if($this->assignmentID != -1){
 			$query = "UPDATE `assignment` SET ";
 			$query .= "`title` = '" . $this->title . "', ";
-			$query .= "`description` = '" . $this->description . "', ";
+			$query .= "`description` = '" . $this->description . "' ";
 			$query .= "WHERE `assignmentID` = " . $this->assignmentID;
 
 			$db = GetDB();
@@ -224,7 +224,7 @@ class Assignment {
 		// 	return; // Wrong assignmentID
 		// }
 		// $queryPart = "DATE_FORMAT($dueDate, '%Y %m %d')";
-		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`, `dueDate`) VALUES ({$this->assignmentID}, $classID, $dueDate) ";
+		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`, `dueDate`) VALUES ({$this->assignmentID}, $classID, STR_TO_DATE('".$dueDate."', '%Y-%m-%d')) ";
 
 		$db = GetDB();
 		if($db->query($query) === TRUE){

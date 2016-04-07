@@ -9,6 +9,11 @@
 <center><table id = "instructorClasspPageAssign" class="table">
 	<thead><tr><th class="table">Assignments</tr></thead>
 
+	<tr><td>
+		<form method='post' action='assignment_create.php'>
+		<button type="submit" value="{{classID}}" name="classID">Add Assignment</button>
+	</td></tr>
+
 	{% for assignment in assignments %}
 		<tr><td>
 		<form method='post' id="instructorClassTables" action='instructor_assignment.php'>
