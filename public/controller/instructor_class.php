@@ -45,9 +45,8 @@
 					if ($eval->evaluation_type=='Peer'){
 						if($eval->target_userID != 0){
 							$u = new User($eval->target_userID);
+							$target = "Peer " . $u->firstName;
 						}
-	
-						$target = "Peer " . $u->firstName;
 					} 
 					else {
 						$target = "Group " . $eval->GetGroup()->groupNumber;
