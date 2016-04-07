@@ -210,24 +210,27 @@ class User {
 			
 		} 
 
-		$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$this->GetGroup()->student_groupID}";
-		$rows = $db->query($query);
-		if($rows){
-			while($row = $rows->fetch_array(MYSQLI_BOTH)){
-				
-				/*
-				$query = "SELECT * FROM `evaluation` WHERE `evaluationID` = {$row['evaluationID']}";
+		$group = $this->GetGroup();
+		if($group != FALSE){
+			$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$group->student_groupID}";
+			$rows = $db->query($query);
+			if($rows){
+				while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+					/*
+					$query = "SELECT * FROM `evaluation` WHERE `evaluationID` = {$row['evaluationID']}";
 
-				$evaluationes = $db->query($query);
-				if($evaluationes){
-					while($evaluation = $evaluationes->fetch_array(MYSQLI_BOTH)){
-						$ret[] = $evaluation;
+					$evaluationes = $db->query($query);
+					if($evaluationes){
+						while($evaluation = $evaluationes->fetch_array(MYSQLI_BOTH)){
+							$ret[] = $evaluation;
+						}
 					}
-				}
-				*/
+					*/
 
-				$e = new Evaluation($row['evaluationID']);
-				$ret[] = $e;
+					$e = new Evaluation($row['evaluationID']);
+					$ret[] = $e;
+				}
 			}
 		}
 		return $ret;
