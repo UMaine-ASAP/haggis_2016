@@ -1,0 +1,50 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Evaluation Submit{% endblock %}
+
+{% block content %}
+<div id="evaluation">
+	<h2>{{ evaluationTitle }}</h2>
+	<form method="post" id="submitEvaluation" action="evaluation_edit_request.php">
+		{% set count = 0 %}
+		{% for c in criteria %}
+		<table border="1">
+			<tbody>
+				<tr>
+					<th width="100" style="color:white">{{c.criteriaTitle}}</th>
+					{% if c.checked == 1 %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="1" checked> 1.<br>{{c.v1}}</td>
+					{% else %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="1" >	1.<br>{{c.v1}}</td>
+					{% endif %}
+					{% if c.checked == 2 %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="2"  checked> 2.<br>{{c.v2}}</td>
+					{% else %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="2" >	2.<br>{{c.v2}}</td>
+					{% endif %}						
+					{% if c.checked == 3 %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="3"  checked> 3.<br>{{c.v3}}</td>
+					{% else %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="3" > 3.<br>{{c.v3}}</td>
+					{% endif %}						
+					{% if c.checked == 4 %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="4"  checked> 4.<br>{{c.v4}}</td>
+					{% else %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="4" > 4.<br>{{c.v4}}</td>
+					{% endif %}						
+					{% if c.checked == 5 %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="5"  checked> 5.<br>{{c.v5}}</td>
+					{% else %}
+					<td width="200"><input type="radio" name="selected[{{count}}]" value="5" > 5.<br>{{c.v5}}</td>
+					{% endif %}						
+				</tr>
+			</tbody>
+		</table>
+		<textarea name="comments[{{count}}]" form ="submitEvaluation" rows="5" cols="100" placeholder="Empty">{{c.comments}}</textarea>
+		{% set count = count + 1 %}
+		{% endfor %}
+		<br>
+		<input type="hidden" value="{{evaluationID}}" name="evaluationID">
+		<button type="submit" >Save</button>
+	</form>
+</div>
+{% endblock %}

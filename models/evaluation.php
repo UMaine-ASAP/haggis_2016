@@ -166,14 +166,18 @@ class Evaluation {
 	}
 
 	public function SaveCriteria($criteriaID,$rating,$comments){
+		// $query = "UPDATE `evaluation_criteria` SET `evaluationID`={$this->evaluationID},`criteriaID`={$criteriaID},";
+		// $query .='`rating`={$rating},`comments`="'. .'"';
+		// $query .=" WHERE `evaluationID`={$this->evaluationID} AND `criteriaID` = {$criteriaID}";
 		$query = "UPDATE `evaluation_criteria` SET ";
 		$query .="`rating`=". $rating .",`comments`='".$comments."' ";
 		$query .=" WHERE `evaluationID` = ".$this->evaluationID." AND `criteriaID` = " . $criteriaID;
 		$db = GetDB();
+		echo $query;
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db));
+			die("Couldn't update criteria for evaluation: " . $this->evaluationID . " " . mysqli_error($db));
 		}
 	}
 
