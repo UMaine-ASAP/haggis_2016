@@ -19,6 +19,7 @@
 			"dueDate"    	   => $a[1],
 			"id"  			   => $a[0]->assignmentID
 		];
+		
 	}
 
 	//Build Evaluations
@@ -69,6 +70,7 @@
 				'assigned'		 => $e
 		];
 	}
+
 
 		//Build students
 	$student_results = array();

@@ -10,7 +10,7 @@
 
 		<thead><tr><th align="left">Evaluations</th></tr></thead>
 		<tbody>
-				{% if evalsTotal >= 0 %}
+				{% if evalsTotal > 0 %}
 			   <td>Evaluations Complete: {{ evalsTotal }}</td>
 			   	{% else %}
 			   <td>
@@ -22,13 +22,13 @@
 			   <tr align="right">
 			   	<td>
 			   
-			    {% if evalsTotal >= 0 %}
+			    {% if groupEvaluationID > 0 %}
 			    <form method="post" action="evaluation_view.php">
 		   		<button type="submit" value="{{groupEvaluationID}}" name="evaluationID">View Group Criteria</button>		
 		   		</form>
 		   		{% endif %}
 
-		   		{% if evalsTotal >= 0 %}
+		   		{% if peerEvaluationID > 0 %}
 			    <form method="post" action="evaluation_view.php">
 		   		<button type="submit" value="{{peerEvaluationID}}" name="evaluationID">View Peer Criteria</button>		
 		   		</form>
