@@ -210,8 +210,9 @@ class User {
 			
 		} 
 
-		$group = $this->GetGroup();
-		if($group != FALSE){
+		$groups = $this->GetGroups();
+		if($groups != array()){
+		  foreach($groups as $group){
 			$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$group->student_groupID}";
 			$rows = $db->query($query);
 			if($rows){
@@ -232,6 +233,7 @@ class User {
 					$ret[] = $e;
 				}
 			}
+		  }
 		}
 		return $ret;
 	}
@@ -275,20 +277,22 @@ class User {
 			}
 	}
 
-	public function GetGroup(){
+	public function GetGroups(){
 		$db = GetDB();
 		$query = "SELECT * FROM `student_group_user` WHERE `userID` = {$this->userID}";
 
-		$result = $db->query($query);
-		if($result->num_rows != 0){
-			$group = $result->fetch_array(MYSQLI_BOTH);
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				$g = new Student_Group($row['student_groupID']);
+				$ret[] = $g;
 
-			$group = new Student_Group ($group['student_groupID']);
-			return $group;
-		}
-		else{
-			return FALSE;
-			die("Couldn't find group for userID: " . $this->userID);
+			}
+			return $ret;
+		} else {
+			return Array();
 		}
 	}
 

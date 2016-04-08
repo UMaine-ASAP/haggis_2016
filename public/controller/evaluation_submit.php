@@ -10,11 +10,19 @@
 	if(!empty($_POST['group_target'])){
 		$group = new Student_Group($_POST['group_target']);
 		$evaluationTitle .= "Group " . $group->groupNumber . " Evaluation";
-		$eval = $evals[0];
+		foreach($evals as $e){
+			if($e->evaluation_type == 'Group' and $e->groupID == 0){
+				$eval = $e;
+			}
+		}
 	}else{
 		$user = new User($_POST['peer_target']);
 		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Peer Evaluation";
-		$eval = $evals[1];
+		foreach($evals as $e){
+			if($e->evaluation_type == 'Peer' and $e->target_userID == 0){
+				$eval = $e;
+			}
+		}
 	}
 	 
 

@@ -3,6 +3,7 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+
 	$_SESSION['assignmentID'] = $_POST['assignmentID'];
 	//Get the peers in the user's group
 	$user = $_SESSION['user'];
@@ -13,7 +14,14 @@
 	// 	$evaluations_made_IDs[] = $e->evaluationID;
 	// }
 
-	$group = $user->GetGroup();
+	$groups = $user->GetGroups();
+	$group = FALSE;
+	foreach($groups as $g){
+		if($g->assignmentID == $_SESSION['assignmentID']){
+			$group = $g;
+		}
+	}
+
 	$peer_results = array();
 	$group_results = array();
 	$peer_eval_results = array();
@@ -22,6 +30,7 @@
 	$group_users = array();
 	//get peers in the same group as user
 	if($group != FALSE){
+
 		$group_users = $group->GetUsers();
 		foreach($group_users as $u){
 			if($u->userID != $user->userID){
@@ -39,7 +48,8 @@
 		foreach($peer_received_evals as $peer_eval){
 			$result = array_search($peer_eval, $evaluations_made);
 			if(gettype($result) == 'integer'){
-				if($evaluations_made[$result]->GetAssignment() == $peer_eval->GetAssignment()){
+				$a = $evaluations_made[$result]->GetAssignment();
+				if($a == $peer_eval->GetAssignment() AND $a->assignmentID == $_SESSION['assignmentID']){
 					$peer_eval_results[] = [
 						"name" => $u->firstName." ".$u->lastName,
 						"id"   => $peer_eval->evaluationID
@@ -69,7 +79,8 @@
 		foreach($group_received_evals as $group_eval){
 			$result = array_search($group_eval, $evaluations_made);
 			if(gettype($result) == 'integer'){
-				if($evaluations_made[$result]->GetAssignment() == $group_eval->GetAssignment()){
+				$a = $evaluations_made[$result]->GetAssignment();
+				if($a == $group_eval->GetAssignment() AND $a->assignmentID == $_SESSION['assignmentID']){
 					$group_eval_results[] = [
 						"number" => $g->groupNumber,
 						"id"   => $group_eval->evaluationID

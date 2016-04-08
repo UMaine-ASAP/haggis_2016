@@ -10,9 +10,10 @@
 
 		<thead><tr><th align="left">Evaluations</th></tr></thead>
 		<tbody>
-				{% if evalsTotal > 0 %}
-			   <td>Evaluations Complete: {{ evalsTotal }}</td>
-			   	{% else %}
+				{% if evalsTotal > 0 or groupEvaluationID != -1 or peerEvaluationID != -1 %}
+			   <tr><td>Evaluations Complete: {{ evalsTotal }}</td></tr>
+			   	{% endif %}
+			   	{% if groupEvaluationID == -1 or peerEvaluationID == -1 %}
 			   <td>
 			   <form method="post" action="evaluation_create.php">
 			   <button type="submit" name="postCreateMasterEval">Create Evaluation</button>
