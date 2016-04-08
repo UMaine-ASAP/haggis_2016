@@ -8,6 +8,9 @@
 		$assignmentID = $_POST['assignmentID'];
 		$assignment = new Assignment($assignmentID);
 		$master_evaluations = $assignment->GetEvaluations();
+		$class = $assignment->GetClasses()[0]; //class for this assignment
+		$all_users = $class->GetUsers();
+		
 	}
 	else
 		$assignmentID = $_SESSION['assignmentID'];
