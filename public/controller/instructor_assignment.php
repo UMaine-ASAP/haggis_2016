@@ -19,6 +19,7 @@
 	$all_peer_evals = $master_evaluations[1]->GetChildEvaluations();
 	$evalsTotal = count($all_group_evals);
 	$evalsTotal += count($all_peer_evals);
+	$students = 
 
 	$instructor = $_SESSION['user']->userID;
 
@@ -30,7 +31,9 @@
 			"evalsTotal" => $evalsTotal,
 			"assignmentID" => $_SESSION['assignmentID'],
 			"groupEvaluationID" => $master_evaluations[0]->evaluationID,
-			"peerEvaluationID" => $master_evaluations[1]->evaluationID
+			"peerEvaluationID" => $master_evaluations[1]->evaluationID,
+			"students"			=>   					,
+			"groups"			=> 
 		]);
 
 ?>
