@@ -74,6 +74,35 @@ class Assignment {
 		}
 	}
 
+	public function DeleteFromClass($classID){
+		if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
+			return; // Wrong assignmentID
+		}
+
+		$query = "DELETE FROM `assignment_class` WHERE `assignmentID` = {$this->assignmentID} AND `classID` = {$classID}";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't delete assignment from class: " . $classID);
+		}
+	}
+
+	public function DeleteFromEvaluations(){
+		if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
+			return; // Wrong assignmentID
+		}
+
+		$query = "DELETE FROM `assignment_evaluation` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't delete assignment from evaluations: " . $this->assignmentID);
+		}
+	}
 /////////////////////////////////////////////////////////////////// CRITERIA
 
 	public function AddCriteria($criteriaID){

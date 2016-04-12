@@ -13,6 +13,7 @@ $assignments = Array();
 foreach ($classes as $class) {
 	$assignments[] = $class->GetAssignments();
 }
+
 if ($assignments != array() ) {
 	foreach ($assignments[0] as $assignment) {
 		$assignments_results[] = [
