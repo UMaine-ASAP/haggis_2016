@@ -16,18 +16,27 @@
 
 	$groups = $user->GetGroups();
 	$group = FALSE;
+
+	//find group associated with this assignment
 	foreach($groups as $g){
 		if($g->assignmentID == $_SESSION['assignmentID']){
 			$group = $g;
 		}
 	}
 
+	//people in respective group/peer category
 	$peer_results = array();
 	$group_results = array();
+	$individual_results = array();
+
+	//editable and previous done evaluations
 	$peer_eval_results = array();
 	$group_eval_results = array();
+	$individual_eval_results = array();
 
+	//used to find users in a group, then used to add to peer_results 
 	$group_users = array();
+
 	//get peers in the same group as user
 	if($group != FALSE){
 
@@ -45,6 +54,7 @@
 	//get submitted evaluations for peers in this assignment
 	foreach($group_users as $u){
 		$peer_received_evals = $u->GetReceivedEvaluations();
+
 		foreach($peer_received_evals as $peer_eval){
 			$result = array_search($peer_eval, $evaluations_made);
 			if(gettype($result) == 'integer'){
@@ -90,6 +100,10 @@
 		}
 	}
 
+	//get students in the class to evaluate for individual assignment
+	
+
+
 	// You need to send over the assignment id derived from the evaluation id so that the next view can
 	// populate the dropdown with students/groups.
 	// Of course for this to work by now the students need to be entered into their respective groups.
@@ -97,7 +111,11 @@
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"peers"		 	  => $peer_results,
 		"groups"		  => $group_results,
+		"individuals"	  => $individual_results,		//userID, name
 		"peer_evals"	  => $peer_eval_results,
-		"group_evals"	  => $group_eval_results
+		"numPeers"		  => count($peer_eval_results),
+		"group_evals"	  => $group_eval_results,
+		"numGroups"		  => count($group_eval_results),
+		"individual_evals" => $individual_eval_results	//id, name
 		]);
 ?>
