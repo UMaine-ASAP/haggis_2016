@@ -10,20 +10,17 @@
 	<table id="cumulativeResults">
 		<thead>
 			<tr>
-				<th>Criteria 1</th>
-				<th>Criteria 2</th>
-				<th>Criteria 3</th>
-				<th>Criteria 4</th>
-				<th>Criteria 5</th>
+				{% for i in 1..(assignment.criteriaCount) %}
+				<th>Criteria {{i}}</th>
+				{% endfor %}
+
 			</tr>
 		</thead>
 		<tbody>
 			<tr> 
-				<td>{{assignment.resultOne}}</td>
-				<td>{{assignment.resultTwo}}</td>
-				<td>{{assignment.resultThree}}</td>
-				<td>{{assignment.resultFour}}</td>
-				<td>{{assignment.resultFive}}</td>
+				{% for criteria in assignment.criteria %}
+				<td>{{criteria}}</td>
+				{% endfor %}
 			</tr>
 		</tbody>
 	</table>
