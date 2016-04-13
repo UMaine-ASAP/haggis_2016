@@ -14,42 +14,76 @@ foreach ($classes as $class)
 		$assignments[] = $class->GetAssignments();
 	}
 }
-
-$evaluationReceived_results = [];
 $criteria_ids = [];
 
 $rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();
 
-foreach ($rec_evaluations as $eval)
+$parentEvaluation = $rec_evaluations[0]->GetParentEvaluation();
+
+$e = new Evaluation($parentEvaluation->evaluationID);
+
+$criterias = $e->GetCriteria();
+foreach($criterias as $key=>$criteria)
 {
-	if($eval->done == 1)
-	{
-		$e = new Evaluation($eval->evaluationID);
-		
-		$criterias = $e->GetCriteria();
-		foreach($criterias as $key=>$criteria)
-		{
-			$criteria_ids[] =
-			[
-				"citeriaID".$key	=> $criteria->criteriaID
-			];
-		}
-	}
+	$criteria_ids[] =
+	[
+		"citeriaID".$key	=> $criteria->criteriaID
+	];
 }
+
+$totalCriteriaResults = array();
 
 foreach ($rec_evaluations as $eval)
 {
 	if($eval->done == 1)
 	{
 		$e = new Evaluation($eval->evaluationID);
-		
+		foreach ($criterias as $key=>$criteria)
+		{
+			$thisRating = $criteria->GetCriteriaRating($e->evaluationID);
+			$totalCriteriaResults[] = $thisRating;
+		}
 	}
 }
+
+$criteriaTotal = 0;
+foreach ($rec_evaluations as $eval)
+{
+	if($eval->done == 1)
+	{
+		$e = new Evaluation($eval->evaluationID);
+		foreach ($criterias as $key=>$criteria)
+		{
+			$criteriaTotal = $criteriaTotal+1;
+		}
+	}
+}
+$criteriaLoop = 0;
+foreach ($rec_evaluations as $key=>$eval)
+{
+	for($i = 0; $i < $criteriaTotal;$i++)
+	{
+		$index = $i + $criteriaLoop;
+		if(isset(${"criteria$i"}))
+		{
+			${"criteria$i"} += $totalCriteriaResults[$index];
+		}
+		else
+		{
+			${"criteria$i"} = $totalCriteriaResults[$index];
+		}
+		print_r(${"criteria$i"});	
+	}
+	$criteriaLoop += $criteriaTotal;
+}
+
+// var_dump($criteria_ids);
+// var_dump($totalCriteriaResults);
+die();
 
 echo $twig->render('cumulative_results_student.html', [
 	"username"      		=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 	"assignments"			=> $assignments,
 	"criterias"				=> $criteria_ids,
-	"evaluationsReceived"	=> $evaluationReceived_results
 	]);
 ?>
