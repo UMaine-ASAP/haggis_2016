@@ -153,11 +153,14 @@ button[name="evaluationID"]{
 #tableContainer{
 	text-align: center;
 	margin: 0 auto;
+	table-layout: fixed;
+	width: 600px; 
 }
 
 .tableLocation{
 	text-align: left;
-	margin: 0 0 0 100px;
+	margin: 0 0 0 5px;
+
 
 }
 
@@ -169,8 +172,8 @@ button[name="evaluationID"]{
 
 #cumulativeResults tbody tr:nth-child(odd) {background: #BBB}
 
-#cumulativeResults tbody td:hover{
-	background: white;
+#cumulativeResults thead th:hover{
+	background: #FFFFFF;
 	cursor: pointer;
 }
 
@@ -181,6 +184,17 @@ button[name="evaluationID"]{
 .ratingIndex strong{
 	margin-right: 10px;
 }
+
+.cumulativeAssignmentTitle{
+	text-align: left;
+	margin: 0 0 0 60px;
+}
+.cumulativeEvalButton{
+
+	margin: 0 0 0 335px;
+
+}
+
 
 <<<<<<< HEAD
 /*EVALUATION--------------------------------------------*/

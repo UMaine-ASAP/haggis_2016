@@ -33,7 +33,7 @@
 </table> -->
 
 <table>
-	<thead><tr><th>Evaluations Received</tr></thead>
+	<thead><tr><th>Recently Received</tr></thead>
 	{% for evaluation in evaluationsReceived %}
 	<tr><td>
 		<form method='post' action='evaluation_view.php'>
@@ -45,4 +45,10 @@
 	<tr><td>No Evaluations</td></tr>
 	{% endfor %}
 </table>
+
+<form method='post' action='cumulative_results.php'>
+<button type="submit">Cumulative Results</button>
+</form>
+
+
 {% endblock %}
