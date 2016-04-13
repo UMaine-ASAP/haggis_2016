@@ -43,7 +43,7 @@ if (isset($_POST['submitRegister'])) {
 	}
 
 
-	if ( empty($_POST['classID'])) {
+	if ( empty($_POST['postClassCode'])) {
 		$data['message'] = "Class ID is required.";
 
 
