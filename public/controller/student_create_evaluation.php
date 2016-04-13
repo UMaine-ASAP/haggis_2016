@@ -138,9 +138,9 @@
 		"groups"		  => $group_results,
 		"individuals"	  => $individual_results,		//userID, name
 		"peer_evals"	  => $peer_eval_results,
-		"numPeers"		  => count($peer_eval_results),
+		"numPeers"		  => count($peer_results),
 		"group_evals"	  => $group_eval_results,
-		"numGroups"		  => count($group_eval_results),
+		"numGroups"		  => count($group_results),
 		"individual_evals" => $individual_eval_results	//id, name
 		]);
 ?>
