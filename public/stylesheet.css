@@ -258,5 +258,12 @@ button[name="evaluationID"]{
 .evaluationsContainer{
 	margin-left: 10px;
 	border: 1px solid black;
-	display: block;
+	display: inline-block;
+	margin-left: auto;
+	vertical-align: top;
+	padding: 5px;
+}
+
+.evaluationsContainer h3{
+	margin: 0;
 }
