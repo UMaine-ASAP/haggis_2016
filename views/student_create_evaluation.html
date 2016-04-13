@@ -47,6 +47,8 @@ Evaluated Group {{group_eval.number}}
 {% endfor %}
 {% endif %}
 
+
+{% if check_individual == 1 %}
 <br><br>
 <form method= 'post' action="evaluation_submit.php">
 <select name="individual_target">
@@ -65,5 +67,6 @@ Evaluated {{individual_eval.name}}
 	<button type="submit">Edit</button>
 </form>
 {% endfor %}
+{% endif %}
 
 {% endblock %}
