@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 require_once __DIR__ . "/../../system/bootstrap.php";
 
 ensureLoggedIn();
@@ -9,6 +7,7 @@ ensureLoggedIn();
 $assignments_results = array();
 
 $classes = $_SESSION['user']->GetClasses();
+$_SESSION['classID'] = 
 $assignments = Array();
 foreach ($classes as $class) {
 	$assignments[] = $class->GetAssignments();

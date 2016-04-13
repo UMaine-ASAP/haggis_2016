@@ -3,8 +3,8 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
-
-	$_SESSION['assignmentID'] = $_POST['assignmentID'];
+	if(!empty($_POST['assignmentID'])) $_SESSION['assignmentID'] = $_POST['assignmentID'];
+	$assignment = new Assignment($_SESSION['assignmentID']);
 	//Get the peers in the user's group
 	$user = $_SESSION['user'];
 
@@ -59,7 +59,7 @@
 			$result = array_search($peer_eval, $evaluations_made);
 			if(gettype($result) == 'integer'){
 				$a = $evaluations_made[$result]->GetAssignment();
-				if($a == $peer_eval->GetAssignment() AND $a->assignmentID == $_SESSION['assignmentID']){
+				if($a == $peer_eval->GetAssignment() AND $a->assignmentID == $_SESSION['assignmentID'] and $peer_eval->evaluation_type == 'Peer'){
 					$peer_eval_results[] = [
 						"name" => $u->firstName." ".$u->lastName,
 						"id"   => $peer_eval->evaluationID
@@ -101,7 +101,32 @@
 	}
 
 	//get students in the class to evaluate for individual assignment
-	
+	$class = $assignment->GetClasses()[0];
+	$users = $class->GetUsers();
+	foreach($users as $u){
+		if($u->userType=="Student" and $u->userID != $_SESSION['user']->userID){
+			$individual_results[] = [
+				"userID" => $u->userID,
+				"name"   => $u->firstName . " " . $u->lastName
+			];
+
+			$rec_evals = $u->GetReceivedEvaluations();
+
+			foreach($rec_evals as $eval){
+				$result = array_search($eval, $evaluations_made);
+				if(gettype($result) == 'integer'){
+					$a = $evaluations_made[$result]->GetAssignment();
+					if($a == $eval->GetAssignment() AND $a->assignmentID == $_SESSION['assignmentID'] and $eval->evaluation_type == 'Individual'){
+						$individual_eval_results[] = [
+							"name" => $u->firstName." ".$u->lastName,
+							"id"   => $eval->evaluationID
+						];
+					}
+				}
+			}
+		}
+	}
+
 
 
 	// You need to send over the assignment id derived from the evaluation id so that the next view can

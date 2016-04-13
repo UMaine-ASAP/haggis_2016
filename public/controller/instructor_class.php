@@ -45,8 +45,14 @@
 							$target = "Peer " . $u->firstName;
 						}
 					} 
-					else {
+					else if ($eval->evaluation_type=='Group'){
 						$target = "Group " . $eval->GetGroup()->groupNumber;
+					}
+					else if ($eval->evaluation_type=='Individual'){
+						if($eval->target_userID != 0){
+							$u = new User($eval->target_userID);
+							$target = "Individual " . $u->firstName;
+						}
 					}
 	
 					if($eval->done == 0){
