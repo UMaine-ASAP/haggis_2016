@@ -141,6 +141,7 @@
 		"numPeers"		  => count($peer_results),
 		"group_evals"	  => $group_eval_results,
 		"numGroups"		  => count($group_results),
-		"individual_evals" => $individual_eval_results	//id, name
+		"individual_evals" => $individual_eval_results,	//id, name
+		"assignmentTitle" => $assignment->title
 		]);
 ?>

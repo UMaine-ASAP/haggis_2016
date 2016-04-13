@@ -151,7 +151,6 @@ button[name="evaluationID"]{
 }
 
 #tableContainer{
-	text-align: center;
 	margin: 0 auto;
 	table-layout: fixed;
 	width: 600px; 
@@ -173,8 +172,9 @@ button[name="evaluationID"]{
 #cumulativeResults tbody tr:nth-child(odd) {background: #BBB}
 
 #cumulativeResults thead th:hover{
-	background: #FFFFFF;
-	cursor: pointer;
+	/*Commented out by Dylan. If there is nothing they can do by clicking, yet, then it the th shouldn't highlight when the mouse hovers on top of it.*/
+	/*background: #FFFFFF;*/
+	/*cursor: pointer;*/
 }
 
 #cumulativeResults tbody td{
@@ -187,7 +187,7 @@ button[name="evaluationID"]{
 
 .cumulativeAssignmentTitle{
 	text-align: left;
-	margin: 0 0 0 60px;
+	/*margin: 0 0 0 60px;*/
 }
 .cumulativeEvalButton{
 
@@ -195,8 +195,6 @@ button[name="evaluationID"]{
 
 }
 
-
-<<<<<<< HEAD
 /*EVALUATION--------------------------------------------*/
 #evaluation .criteria .radio{
 	display: inline-block;
@@ -220,7 +218,7 @@ button[name="evaluationID"]{
 	display: block;
 	
 }
-=======
+
 /*INSTRUCTOR CLASS------------------------------------------*/
 
 #instructorClassTables{
@@ -254,4 +252,11 @@ button[name="evaluationID"]{
 
 #assignUsers td{
 	border:1px solid black;
+}
+
+/*STUDENT CREATE EVALUATION------------------------------------------*/
+.evaluationsContainer{
+	margin-left: 10px;
+	border: 1px solid black;
+	display: block;
 }
