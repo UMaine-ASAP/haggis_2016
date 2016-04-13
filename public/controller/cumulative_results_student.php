@@ -58,6 +58,7 @@ foreach ($rec_evaluations as $eval)
 		}
 	}
 }
+
 $criteriaLoop = 0;
 foreach ($rec_evaluations as $key=>$eval)
 {
@@ -71,19 +72,30 @@ foreach ($rec_evaluations as $key=>$eval)
 		else
 		{
 			${"criteria$i"} = $totalCriteriaResults[$index];
-		}
-		print_r(${"criteria$i"});	
+		}	
 	}
 	$criteriaLoop += $criteriaTotal;
 }
 
-// var_dump($criteria_ids);
-// var_dump($totalCriteriaResults);
+for($i = 0; $i < $criteriaTotal;$i++)
+{
+	${"avgCriteriaRating$i"} = ${"criteria$i"}/($key+1);
+}
+
+for($i = 0; $i < $criteriaTotal; $i++)
+{
+	$allTheRatingsAveraged[] =
+	[
+		${"avgCriteriaRating$i"}
+	];
+}
+var_dump($allTheRatingsAveraged);
 die();
 
 echo $twig->render('cumulative_results_student.html', [
 	"username"      		=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 	"assignments"			=> $assignments,
 	"criterias"				=> $criteria_ids,
+	"ratings"				=> $allTheRatingsAveraged
 	]);
 ?>
