@@ -12,11 +12,11 @@ ini_set('display_errors', '1');
 
 
 	foreach($assignments as $a){
-		$overallGroup = [0,0,0,0,0];
+		$overallGroup = array();
 		$countGroup = 0;
-		$overallPeer = [0,0,0,0,0];
+		$overallPeer = array();
 		$countPeer = 0;
-		$overallIndividual = [0,0,0,0,0];
+		$overallIndividual = array();
 		$countIndividual = 0;
 
 		foreach($rec_evals as $eval){
@@ -25,9 +25,10 @@ ini_set('display_errors', '1');
 				if($eval->evaluation_type == 'Group'){
 					$criteria = $eval->GetCriteria();
 					for($i = 0; $i < count($criteria)-1; $i++){
-						$overallGroup[$i] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+						$overallGroup[$i][] = $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 					}
 					$countGroup++;
+					
 				}
 				else if($eval->evaluation_type == 'Peer'){
 					$criteria = $eval->GetCriteria();
@@ -38,20 +39,23 @@ ini_set('display_errors', '1');
 				}
 				else if($eval->evaluation_type == 'Individual'){
 					$criteria = $eval->GetCriteria();
-					var_dump($criteria);
+				
 					for($i = 0; $i < count($criteria); $i++){
 						$overallIndividual[$i] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 					}
 					$countIndividual++;
-					var_dump($overallIndividual); echo "<br>";
 				}
 			}
 		}
 		if($countGroup > 0){
+			$criteriaGroupFinal = array();
+			foreach ($overallGroup as $criteria) {
+				var_dump($criteria);echo"<br>";
+			}
 			$assignment_results[] = [
 				"name"		=> $a[0]->title . " Group Results",
 				"id"		=> $a[0]->assignmentID,
-				"resultOne" => round($overallGroup[0]/$countGroup,1),
+				"criteria" => $criteriaFinal,
 				"resultTwo" => round($overallGroup[1]/$countGroup,1),
 				"resultThree" => round($overallGroup[2]/$countGroup,1),
 				"resultFour" => round($overallGroup[3]/$countGroup,1),
