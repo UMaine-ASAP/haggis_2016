@@ -6,8 +6,14 @@
 <h2 class="pageTitle">Classes</h2><br>
 
 <div id ="instructorClassPage"><h2>{{className}}</h2></div>
-<center><table id = "instructorClasspPageAssign" class="table">
+<center><table id = "instructorClassPageAssign" class="table">
 	<thead><tr><th class="table">Assignments</tr></thead>
+
+	<tr><td>
+		<form method='post' action='assignment_create.php'>
+		<button type="submit" value="{{classID}}" name="classID">Add Assignment</button>
+		</form>
+	</td></tr>
 
 	{% for assignment in assignments %}
 		<tr><td>

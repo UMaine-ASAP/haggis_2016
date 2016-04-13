@@ -10,9 +10,10 @@
 
 		<thead><tr><th align="left">Evaluations</th></tr></thead>
 		<tbody>
-				{% if evalsTotal >= 0 %}
-			   <td>Evaluations Complete: {{ evalsTotal }}</td>
-			   	{% else %}
+				{% if evalsTotal > 0 or groupEvaluationID != -1 or peerEvaluationID != -1 or individualEvaluationID != -1 %}
+			   <tr><td>Evaluations Complete: {{ evalsTotal }}</td></tr>
+			   	{% endif %}
+			   	{% if groupEvaluationID == -1 or peerEvaluationID == -1 or individualEvaluationID == -1 %}
 			   <td>
 			   <form method="post" action="evaluation_create.php">
 			   <button type="submit" name="postCreateMasterEval">Create Evaluation</button>
@@ -22,15 +23,21 @@
 			   <tr align="right">
 			   	<td>
 			   
-			    {% if evalsTotal >= 0 %}
+			    {% if groupEvaluationID > 0 %}
 			    <form method="post" action="evaluation_view.php">
 		   		<button type="submit" value="{{groupEvaluationID}}" name="evaluationID">View Group Criteria</button>		
 		   		</form>
 		   		{% endif %}
 
-		   		{% if evalsTotal >= 0 %}
+		   		{% if peerEvaluationID > 0 %}
 			    <form method="post" action="evaluation_view.php">
 		   		<button type="submit" value="{{peerEvaluationID}}" name="evaluationID">View Peer Criteria</button>		
+		   		</form>
+		   		{% endif %}
+
+		   		{% if individualEvaluationID > 0 %}
+			    <form method="post" action="evaluation_view.php">
+		   		<button type="submit" value="{{individualEvaluationID}}" name="evaluationID">View Individual Criteria</button>		
 		   		</form>
 		   		{% endif %}
 
@@ -45,6 +52,8 @@
 
 			   </form>
 		</tbody>
-	
-	</table>
+	</table><br>
+	<form method="post" action="assignment_remove.php">
+   		<button type="submit" value="{{ assignmentID }}" name="assignmentID">Remove assignment from class</button>
+	</form>
 {% endblock %}

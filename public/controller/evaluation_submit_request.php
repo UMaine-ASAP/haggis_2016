@@ -14,11 +14,17 @@
     	$new_eval->groupID = $_SESSION['group_target'];
     	unset($_SESSION['group_target']);
     }
-    else{
+    else if(!empty($_SESSION['peer_target'])){
     	$new_eval->evaluation_type = 'Peer';
     	$new_eval->done = 1;
     	$new_eval->target_userID = $_SESSION['peer_target'];
     	unset($_SESSION['peer_target']);
+    }
+    else if(!empty($_SESSION['individual_target'])){
+        $new_eval->evaluation_type = 'Individual';
+        $new_eval->done = 1;
+        $new_eval->target_userID = $_SESSION['individual_target'];
+        unset($_SESSION['individual_target']);
     }
     
     //create and save results of criteria results into evaluation_criteria table
@@ -36,6 +42,9 @@
 	$new_eval->Save();
 	$parent_eval = new Evaluation($_SESSION['evaluationID']);
 	$parent_eval->AddChildEvaluation($new_eval->evaluationID);
+
+    $assignment = new Assignment($_SESSION['assignmentID']);
+    $assignment->AddEvaluation($new_eval->evaluationID);
 
 	header("location:student_home.php");
 ?>

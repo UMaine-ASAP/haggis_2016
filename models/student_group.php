@@ -128,6 +128,34 @@ class Student_Group {
 			return Array();
 		}
 	}
+
+	public function GetReceivedEvaluations(){
+		
+		$ret = Array();
+		$db = GetDB();
+
+		$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$this->student_groupID}";
+		$rows = $db->query($query);
+		if($rows){
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				/*
+				$query = "SELECT * FROM `evaluation` WHERE `evaluationID` = {$row['evaluationID']}";
+
+				$evaluationes = $db->query($query);
+				if($evaluationes){
+					while($evaluation = $evaluationes->fetch_array(MYSQLI_BOTH)){
+						$ret[] = $evaluation;
+					}
+				}
+				*/
+
+				$e = new Evaluation($row['evaluationID']);
+				$ret[] = $e;
+			}
+		}
+		return $ret;
+	}
 }
 
 ?>

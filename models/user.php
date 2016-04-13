@@ -210,25 +210,30 @@ class User {
 			
 		} 
 
-		$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$this->GetGroup()->student_groupID}";
-		$rows = $db->query($query);
-		if($rows){
-			while($row = $rows->fetch_array(MYSQLI_BOTH)){
-				
-				/*
-				$query = "SELECT * FROM `evaluation` WHERE `evaluationID` = {$row['evaluationID']}";
+		$groups = $this->GetGroups();
+		if($groups != array()){
+		  foreach($groups as $group){
+			$query = "SELECT * FROM `evaluation` WHERE `groupID` = {$group->student_groupID}";
+			$rows = $db->query($query);
+			if($rows){
+				while($row = $rows->fetch_array(MYSQLI_BOTH)){
+					
+					/*
+					$query = "SELECT * FROM `evaluation` WHERE `evaluationID` = {$row['evaluationID']}";
 
-				$evaluationes = $db->query($query);
-				if($evaluationes){
-					while($evaluation = $evaluationes->fetch_array(MYSQLI_BOTH)){
-						$ret[] = $evaluation;
+					$evaluationes = $db->query($query);
+					if($evaluationes){
+						while($evaluation = $evaluationes->fetch_array(MYSQLI_BOTH)){
+							$ret[] = $evaluation;
+						}
 					}
-				}
-				*/
+					*/
 
-				$e = new Evaluation($row['evaluationID']);
-				$ret[] = $e;
+					$e = new Evaluation($row['evaluationID']);
+					$ret[] = $e;
+				}
 			}
+		  }
 		}
 		return $ret;
 	}
@@ -272,20 +277,22 @@ class User {
 			}
 	}
 
-	public function GetGroup(){
+	public function GetGroups(){
 		$db = GetDB();
 		$query = "SELECT * FROM `student_group_user` WHERE `userID` = {$this->userID}";
 
-		$result = $db->query($query);
-		if($result->num_rows != 0){
-			$group = $result->fetch_array(MYSQLI_BOTH);
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				$g = new Student_Group($row['student_groupID']);
+				$ret[] = $g;
 
-			$group = new Student_Group ($group['student_groupID']);
-			return $group;
-		}
-		else{
-			return FALSE;
-			die("Couldn't find group for userID: " . $this->userID);
+			}
+			return $ret;
+		} else {
+			return Array();
 		}
 	}
 
