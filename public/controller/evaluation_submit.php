@@ -22,7 +22,6 @@
 		foreach($evals as $e){
 			if($e->evaluation_type == 'Peer' and $e->target_userID == 0){
 				$eval = $e;
-				var_dump($eval);
 				break;
 			}
 		}
