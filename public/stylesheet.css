@@ -142,6 +142,7 @@ button[name="evaluationID"]{
 	width: 100%;
 }
 
+
 /*CUMULATIVE RESULTS--------------------------------------------*/
 
 #cumulativeResults table{
@@ -262,6 +263,28 @@ button[name="evaluationID"]{
 	margin-left: auto;
 	vertical-align: top;
 	padding: 5px;
+}
+
+.evaluationTarget{
+	display: inline-block;
+	/*vertical-align: middle;*/
+	line-height: 23px;
+	
+}
+
+.editEvaluation{
+	display: inline-block;
+
+}
+
+.editEvaluation button{
+	height: 23px;
+	margin-left: 10px;
+}
+
+.createEvaluation{
+	margin-top: 10px;
+
 }
 
 .evaluationsContainer h3{

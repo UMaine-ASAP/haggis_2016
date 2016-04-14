@@ -46,9 +46,22 @@
 	{% endfor %}
 </table>
 
-<form method='post' action='cumulative_results.php'>
-<button type="submit">Cumulative Results</button>
-</form>
+<table>
+	<thead>
+		<tr>
+			<th>View Received Evaluation Results</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<form method='post' action='cumulative_results.php'>
+					<button type="submit">Cumulative Results</button>
+				</form>
+			</td>
+		</tr>
+</tbody>
+</table>
 
 
 {% endblock %}
