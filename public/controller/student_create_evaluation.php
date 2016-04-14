@@ -127,7 +127,14 @@
 		}
 	}
 
-
+	$check_individual = 0;
+	$individual_evals = $assignment->GetEvaluations();
+	foreach ($individual_evals as $eval) {
+		if($eval->evaluation_type == 'Individual'){
+			$check_individual = 1;
+			break;
+		}
+	}
 
 	// You need to send over the assignment id derived from the evaluation id so that the next view can
 	// populate the dropdown with students/groups.
@@ -141,6 +148,8 @@
 		"numPeers"		  => count($peer_results),
 		"group_evals"	  => $group_eval_results,
 		"numGroups"		  => count($group_results),
-		"individual_evals" => $individual_eval_results	//id, name
+		"individual_evals" => $individual_eval_results,	//id, name
+		"assignmentTitle" => $assignment->title,
+		"check_individual" => $check_individual
 		]);
 ?>

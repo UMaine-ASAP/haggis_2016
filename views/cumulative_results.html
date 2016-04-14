@@ -1,53 +1,31 @@
 {% extends "base_account.html" %}
 {% block title %}Haggis - View Cumulative Results{% endblock %}
 {% block content %}
-<h2 class="pageTitle">Cumulative Score</h2>
+<h2 class="pageTitle">Cumulative Results</h2>
 <div id="tableContainer">
-	<h3 class="tableLocation">Viewing: All</h3>
-	<div class="ratingIndex">
-		<strong>1-<span style="color: #216499">Strongly Disagree</span></strong>
-		<strong>2-<span style="color: #216499">Disagree</span></strong>
-		<strong>3-<span style="color: #216499">Neutral</span></strong>
-		<strong>4-<span style="color: #216499">Agree</span></strong>
-		<strong>5-<span style="color: #216499">Strongly Agree</span></strong>
-	</div>
+	
+{% for assignment in assignments %}
+	<h3 class="cumulativeAssignmentTitle">{{assignment.name}}</h3>
+
 	<table id="cumulativeResults">
 		<thead>
 			<tr>
-				<th>Assignment</th>
-				<th>Criteria 1</th>
-				<th>Criteria 2</th>
-				<th>Criteria 3</th>
-				<th>Criteria 4</th>
-				<th>Criteria 5</th>
+				{% for i in 1..(assignment.criteriaCount) %}
+				<th>Criteria {{i}}</th>
+				{% endfor %}
+
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Edutainment</td>
-				<td>5</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>5</td>
-			</tr>
-			<tr>
-				<td>Interactive Narative</td>
-				<td>3</td>
-				<td>2</td>
-				<td>5</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Musical Instrument</td>
-				<td>2</td>
-				<td>5</td>
-				<td>5</td>
-				<td>5</td>
-				<td>5</td>
+			<tr> 
+				{% for criteria in assignment.criteria %}
+				<td>{{criteria}}</td>
+				{% endfor %}
 			</tr>
 		</tbody>
 	</table>
-</div>
+
+<p>
+<!-- <button type="submit" class="cumulativeEvalButton" value="{{assignment.id}}" name="assignmentID">View {{assignment.title}} Evaluations</button><p> -->
+{% endfor %}
 {% endblock %}
