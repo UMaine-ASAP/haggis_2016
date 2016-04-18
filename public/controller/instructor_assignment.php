@@ -10,17 +10,16 @@
 	if(isset($_POST['assignmentID'])){
 		$_SESSION['assignmentID'] =  $_POST['assignmentID'];
 		$assignmentID = $_POST['assignmentID'];
-		$assignment = new Assignment($assignmentID);
-		$master_evaluations = $assignment->GetEvaluations();
-		$class = $assignment->GetClasses()[0]; //class for this assignment
-		$all_users = $class->GetUsers();
-		$Get_Groups = $assignment->GetGroups();
 	}
 	else
 		$assignmentID = $_SESSION['assignmentID'];
 
 	$assignment = new Assignment($assignmentID);
 	$evaluations = $assignment->GetEvaluations();
+	$master_evaluations = $assignment->GetEvaluations();
+	$class = $assignment->GetClasses()[0]; //class for this assignment
+	$all_users = $class->GetUsers();
+	$Get_Groups = $assignment->GetGroups();
 
 	$master_group = -1;
 	$master_groupID = -1;
@@ -68,7 +67,10 @@
 	//adds EVERY STUDENT into the $studens array
 	foreach($all_users as $user){ //
 		if ($user->userType == "Student"){
-			$students[] = ["name"=>$user->firstName." ".$user->lastName];
+			$students[] = [
+				"name"=>$user->firstName." ".$user->lastName,
+				"id" => $user->userID
+			];
 		}
 	}
 
@@ -77,7 +79,10 @@
 		$group_students = $group->GetUsers();
 		$names = array();
 		foreach ($group_students as $s) {
-			$names[] = $s->firstName." ".$s->lastName;
+			$names[] = [
+				"name"=>$s->firstName." ".$s->lastName,
+				"id" => $s->userID
+			];
 		}
 		$groups[]= [
 			"groupID"=>$group->student_groupID, 

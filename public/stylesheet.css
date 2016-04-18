@@ -255,6 +255,25 @@ button[name="evaluationID"]{
 	border:1px solid black;
 }
 
+/*INSTRUCTOR ASSIGNMENT------------------------------------------*/
+table{
+	display: inline-block;
+}
+#groups{
+	display: inline-block;
+	width: 600px;
+}
+
+#groups table{
+	display: inline-block;
+	margin: 5px;
+
+}
+
+.inline_button{
+	display: inline-block;
+}
+
 /*STUDENT CREATE EVALUATION------------------------------------------*/
 .evaluationsContainer{
 	margin-left: 10px;
