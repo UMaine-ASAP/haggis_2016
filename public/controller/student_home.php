@@ -7,10 +7,10 @@ ensureLoggedIn();
 $assignments_results = array();
 
 $classes = $_SESSION['user']->GetClasses();
-$_SESSION['classID'] = 
 $assignments = Array();
 foreach ($classes as $class) {
 	$assignments[] = $class->GetAssignments();
+	$_SESSION['classID'] = $class->classID;
 }
 
 if ($assignments != array() ) {

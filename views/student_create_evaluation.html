@@ -2,68 +2,99 @@
 {% block title %}Haggis - Student Create Evaluation{% endblock %}
 
 {% block content %}
+<h2 class="pageTitle">{{ assignmentTitle }}</h1>
 <!-- Needs to use twig to populate with groups/users.  -->
+
+<!-- Peers -->
+<div class="evaluationsContainer">
+<h3>Peer Evaluations</h3>
+<!-- Checks to see if the user is part of an assignment that involves an evaluation targeting peers. -->
 {% if numPeers > 0 %}
-<form method= 'post' action="evaluation_submit.php">
-<select name="peer_target">
-	{% for peer in peers %}
-	<option value="{{peer.userID}}">{{peer.name}}</option>
+
+	<!-- Lists peer evaluations the student has created. -->
+	{% for peer_eval in peer_evals %}
+	<div class="evaluationTarget">Evaluated {{peer_eval.name}}</div> 
+	<form method='post' action='evaluation_edit.php' class="editEvaluation">
+		<input type='hidden' value='{{peer_eval.id}}' name='evaluationID'>
+		<button type="submit">Edit</button>
+	</form>
 	{% endfor %}
-</select>
-<!-- When they submit it will next go to the submit_eval controller and show eval id = 144 (the one you made) and have
-the user fill it out. When they hit submit it makes a new eval with a eval_parent id from itself to 144.
-You might have to work this last part out a bit I haven't entirely thought it through. -->
-<button type="submit">Evaluate Peer</button>
-</form><br><br>
 
-{% for peer_eval in peer_evals %}
-Evaluated {{peer_eval.name}} 
-<form method='post' action='evaluation_edit.php'>
-	<input type='hidden' value='{{peer_eval.id}}' name='evaluationID'>
-	<button type="submit">Edit</button>
-</form>
-{% endfor %}
-{% endif %}
+	<!-- Option to create a new peer evaluations -->
+	<form method= 'post' action="evaluation_submit.php" class="createEvaluation">
+		<select name="peer_target">
+			{% for peer in peers %}
+			<option value="{{peer.userID}}">{{peer.name}}</option>
+			{% endfor %}
+		</select>
+		<!-- When they submit it will next go to the submit_eval controller and show eval id = 144 (the one you made) and have
+		the user fill it out. When they hit submit it makes a new eval with a eval_parent id from itself to 144.
+		You might have to work this last part out a bit I haven't entirely thought it through. -->
+		<button type="submit">Create Evaluation</button>
+	</form>
+	{% else %}
+	<div>No Peer Evaluations yet created for {{ assignmentTitle }}.</div>
+	{% endif %}
+
+</div>
 
 
-{% if numGroups > 0 %}
-<br><br>
-<form method= 'post' action="evaluation_submit.php">
-<select name="group_target">
-	{% for group in groups %}
-	<option value="{{group.groupID}}">Group {{group.number}}</option>
+<!-- Groups -->
+<div class="evaluationsContainer">
+	<h3>Group Evaluations</h3>
+	{% if numGroups > 0 %}
+	<!-- Lists group evaluations the user has already made. -->
+	{% for group_eval in group_evals %}
+	<div class="evaluationTarget">Evaluated Group {{group_eval.number}}</div>
+	<form method='post' action='evaluation_edit.php' class="editEvaluation">
+		<input type='hidden' value='{{group_eval.id}}' name='evaluationID'>
+		<button type="submit">Edit</button>
+	</form>
 	{% endfor %}
-</select>
 
-<button type="submit">Evaluate Group</button>
-</form><br><br>
+	<!-- Option to create a new group evaluation. -->
+	<form method= 'post' action="evaluation_submit.php" class="createEvaluation">
+		<select name="group_target">
+			{% for group in groups %}
+			<option value="{{group.groupID}}">Group {{group.number}}</option>
+			{% endfor %}
+		</select>
 
-{% for group_eval in group_evals %}
-Evaluated Group {{group_eval.number}} 
-<form method='post' action='evaluation_edit.php'>
-	<input type='hidden' value='{{group_eval.id}}' name='evaluationID'>
-	<button type="submit">Edit</button>
-</form>
-{% endfor %}
-{% endif %}
+		<button type="submit">Create Evaluation</button>
+	</form>
+	{% else %}
+	<div>No Group Evaluations yet created for {{ assignmentTitle }}.</div>
+	{% endif %}
+</div>
 
-<br><br>
-<form method= 'post' action="evaluation_submit.php">
-<select name="individual_target">
-	{% for individual in individuals %}
-	<option value="{{individual.userID}}">{{individual.name}}</option>
+<!-- Individuals -->
+<div class="evaluationsContainer">
+	<h3>Individual Evaluations</h3>
+	{% if check_individual == 1 %}
+
+	<!-- List individual evaluations the user has already made. -->
+	{% for individual_eval in individual_evals %}
+	<div class="evaluationTarget">Evaluated {{individual_eval.name}}</div>
+	<form method='post' action='evaluation_edit.php' class="editEvaluation">
+		<input type='hidden' value='{{individual_eval.id}}' name='evaluationID'>
+		<button type="submit">Edit</button>
+	</form>
 	{% endfor %}
-</select>
 
-<button type="submit">Evaluate Individual</button>
-</form><br><br>
+	<!-- Option to create a new individual evaluation. -->
+	<form method= 'post' action="evaluation_submit.php" class="createEvaluation">
+		<select name="individual_target">
+			{% for individual in individuals %}
+			<option value="{{individual.userID}}">{{individual.name}}</option>
+			{% endfor %}
+		</select>
 
-{% for individual_eval in individual_evals %}
-Evaluated {{individual_eval.name}} 
-<form method='post' action='evaluation_edit.php'>
-	<input type='hidden' value='{{individual_eval.id}}' name='evaluationID'>
-	<button type="submit">Edit</button>
-</form>
-{% endfor %}
 
+		<button type="submit">Create Evaluation</button>
+	</form>
+	{% else %}
+	<div>No Individual Evaluations yet created for {{ assignmentTitle }}.</div>
+	{% endif %}
+
+</div>	
 {% endblock %}

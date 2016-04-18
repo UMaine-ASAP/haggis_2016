@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Assign Users{% endblock %}
 {% block header %}
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 <h2 id="siteTitle">Haggis</h2>
 Welcome, <b>{{professorName}} <!--I should be set beside the logout button -->
 <!--THE A LINK IS DONE POORL, but it works ;) --> 

@@ -51,34 +51,60 @@
 			   </tr>
 			   </form>
 		</tbody>
-<<<<<<< HEAD
 	</table><br><br>
 
-	<form method='post' action='add_user_group.php'>
-		Add Student: 
-		<select name="peer_target">
-			{% for student in students %}
-			<option value="{{peer.userID}}">{{student.name}}</option>
-			{% endfor %}
-		</select>
-		To 
-		<select name="group_target">
-			{% for group in groups %}
-			<option value="{{group.groupID}}">Group {{group.number}}</option>
-			{% endfor %}
-		</select>
-		<button type="submit"> Add</button>
-	</form><br>
+<div id = "roster">
+	<table>
+		<thead><tr><th class="table">Roster</tr></thead>
+
+		{% for student in students %}
+
+			<tr><td>{{student.name}}</td></tr>
+
+		{% endfor %}
+
+	</table>
+</div><br>
+
+{% for group in groups %}
+	<table>
+		<thead><tr><th class="table">Group {{group.number}}</tr></thead>
+
+		{% for name in group.names %}
+
+			<tr>
+				<td>{{name}}</td>
+			</tr>
+
+		{% endfor %}
+		<tr><td>
+			<form method='post' action='add_user_group.php'>
+				Add Student: 
+				<select name="peer_target">
+					{% for student in students %}
+					<option value="{{peer.userID}}">{{student.name}}</option>
+					{% endfor %}
+				</select>
+				<input type="hidden" value="{{group.groupID}}" name="groupID">
+				<button type="submit"> Add</button>
+			</form><br>
+		</td></tr>
+	</table><br>
+{% endfor %}
+
 
 	<form method='post' action='create_group.php'>
 		<input type='hidden' value='{{assignmentID}}' name='assignmentID'>
 		Create New Group with Number: 
 		<input type='number' min='1' name='groupNumber'>
 		<button type="submit">Add</button>
-=======
+
 	</table><br>
+
+	</table><br><br><br><br><br><br><br><br>
+
 	<form method="post" action="assignment_remove.php">
    		<button type="submit" value="{{ assignmentID }}" name="assignmentID">Remove assignment from class</button>
->>>>>>> master
+
 	</form>
 {% endblock %}

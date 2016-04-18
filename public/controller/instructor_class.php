@@ -7,8 +7,9 @@
 	{
 		header("location:login.php");
 	}
-
-	$_SESSION['classID'] = $_POST['classID'];
+	if(!empty($_POST['classID'])){
+		$_SESSION['classID'] = $_POST['classID'];
+	}
 	$class = new Period($_SESSION['classID']);
 	//Build assignments
 	$assignment_results = array();

@@ -10,15 +10,11 @@
 	if(isset($_POST['assignmentID'])){
 		$_SESSION['assignmentID'] =  $_POST['assignmentID'];
 		$assignmentID = $_POST['assignmentID'];
-<<<<<<< HEAD
 		$assignment = new Assignment($assignmentID);
 		$master_evaluations = $assignment->GetEvaluations();
 		$class = $assignment->GetClasses()[0]; //class for this assignment
 		$all_users = $class->GetUsers();
 		$Get_Groups = $assignment->GetGroups();
-		
-=======
->>>>>>> master
 	}
 	else
 		$assignmentID = $_SESSION['assignmentID'];
@@ -66,7 +62,6 @@
 
 	$evalsTotal += count($all_group_evals);
 	$evalsTotal += count($all_peer_evals);
-<<<<<<< HEAD
 	$students = array();
 	$groups = array();	
 
@@ -79,13 +74,19 @@
 
 	//adds existing groups into the $groups array 
 	foreach($Get_Groups as $group){
-		$groups[]= ["groupID"=>$group->student_groupID, "number"=>$group->groupNumber];
+		$group_students = $group->GetUsers();
+		$names = array();
+		foreach ($group_students as $s) {
+			$names[] = $s->firstName." ".$s->lastName;
+		}
+		$groups[]= [
+			"groupID"=>$group->student_groupID, 
+			"number"=>$group->groupNumber,
+			"names" => $names
+			];
 	}
 
-
-=======
 	$evalsTotal += count($all_individual_evals);
->>>>>>> master
 
 	$instructor = $_SESSION['user']->userID;
 
@@ -94,20 +95,13 @@
 			"username"      	    => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 			"assignmentName" 		=> $assignment->title,
 			"assignmentDescription" => $assignment->description,
-<<<<<<< HEAD
-			"evalsTotal" => $evalsTotal,
-			"assignmentID" => $_SESSION['assignmentID'],
-			"groupEvaluationID" => $master_evaluations[0]->evaluationID,
-			"peerEvaluationID" => $master_evaluations[1]->evaluationID,
 			"students" => $students,     //array(["name"=>'matt', "userID"=>50],["name"=>'steven'],["name"=>'matt']),
-			"groups" => $groups           //array(["groupID"=>'6', "number"=>'1'])
-=======
+			"groups" => $groups,           //array(["groupID"=>'6', "number"=>'1'])
 			"evalsTotal" 			=> $evalsTotal,
 			"assignmentID" 			=> $_SESSION['assignmentID'],
 			"groupEvaluationID" 	=> $master_groupID,
 			"peerEvaluationID" 		=> $master_peerID,
 			"individualEvaluationID" => $master_individualID
->>>>>>> master
 		]);
 
 ?>
