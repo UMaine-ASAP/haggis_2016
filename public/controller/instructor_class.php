@@ -1,11 +1,7 @@
 <?php
 
-	ini_set('display_errors',1);  
-	error_reporting(E_ALL);
-
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
-	// echo 'Success';
 
 	if($_SESSION['user']->userType == 'Student')
 	{
@@ -23,6 +19,7 @@
 			"dueDate"    	   => $a[1],
 			"id"  			   => $a[0]->assignmentID
 		];
+		
 	}
 
 	//Build Evaluations
@@ -48,8 +45,14 @@
 							$target = "Peer " . $u->firstName;
 						}
 					} 
-					else {
+					else if ($eval->evaluation_type=='Group'){
 						$target = "Group " . $eval->GetGroup()->groupNumber;
+					}
+					else if ($eval->evaluation_type=='Individual'){
+						if($eval->target_userID != 0){
+							$u = new User($eval->target_userID);
+							$target = "Individual " . $u->firstName;
+						}
 					}
 	
 					if($eval->done == 0){
@@ -74,6 +77,7 @@
 		];
 	}
 
+
 		//Build students
 	$student_results = array();
 	$students = $class->GetUsers();
@@ -88,7 +92,8 @@
 		"className"       => $class->title,
 		"assignments"	  => $assignment_results,
 		"evaluations"	  => $evaluation_results,
-		"students"		  => $student_results
+		"students"		  => $student_results,
+		"classID"	 	  => $_SESSION['classID']
 	]);
 
 ?>

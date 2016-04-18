@@ -10,11 +10,27 @@
 	if(!empty($_POST['group_target'])){
 		$group = new Student_Group($_POST['group_target']);
 		$evaluationTitle .= "Group " . $group->groupNumber . " Evaluation";
-		$eval = $evals[0];
-	}else{
+		foreach($evals as $e){
+			if($e->evaluation_type == 'Group' and $e->groupID == 0){
+				$eval = $e;
+			}
+		}
+	}else if(!empty($_POST['peer_target'])){
 		$user = new User($_POST['peer_target']);
 		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Peer Evaluation";
-		$eval = $evals[1];
+		foreach($evals as $e){
+			if($e->evaluation_type == 'Peer' and $e->target_userID == 0){
+				$eval = $e;
+			}
+		}
+	}else if(!empty($_POST['individual_target'])){
+		$user = new User($_POST['individual_target']);
+		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Individual Evaluation";
+		foreach($evals as $e){
+			if($e->evaluation_type == 'Individual' and $e->target_userID == 0){
+				$eval = $e;
+			}
+		}
 	}
 	 
 
@@ -42,9 +58,13 @@
 	if(!empty($_POST['group_target'])){
 		$_SESSION['group_target'] = $_POST['group_target'];
 	}
-	else{
+	else if(!empty($_POST['peer_target'])){
 		$_SESSION['peer_target'] = $_POST['peer_target'];
 	}
+	else if(!empty($_POST['individual_target'])){
+		$_SESSION['individual_target'] = $_POST['individual_target'];
+	}
+	
 	//Go to html view.
 	echo $twig->render('evaluation_submit.html', [
 		"username"              => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,

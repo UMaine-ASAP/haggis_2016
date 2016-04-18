@@ -2,6 +2,12 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+	if(empty($_POST['postEvaluationTitle']) or empty($_POST['evaluationType'])
+		or in_array("",$_POST['postCriteriaTitle']) or in_array("",$_POST['postOptionOne'])
+		or in_array("",$_POST['postOptionTwo']) or in_array("",$_POST['postOptionThree'])
+		or in_array("",$_POST['postOptionFour']) or in_array("",$_POST['postOptionFive'])){
+		die('Did not submit all fields, try again.');
+	}
 	$evaluation = new Evaluation(0);
 	$evaluation->done = 0;
 	$evaluation->criteriaID = 1;

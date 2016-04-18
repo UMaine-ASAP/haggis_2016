@@ -47,7 +47,7 @@ class Assignment {
 		if($this->assignmentID != -1){
 			$query = "UPDATE `assignment` SET ";
 			$query .= "`title` = '" . $this->title . "', ";
-			$query .= "`description` = '" . $this->description . "', ";
+			$query .= "`description` = '" . $this->description . "' ";
 			$query .= "WHERE `assignmentID` = " . $this->assignmentID;
 
 			$db = GetDB();
@@ -74,6 +74,35 @@ class Assignment {
 		}
 	}
 
+	public function DeleteFromClass($classID){
+		if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
+			return; // Wrong assignmentID
+		}
+
+		$query = "DELETE FROM `assignment_class` WHERE `assignmentID` = {$this->assignmentID} AND `classID` = {$classID}";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't delete assignment from class: " . $classID);
+		}
+	}
+
+	public function DeleteFromEvaluations(){
+		if(!filter_var($this->assignmentID, FILTER_VALIDATE_INT) === TRUE){
+			return; // Wrong assignmentID
+		}
+
+		$query = "DELETE FROM `assignment_evaluation` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't delete assignment from evaluations: " . $this->assignmentID);
+		}
+	}
 /////////////////////////////////////////////////////////////////// CRITERIA
 
 	public function AddCriteria($criteriaID){
@@ -224,7 +253,7 @@ class Assignment {
 		// 	return; // Wrong assignmentID
 		// }
 		// $queryPart = "DATE_FORMAT($dueDate, '%Y %m %d')";
-		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`, `dueDate`) VALUES ({$this->assignmentID}, $classID, $dueDate) ";
+		$query = "INSERT INTO `assignment_class` (`assignmentID`, `classID`, `dueDate`) VALUES ({$this->assignmentID}, $classID, STR_TO_DATE('".$dueDate."', '%Y-%m-%d')) ";
 
 		$db = GetDB();
 		if($db->query($query) === TRUE){

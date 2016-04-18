@@ -23,12 +23,18 @@
 	}else if($eval->evaluation_type == "Peer" and intval($eval->target_userID) > 0){
 		$user = new User($eval->target_userID);
 		$evaluationTitle .= " - " . $user->firstName." ".$user->lastName." Peer Evaluation";
+	}else if($eval->evaluation_type == "Individual" and intval($eval->target_userID) > 0){
+		$user = new User($eval->target_userID);
+		$evaluationTitle .= " - " . $user->firstName." ".$user->lastName." Individual Evaluation";
 	}
 	else if($eval->evaluation_type == "Group"){
 		$evaluationTitle .= " - Group Criteria";
 	}
-	else{
+	else if($eval->evaluation_type == "Peer"){
 		$evaluationTitle .= " - Peer Criteria";
+	}
+	else{
+		$evaluationTitle .= " - Individual Criteria";
 	}
 	 
 
