@@ -18,7 +18,7 @@ class Student_Group {
 
 		// If the criteria_id is equal to zero, then this must be a new criteria
 		if($this->student_groupID == 0){
-			$query = "INSERT INTO `criteria` () VALUES ()";
+			$query = "INSERT INTO `student_group` () VALUES ()";
 			if($db->query($query) === TRUE){
 				$this->student_groupID = $db->insert_id;
 			} else {
@@ -105,6 +105,36 @@ class Student_Group {
 			return $ret;
 		} else {
 			return Array();
+		}
+	}
+
+	public function AddUser($userID){
+		if(!filter_var($this->student_groupID, FILTER_VALIDATE_INT) === TRUE){
+			return; 
+		}
+
+		$query = "INSERT INTO `student_group_user`(`student_groupID`, `userID`) VALUES (".$this->student_groupID.", ". $userID .")";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't add group user: " . $userID);
+		}
+	}
+
+	public function RemoveUser($userID){
+		if(!filter_var($this->student_groupID, FILTER_VALIDATE_INT) === TRUE){
+			return; 
+		}
+
+		$query = "DELETE FROM `student_group_user` WHERE `userID` = {$userID}";
+
+		$db = GetDB();
+		if($db->query($query) === TRUE){
+			// Updated succesfully
+		} else {
+			die("Couldn't delete group user: " . $userID);
 		}
 	}
 

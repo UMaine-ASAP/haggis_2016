@@ -366,7 +366,27 @@ class Assignment {
 			die("Couldn't add evaluation to assignment: " . $this->assignmentID);
 		}
 	}
+
+	public function GetGroups(){
+		$query = "SELECT * FROM `student_group` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				$e = new Student_Group($row['student_groupID']);
+				$ret[] = $e;
+			}
+			return $ret; 
+		} else {
+			return Array();
+		}
+	}
+
+
 }
+
 
 /*
 $u = new Assignment(1);

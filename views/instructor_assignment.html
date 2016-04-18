@@ -6,7 +6,7 @@
 	<h2>{{ assignmentName }}</h2>
 	<p>{{ assignmentDescription }}</p> 
 	
-	<table>
+	<table class="evaluations">
 
 		<thead><tr><th align="left">Evaluations</th></tr></thead>
 		<tbody>
@@ -49,11 +49,78 @@
 
 			   	</td>
 			   </tr>
-
 			   </form>
 		</tbody>
-	</table><br><br><br><br><br><br><br><br>
+	</table>
+
+
+	<table>
+		<thead><tr><th>Roster</tr></thead>
+		<tbody>
+		{% for student in students %}
+
+			<tr><td>{{student.name}}</td></tr>
+
+		{% endfor %}
+	</tbody>
+
+	</table>
+
+
+<div id="groups">
+		<form method='post' action='create_group.php'>
+			<input type='hidden' value='{{assignmentID}}' name='assignmentID'>
+			Create New Group with Number: 
+			<input type='number' min='1' name='groupNumber'>
+			<button type="submit">Add</button>
+		</form>
+{% for group in groups %}
+	<table class="group">
+		<thead>
+			<tr>
+				<th class="table">Group {{group.number}}</th>
+			</tr>
+		</thead>
+
+		{% for name in group.names %}
+
+		<tr>
+			<td>{{name.name}}
+			
+				<form method='post' class="inline_button" action='remove_user_group.php'>
+					<input type="hidden" value="{{group.groupID}}" name="groupID">
+					<input type="hidden" value="{{name.id}}" name="studentID">
+					<button  type="submit">Remove</button>
+				</form>
+			</td>
+		</tr>
+
+		{% endfor %}
+		<tr><td>
+			<form method='post' action='add_user_group.php'>
+				<select name="user_target">
+					{% for student in students %}
+					<option value="{{student.id}}">{{student.name}}</option>
+					{% endfor %}
+				</select>
+				<input type="hidden" value="{{group.groupID}}" name="groupID">
+				<button class="inline_button" type="submit">Add Member</button>
+			</form>
+		</td></tr>
+
+		<tr><td>
+			<form method='post' action='remove_group.php'>
+				<input type="hidden" value="{{group.groupID}}" name="groupID">
+				<button class="inline_button" type="submit">Remove group</button>
+			</form>
+		</td></tr>
+	</table>
+{% endfor %}
+
+</div>
+
 	<form method="post" action="assignment_remove.php">
    		<button type="submit" value="{{ assignmentID }}" name="assignmentID">Remove assignment from class</button>
+
 	</form>
 {% endblock %}
