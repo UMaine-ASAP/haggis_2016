@@ -2,6 +2,10 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+
 	//grab assignment info
 	if(isset($_POST['assignmentID'])){
 		$_SESSION['assignmentID'] =  $_POST['assignmentID'];
@@ -12,6 +16,10 @@
 
 	$assignment = new Assignment($assignmentID);
 	$evaluations = $assignment->GetEvaluations();
+	$master_evaluations = $assignment->GetEvaluations();
+	$class = $assignment->GetClasses()[0]; //class for this assignment
+	$all_users = $class->GetUsers();
+	$Get_Groups = $assignment->GetGroups();
 
 	$master_group = -1;
 	$master_groupID = -1;
@@ -53,6 +61,36 @@
 
 	$evalsTotal += count($all_group_evals);
 	$evalsTotal += count($all_peer_evals);
+	$students = array();
+	$groups = array();	
+
+	//adds EVERY STUDENT into the $studens array
+	foreach($all_users as $user){ //
+		if ($user->userType == "Student"){
+			$students[] = [
+				"name"=>$user->firstName." ".$user->lastName,
+				"id" => $user->userID
+			];
+		}
+	}
+
+	//adds existing groups into the $groups array 
+	foreach($Get_Groups as $group){
+		$group_students = $group->GetUsers();
+		$names = array();
+		foreach ($group_students as $s) {
+			$names[] = [
+				"name"=>$s->firstName." ".$s->lastName,
+				"id" => $s->userID
+			];
+		}
+		$groups[]= [
+			"groupID"=>$group->student_groupID, 
+			"number"=>$group->groupNumber,
+			"names" => $names
+			];
+	}
+
 	$evalsTotal += count($all_individual_evals);
 
 	$instructor = $_SESSION['user']->userID;
@@ -62,6 +100,8 @@
 			"username"      	    => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 			"assignmentName" 		=> $assignment->title,
 			"assignmentDescription" => $assignment->description,
+			"students" => $students,     //array(["name"=>'matt', "userID"=>50],["name"=>'steven'],["name"=>'matt']),
+			"groups" => $groups,           //array(["groupID"=>'6', "number"=>'1'])
 			"evalsTotal" 			=> $evalsTotal,
 			"assignmentID" 			=> $_SESSION['assignmentID'],
 			"groupEvaluationID" 	=> $master_groupID,
