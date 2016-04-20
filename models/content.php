@@ -20,7 +20,10 @@ class Content {
 			if($db->query($query) === TRUE){
 				$this->contentID = $db->insert_id;
 			} else {
-				die("Couldn't create content");
+				$_GET['error'] = 623;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create content");
 			}
 			return;
 		}
@@ -37,10 +40,16 @@ class Content {
 				$this->size = $content['size'];
 				$this->location = $content['location'];
 			} else {
-				die("Couldn't find content: " . $this->contentID);
+				$_GET['error'] = 624;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find content: " . $this->contentID);
 			}
 		} else {
-			die("Couldn't find content: " . $this->contentID);
+			$_GET['error'] = 625;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find content: " . $this->contentID);
 		}
 	}
 
@@ -57,7 +66,10 @@ class Content {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update content: " . $this->contentID);
+				$_GET['error'] = 626;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update content: " . $this->contentID);
 			}
 		}
 	}
@@ -73,7 +85,10 @@ class Content {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete content: " . $this->contentID);
+			$_GET['error'] = 627;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete content: " . $this->contentID);
 		}
 	}
 

@@ -19,7 +19,10 @@ class Course {
 			if($db->query($query) === TRUE){
 				$this->courseID = $db->insert_id;
 			} else {
-				die("Couldn't create course");
+				$_GET['error'] = 628;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create course");
 			}
 			return;
 		}
@@ -35,10 +38,16 @@ class Course {
 				$this->courseCode = $course['courseCode'];
 				$this->description = $course['description'];
 			} else {
-				die("Couldn't find course: " . $this->courseID);
+				$_GET['error'] = 629;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find course: " . $this->courseID);
 			}
 		} else {
-			die("Couldn't find course: " . $this->courseID);
+			$_GET['error'] = 630;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find course: " . $this->courseID);
 		}
 	}
 
@@ -54,7 +63,10 @@ class Course {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update course: " . $this->courseID);
+				$_GET['error'] = 631;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update course: " . $this->courseID);
 			}
 		}
 	}
@@ -70,7 +82,10 @@ class Course {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete course: " . $this->courseID);
+			$_GET['error'] = 632;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete course: " . $this->courseID);
 		}
 	}
 

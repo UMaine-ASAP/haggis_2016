@@ -18,7 +18,10 @@ class Selection {
 			if($db->query($query) === TRUE){
 				$this->selectionID = $db->insert_id;
 			} else {
-				die("Couldn't create selection");
+				$_GET['error'] = 654;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create selection");
 			}
 			return;
 		}
@@ -32,10 +35,16 @@ class Selection {
 			if($selection != NULL){
 				$this->description = $selection['description'];
 			} else {
-				die("Couldn't find selection: " . $this->selectionID);
+				$_GET['error'] = 655;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find selection: " . $this->selectionID);
 			}
 		} else {
-			die("Couldn't find selection: " . $this->selectionID);
+			$_GET['error'] = 656;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find selection: " . $this->selectionID);
 		}
 	}
 
@@ -49,7 +58,10 @@ class Selection {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update selection: " . $this->selectionID);
+				$_GET['error'] = 657;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update selection: " . $this->selectionID);
 			}
 		}
 	}
@@ -65,7 +77,10 @@ class Selection {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete selection: " . $this->selectionID);
+			$_GET['error'] = 658;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete selection: " . $this->selectionID);
 		}
 	}
 

@@ -30,7 +30,10 @@ class User {
 			if($db->query($query) === TRUE){
 				$this->userID = $db->insert_id;
 			} else {
-				die("Couldn't create user");
+				$_GET['error'] = 668;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create user");
 			}
 			return;
 		}
@@ -50,10 +53,16 @@ class User {
 				$this->password = $user['password'];
 				$this->salt = $user['salt'];
 			} else {
-				die("Couldn't find user: " . $this->userID);
+				$_GET['error'] = 669;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find user: " . $this->userID);
 			}
 		} else {
-			die("Couldn't find user: " . $this->userID);
+			$_GET['error'] = 670;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find user: " . $this->userID);
 		}
 	}
 
@@ -103,7 +112,10 @@ class User {
 				return TRUE;
 			} else {
 				return FALSE;
-				die("Couldn't update user: " . $this->userID);
+				$_GET['error'] = 671;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update user: " . $this->userID);
 			}
 		}
 		return FALSE;
@@ -120,7 +132,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db));
+			$_GET['error'] = 672;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db));
 		}
 	}
 
@@ -142,7 +157,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add evaluation to user: " . $this->userID);
+			$_GET['error'] = 673;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add evaluation to user: " . $this->userID);
 		}
 	}
 
@@ -252,7 +270,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			die("Couldn't remove evaluation from user: " . $this->userID);
+			$_GET['error'] = 674;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't remove evaluation from user: " . $this->userID);
 		}
 	}
 

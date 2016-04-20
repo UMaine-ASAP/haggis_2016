@@ -22,7 +22,10 @@ class Criteria {
 			if($db->query($query) === TRUE){
 				$this->criteriaID = $db->insert_id;
 			} else {
-				die("Couldn't create criteria");
+				$_GET['error'] = 633;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create criteria");
 			}
 			return;
 		}
@@ -37,10 +40,16 @@ class Criteria {
 				$this->title = $criteria['title'];
 				$this->description = $criteria['description'];
 			} else {
-				die("Couldn't find criteria: " . $this->criteriaID);
+				$_GET['error'] = 634;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find criteria: " . $this->criteriaID);
 			}
 		} else {
-			die("Couldn't find criteria: " . $this->criteriaID);
+			$_GET['error'] = 635;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find criteria: " . $this->criteriaID);
 		}
 	}
 
@@ -55,7 +64,10 @@ class Criteria {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update criteria: " . $this->criteriaID);
+				$_GET['error'] = 636;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update criteria: " . $this->criteriaID);
 			}
 		}
 	}
@@ -72,7 +84,10 @@ class Criteria {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete criteria: " . $this->criteriaID);
+			$_GET['error'] = 637;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete criteria: " . $this->criteriaID);
 		}
 	}
 
@@ -105,7 +120,10 @@ class Criteria {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add selection to criteria: " . $this->criteriaID);
+			$_GET['error'] = 638;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add selection to criteria: " . $this->criteriaID);
 		}
 	}
 
@@ -120,7 +138,10 @@ class Criteria {
 			return $r['rating'];
 		}
 		else{
-			die("Couldn't find group for evaluation: " . $this->evaluationID);
+			$_GET['error'] = 639;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
 	}
 	public function GetCriteriaComments($evaluationID){
@@ -134,7 +155,10 @@ class Criteria {
 		return $r['comments'];
 	}
 	else{
-		die("Couldn't find group for evaluation: " . $this->evaluationID);
+		$_GET['error'] = 640;
+		$_GET['error-detailed'] = mysqli_error($db);
+		header("location:redirect.php");
+		// die("Couldn't find group for evaluation: " . $this->evaluationID);
 	}
 	}
 }

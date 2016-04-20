@@ -29,7 +29,10 @@ class Evaluation {
 			if($db->query($query) === TRUE){
 				$this->evaluationID = $db->insert_id;
 			} else {
-				die("Couldn't create evaluation");
+				$_GET['error'] = 641;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create evaluation");
 			}
 			return;
 		}
@@ -48,10 +51,16 @@ class Evaluation {
 				$this->evaluation_type = $evaluation['evaluation_type'];
 				$this->groupID = $evaluation['groupID'];
 			} else {
-				die("Couldn't find evaluation: " . $this->evaluationID);
+				$_GET['error'] = 642;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find evaluation: " . $this->evaluationID);
 			}
 		} else {
-			die("Couldn't find evaluation: " . $this->evaluationID);
+			$_GET['error'] = 643;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find evaluation: " . $this->evaluationID);
 		}
 	}
 
@@ -68,7 +77,10 @@ class Evaluation {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't add evaluation: " . $this->evaluationID);
+				$_GET['error'] = 644;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't add evaluation: " . $this->evaluationID);
 			}
 
 	}
@@ -87,7 +99,10 @@ class Evaluation {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db));
+				$_GET['error'] = 645;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db));
 			}
 		}
 	}
@@ -103,7 +118,10 @@ class Evaluation {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete evaluation: " . $this->evaluationID);
+			$_GET['error'] = 646;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete evaluation: " . $this->evaluationID);
 		}
 	}
 
@@ -124,7 +142,10 @@ class Evaluation {
 			return $user;
 		}
 		else{
-			die("Couldn't find user for evaluationID: " . $this->evaluationID);
+			$_GET['error'] = 647;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find user for evaluationID: " . $this->evaluationID);
 		}
 	}
 
@@ -141,7 +162,10 @@ class Evaluation {
 			return $assignment;
 		}
 		else{
-			die("Couldn't find assignment for evaluation: " . $this->evaluationID);
+			$_GET['error'] = 648;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find assignment for evaluation: " . $this->evaluationID);
 		}
 	}
 ////////////////////////////////////////////////////////////// CRITERIA
@@ -177,7 +201,10 @@ class Evaluation {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't update criteria for evaluation: " . $this->evaluationID . " " . mysqli_error($db));
+			$_GET['error'] = 649;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't update criteria for evaluation: " . $this->evaluationID . " " . mysqli_error($db));
 		}
 	}
 
@@ -189,7 +216,10 @@ class Evaluation {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add criteria to evaluation: " . $this->evaluationID);
+			$_GET['error'] = 650;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add criteria to evaluation: " . $this->evaluationID);
 		}
 	}
 
@@ -206,7 +236,10 @@ class Evaluation {
 			return $group;
 		}
 		else{
-			die("Couldn't find group for evaluation: " . $this->evaluationID);
+			$_GET['error'] = 651;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
 	}
 
@@ -218,7 +251,10 @@ class Evaluation {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add child to parent evaluation: " . $this->evaluationID);
+			$_GET['error'] = 652;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add child to parent evaluation: " . $this->evaluationID);
 		}
 	}
 
@@ -253,7 +289,10 @@ class Evaluation {
 			return $eval;
 		}
 		else{
-			die("Couldn't find parent for evaluation: " . $this->evaluationID);
+			$_GET['error'] = 653;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find parent for evaluation: " . $this->evaluationID);
 		}
 	}
 }

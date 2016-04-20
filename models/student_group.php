@@ -22,7 +22,10 @@ class Student_Group {
 			if($db->query($query) === TRUE){
 				$this->student_groupID = $db->insert_id;
 			} else {
-				die("Couldn't create criteria");
+				$_GET['error'] = 659;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create criteria");
 			}
 			return;
 		}
@@ -37,10 +40,16 @@ class Student_Group {
 				$this->assignmentID = $group['assignmentID'];
 				$this->groupNumber = $group['groupNumber'];
 			} else {
-				die("Couldn't find group: " . $this->criteriaID);
+				$_GET['error'] = 660;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find group: " . $this->criteriaID);
 			}
 		} else {
-			die("Couldn't find group: " . $this->criteriaID);
+			$_GET['error'] = 661;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find group: " . $this->criteriaID);
 		}
 	}
 
@@ -55,7 +64,10 @@ class Student_Group {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update group: " . $this->student_groupID);
+				$_GET['error'] = 662;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update group: " . $this->student_groupID);
 			}
 		}
 	}
@@ -69,7 +81,10 @@ class Student_Group {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update group: " . $this->student_groupID);
+				$_GET['error'] = 663;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update group: " . $this->student_groupID);
 			}
 		}
 	}	
@@ -85,7 +100,10 @@ class Student_Group {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete group: " . $this->student_groupID);
+			$_GET['error'] = 664;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete group: " . $this->student_groupID);
 		}
 	}
 	public function GetUsers(){
@@ -119,7 +137,10 @@ class Student_Group {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't add group user: " . $userID);
+			$_GET['error'] = 665;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add group user: " . $userID);
 		}
 	}
 
@@ -134,7 +155,10 @@ class Student_Group {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete group user: " . $userID);
+			$_GET['error'] = 666;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete group user: " . $userID);
 		}
 	}
 
@@ -183,6 +207,12 @@ class Student_Group {
 				$e = new Evaluation($row['evaluationID']);
 				$ret[] = $e;
 			}
+		}
+		else
+		{
+			$_GET['error'] = 667;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
 		}
 		return $ret;
 	}

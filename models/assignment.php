@@ -2,7 +2,6 @@
 require_once dirname(__FILE__) . "/../system/database.php";
 require_once dirname(__FILE__) . "/../models/class.php";
 require_once dirname(__FILE__) . "/../models/criteria.php";
-require_once dirname(__FILE__) . "/../models/part.php";
 
 class Assignment {
 
@@ -21,7 +20,10 @@ class Assignment {
 			if($db->query($query) === TRUE){
 				$this->assignmentID = $db->insert_id;
 			} else {
-				die("Couldn't create assignment");
+				$_GET['error'] = 600;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't create assignment");
 			}
 			return;
 		}
@@ -36,10 +38,16 @@ class Assignment {
 				$this->title = $assignment['title'];
 				$this->description = $assignment['description'];
 			} else {
-				die("Couldn't find assignment: " . $this->assignmentID);
+				$_GET['error'] = 601;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't find assignment: " . $this->assignmentID);
 			}
 		} else {
-			die("Couldn't find assignment: " . $this->assignmentID);
+			$_GET['error'] = 602;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -54,7 +62,10 @@ class Assignment {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update assignment: " . $this->assignmentID);
+				$_GET['error'] = 603;
+				$_GET['error-detailed'] = mysqli_error($db);
+				header("location:redirect.php");
+				// die("Couldn't update assignment: " . $this->assignmentID);
 			}
 		}
 	}
@@ -70,7 +81,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete assignment: " . $this->assignmentID);
+			$_GET['error'] = 604;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -85,7 +99,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete assignment from class: " . $classID);
+			$_GET['error'] = 605;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete assignment from class: " . $classID);
 		}
 	}
 
@@ -100,7 +117,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete assignment from evaluations: " . $this->assignmentID);
+			$_GET['error'] = 606;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't delete assignment from evaluations: " . $this->assignmentID);
 		}
 	}
 /////////////////////////////////////////////////////////////////// CRITERIA
@@ -119,7 +139,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add criteria to assignment: " . $this->assignmentID);
+			$_GET['error'] = 607;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add criteria to assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -169,7 +192,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			die("Couldn't remove criteria from assignment: " . $this->assignmentID);
+			$_GET['error'] = 608;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't remove criteria from assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -189,7 +215,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add part to assignment: " . $this->assignmentID);
+			$_GET['error'] = 609;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add part to assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -239,7 +268,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			die("Couldn't remove part from assignment: " . $this->assignmentID);
+			$_GET['error'] = 610;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't remove part from assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -259,7 +291,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add class to assignment: " . $this->assignmentID . " " . mysqli_error($db));
+			$_GET['error'] = 611;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add class to assignment: " . $this->assignmentID . " " . mysqli_error($db));
 		}
 	}
 
@@ -309,7 +344,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			die("Couldn't remove class from assignment: " . $this->assignmentID);
+			$_GET['error'] = 612;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't remove class from assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -345,7 +383,10 @@ class Assignment {
 			return $eval;
 		}
 		else{
-			die("Couldn't find user for evaluationID: " . $this->evaluationID);
+			$_GET['error'] = 613;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't find user for evaluationID: " . $this->evaluationID);
 		}
 	}
 
@@ -363,7 +404,10 @@ class Assignment {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add evaluation to assignment: " . $this->assignmentID);
+			$_GET['error'] = 614;
+			$_GET['error-detailed'] = mysqli_error($db);
+			header("location:redirect.php");
+			// die("Couldn't add evaluation to assignment: " . $this->assignmentID);
 		}
 	}
 
@@ -386,19 +430,4 @@ class Assignment {
 
 
 }
-
-
-/*
-$u = new Assignment(1);
-$u->AddCriteria(1);
-$u->AddPart(1);
-$u->AddClass(1);
-print_r($u->GetCriteria()); echo "<br>";
-print_r($u->GetPart()); echo "<br>";
-print_r($u->GetClasses()); echo "<br>";
-$u->RemoveCriteria(1);
-$u->RemovePart(1);
-$u->RemoveClass(1);
-*/
-
 ?>
