@@ -99,7 +99,7 @@
 		<tr><td>
 			<form method='post' action='add_user_group.php'>
 				<select name="user_target">
-					{% for student in students %}
+					{% for student in group.students %}
 					<option value="{{student.id}}">{{student.name}}</option>
 					{% endfor %}
 				</select>
