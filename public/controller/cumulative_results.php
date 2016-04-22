@@ -25,7 +25,7 @@ ini_set('display_errors', '1');
 		$criteriaCountIndividual = 0;
 
 		foreach($rec_evals as $eval){
-			$assignmentID = $eval->GetAssignment()->assignmentID;
+			$assignmentID = $eval->GetParentEvaluation()->GetAssignment()->assignmentID;
 			if($a[0]->assignmentID == $assignmentID){
 				if($eval->evaluation_type == 'Group'){
 					$criteria = $eval->GetCriteria();
