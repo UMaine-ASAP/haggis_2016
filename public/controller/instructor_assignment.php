@@ -78,6 +78,20 @@
 	foreach($Get_Groups as $group){
 		$group_students = $group->GetUsers();
 		$names = array();
+		$students_for_group = $all_users;
+		$students_for_group2 = array();
+		foreach ($students_for_group as $user) {
+			if(in_array($user,$group_students) OR $user->userType == 'Instructor'){
+				continue;
+			}
+			else{
+				$students_for_group2[] = [
+				"name"=>$user->firstName." ".$user->lastName,
+				"id" => $user->userID
+				];
+			}
+		}
+
 		foreach ($group_students as $s) {
 			$names[] = [
 				"name"=>$s->firstName." ".$s->lastName,
@@ -87,7 +101,8 @@
 		$groups[]= [
 			"groupID"=>$group->student_groupID, 
 			"number"=>$group->groupNumber,
-			"names" => $names
+			"names" => $names,
+			"students" => $students_for_group2
 			];
 	}
 
@@ -100,8 +115,8 @@
 			"username"      	    => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 			"assignmentName" 		=> $assignment->title,
 			"assignmentDescription" => $assignment->description,
-			"students" => $students,     //array(["name"=>'matt', "userID"=>50],["name"=>'steven'],["name"=>'matt']),
-			"groups" => $groups,           //array(["groupID"=>'6', "number"=>'1'])
+			"students" 				=> $students,     //array(["name"=>'matt', "userID"=>50],["name"=>'steven'],["name"=>'matt']),
+			"groups" 				=> $groups,       //array(["groupID"=>'6', "number"=>'1'])
 			"evalsTotal" 			=> $evalsTotal,
 			"assignmentID" 			=> $_SESSION['assignmentID'],
 			"groupEvaluationID" 	=> $master_groupID,

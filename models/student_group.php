@@ -128,7 +128,7 @@ class Student_Group {
 			return; 
 		}
 
-		$query = "DELETE FROM `student_group_user` WHERE `userID` = {$userID}";
+		$query = "DELETE FROM `student_group_user` WHERE `userID` = {$userID} AND `student_groupID` = {$this->student_groupID}";
 
 		$db = GetDB();
 		if($db->query($query) === TRUE){

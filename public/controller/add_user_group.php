@@ -8,6 +8,13 @@
 
     $group = new Student_Group($_POST['groupID']);
 
+    $group_users = $group->GetUsers();
+    foreach ($group_users as $u) {
+    	if($u->userID == $_POST['user_target']){
+    		die("Can't add same user to group");
+    	}
+    }
+
     $group->AddUser($_POST['user_target']);
 
 
