@@ -22,9 +22,9 @@ class Student_Group {
 			if($db->query($query) === TRUE){
 				$this->student_groupID = $db->insert_id;
 			} else {
-				$_GET['error'] = 659;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 659;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't create criteria");
 			}
 			return;
@@ -40,15 +40,15 @@ class Student_Group {
 				$this->assignmentID = $group['assignmentID'];
 				$this->groupNumber = $group['groupNumber'];
 			} else {
-				$_GET['error'] = 660;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 660;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't find group: " . $this->criteriaID);
 			}
 		} else {
-			$_GET['error'] = 661;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 661;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't find group: " . $this->criteriaID);
 		}
 	}
@@ -64,9 +64,9 @@ class Student_Group {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				$_GET['error'] = 662;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 662;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't update group: " . $this->student_groupID);
 			}
 		}
@@ -81,9 +81,9 @@ class Student_Group {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				$_GET['error'] = 663;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 663;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't update group: " . $this->student_groupID);
 			}
 		}
@@ -100,9 +100,9 @@ class Student_Group {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 664;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 664;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't delete group: " . $this->student_groupID);
 		}
 	}
@@ -137,9 +137,9 @@ class Student_Group {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 665;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 665;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't add group user: " . $userID);
 		}
 	}
@@ -155,9 +155,9 @@ class Student_Group {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 666;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 666;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't delete group user: " . $userID);
 		}
 	}
@@ -210,9 +210,9 @@ class Student_Group {
 		}
 		else
 		{
-			$_GET['error'] = 667;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 667;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 		}
 		return $ret;
 	}

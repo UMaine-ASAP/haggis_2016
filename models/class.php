@@ -27,9 +27,9 @@ class Period {
 			if($db->query($query) === TRUE){
 				$this->classID = $db->insert_id;
 			} else {
-				$_GET['error'] = 615;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 615;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't create class");
 			}
 			return;
@@ -48,15 +48,15 @@ class Period {
 				$this->description = $class['description'];
 				$this->location = $class['location'];
 			} else {
-				$_GET['error'] = 616;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 616;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't find class: " . $this->classID);
 			}
 		} else {
-			$_GET['error'] = 617;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 617;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't find class: " . $this->classID);
 		}
 	}
@@ -75,10 +75,10 @@ class Period {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				$_GET['error'] = 618;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
-				// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__);
+				$_SESSION['error'] = 618;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__);
 			}
 		}
 	}
@@ -96,10 +96,10 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 619;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
-			// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__);
+			$_SESSION['error'] = 619;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__);
 		}
 	}
 
@@ -114,9 +114,9 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 620;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 620;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't delete class: " . $this->classID);
 		}
 	}
@@ -138,9 +138,9 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			$_GET['error'] = 621;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 621;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't add user to class: " . $this->classID);
 		}
 	}
@@ -192,9 +192,9 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			$_GET['error'] = 622;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 622;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't remove user from class: " . $this->classID);
 		}
 	}

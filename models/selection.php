@@ -18,9 +18,9 @@ class Selection {
 			if($db->query($query) === TRUE){
 				$this->selectionID = $db->insert_id;
 			} else {
-				$_GET['error'] = 654;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 654;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't create selection");
 			}
 			return;
@@ -35,15 +35,15 @@ class Selection {
 			if($selection != NULL){
 				$this->description = $selection['description'];
 			} else {
-				$_GET['error'] = 655;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 655;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't find selection: " . $this->selectionID);
 			}
 		} else {
-			$_GET['error'] = 656;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 656;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't find selection: " . $this->selectionID);
 		}
 	}
@@ -58,9 +58,9 @@ class Selection {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				$_GET['error'] = 657;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 657;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't update selection: " . $this->selectionID);
 			}
 		}
@@ -77,9 +77,9 @@ class Selection {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 658;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 658;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't delete selection: " . $this->selectionID);
 		}
 	}

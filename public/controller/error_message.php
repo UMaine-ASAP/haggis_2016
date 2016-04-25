@@ -1,13 +1,13 @@
 <?php
 require_once __DIR__ . "/../../system/bootstrap.php";
 
-if(isset($_GET['error']))
-	$errNum = $_GET['error'];
+if(isset($_SESSION['error']))
+	$errNum = $_SESSION['error'];
 else
 	$errNum = 0;
 
-if(isset($_GET['error-detailed']))
-	$errDet = $_GET['error-detailed'];
+if(isset($_SESSION['error-detailed']))
+	$errDet = $_SESSION['error-detailed'];
 else
 	$errDet = " No Such Error Known ";
 

@@ -22,9 +22,9 @@ class Criteria {
 			if($db->query($query) === TRUE){
 				$this->criteriaID = $db->insert_id;
 			} else {
-				$_GET['error'] = 633;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 633;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't create criteria");
 			}
 			return;
@@ -40,15 +40,15 @@ class Criteria {
 				$this->title = $criteria['title'];
 				$this->description = $criteria['description'];
 			} else {
-				$_GET['error'] = 634;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 634;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't find criteria: " . $this->criteriaID);
 			}
 		} else {
-			$_GET['error'] = 635;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 635;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't find criteria: " . $this->criteriaID);
 		}
 	}
@@ -64,9 +64,9 @@ class Criteria {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				$_GET['error'] = 636;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 636;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't update criteria: " . $this->criteriaID);
 			}
 		}
@@ -84,9 +84,9 @@ class Criteria {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 637;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 637;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't delete criteria: " . $this->criteriaID);
 		}
 	}
@@ -120,9 +120,9 @@ class Criteria {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			$_GET['error'] = 638;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 638;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't add selection to criteria: " . $this->criteriaID);
 		}
 	}
@@ -138,9 +138,9 @@ class Criteria {
 			return $r['rating'];
 		}
 		else{
-			$_GET['error'] = 639;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 639;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
 	}
@@ -155,9 +155,9 @@ class Criteria {
 		return $r['comments'];
 	}
 	else{
-		$_GET['error'] = 640;
-		$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-		header("location:redirect.php");
+		$_SESSION['error'] = 640;
+		$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+		header("location:error_message.php");
 		// die("Couldn't find group for evaluation: " . $this->evaluationID);
 	}
 	}

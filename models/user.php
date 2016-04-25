@@ -30,9 +30,9 @@ class User {
 			if($db->query($query) === TRUE){
 				$this->userID = $db->insert_id;
 			} else {
-				$_GET['error'] = 668;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 668;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't create user");
 			}
 			return;
@@ -53,15 +53,15 @@ class User {
 				$this->password = $user['password'];
 				$this->salt = $user['salt'];
 			} else {
-				$_GET['error'] = 669;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 669;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't find user: " . $this->userID);
 			}
 		} else {
-			$_GET['error'] = 670;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 670;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't find user: " . $this->userID);
 		}
 	}
@@ -112,9 +112,9 @@ class User {
 				return TRUE;
 			} else {
 				return FALSE;
-				$_GET['error'] = 671;
-				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-				header("location:redirect.php");
+				$_SESSION['error'] = 671;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
 				// die("Couldn't update user: " . $this->userID);
 			}
 		}
@@ -132,10 +132,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			$_GET['error'] = 672;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
-			// die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db)." On Line: ".__LINE__);
+			$_SESSION['error'] = 672;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__);
 		}
 	}
 
@@ -157,9 +157,9 @@ class User {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			$_GET['error'] = 673;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 673;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't add evaluation to user: " . $this->userID);
 		}
 	}
@@ -270,9 +270,9 @@ class User {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			$_GET['error'] = 674;
-			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
-			header("location:redirect.php");
+			$_SESSION['error'] = 674;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
 			// die("Couldn't remove evaluation from user: " . $this->userID);
 		}
 	}
