@@ -84,7 +84,10 @@
 	$students = $class->GetUsers();
 	foreach($students as $s){
 		if($s->userType == 'Student'){
-			$student_results[] = $s->firstName . " " . $s->lastName;
+			$student_results[] = [
+				"name" => $s->firstName . " " . $s->lastName,
+				"id"   => $s->userID
+			];
 		}
 	}
 

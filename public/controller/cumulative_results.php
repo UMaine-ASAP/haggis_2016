@@ -8,7 +8,10 @@ ini_set('display_errors', '1');
 	$assignment_results = array();
 	$class = new Period($_SESSION['classID']);
 	$assignments = $class->GetAssignments();
-	$rec_evals = $_SESSION['user']->GetReceivedEvaluations();
+
+	if($_GET['studentID'] != '') $user = new User(intval($_GET['studentID']));
+
+	$rec_evals = $user->GetReceivedEvaluations();
 
 
 	foreach($assignments as $a){
@@ -24,6 +27,10 @@ ini_set('display_errors', '1');
 		$countIndividual = 0;
 		$criteriaCountIndividual = 0;
 
+		$commentsGroup = array();
+		$commentsPeer= array();
+		$commentsIndividual= array();
+
 		foreach($rec_evals as $eval){
 			$assignmentID = $eval->GetParentEvaluation()->GetAssignment()->assignmentID;
 			if($a[0]->assignmentID == $assignmentID){
@@ -33,6 +40,12 @@ ini_set('display_errors', '1');
 					$criteriaCountGroup = count($criteria);
 					for($i = 0; $i < count($criteria); $i++){
 						$overallGroup[$countGroup][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+
+						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
+							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							$new_comment .= " ----- Score: " . $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+							$commentsGroup[] = $new_comment;
+						}
 					}
 					$countGroup++;
 				}
@@ -42,6 +55,12 @@ ini_set('display_errors', '1');
 					$criteriaCountPeer = count($criteria);
 					for($i = 0; $i < count($criteria); $i++){
 						$overallPeer[$countPeer][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
+							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							$new_comment .= " ----- Score: " . $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+							$commentsPeer[] = $new_comment;
+						}
+
 					}
 					$countPeer++;
 				}
@@ -51,6 +70,12 @@ ini_set('display_errors', '1');
 					$criteriaCountIndividual = count($criteria);
 					for($i = 0; $i < count($criteria); $i++){
 						$overallIndividual[$countIndividual][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
+							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							$new_comment .= " ----- Score: " . $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+							$commentsIndividual[] = $new_comment;
+						}
+
 					}
 					$countIndividual++;
 				}
@@ -73,7 +98,8 @@ ini_set('display_errors', '1');
 			$assignment_results[] = [
 				"name"		=> $a[0]->title . " Group Results",
 				"id"		=> $a[0]->assignmentID,
-				"criteria" => $criteriaGroupFinal,
+				"criteria"  => $criteriaGroupFinal,
+				"comments"  => $commentsGroup,
 				"criteriaCount" => $criteriaCountGroup
 			];
 		}
@@ -95,6 +121,7 @@ ini_set('display_errors', '1');
 				"name"		=> $a[0]->title . " Peer Results",
 				"id"		=> $a[0]->assignmentID,
 				"criteria" => $criteriaPeerFinal,
+				"comments"  => $commentsPeer,
 				"criteriaCount" => $criteriaCountPeer
 			];
 		}
@@ -116,6 +143,7 @@ ini_set('display_errors', '1');
 				"name"		=> $a[0]->title . " Individual Results",
 				"id"		=> $a[0]->assignmentID,
 				"criteria" => $criteriaIndividualFinal,
+				"comments"  => $commentsIndividual,
 				"criteriaCount" => $criteriaCountIndividual
 			];
 		}
@@ -127,6 +155,7 @@ ini_set('display_errors', '1');
 	//get the html page ready to be displayed
 	echo $twig->render('cumulative_results.html',[
 			"username"    	=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+			"name"			=> $user->firstName . " " . $user->lastName,
 			"assignments"   => $assignment_results //name, id, result one-five
 		]);
 
