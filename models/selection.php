@@ -18,7 +18,10 @@ class Selection {
 			if($db->query($query) === TRUE){
 				$this->selectionID = $db->insert_id;
 			} else {
-				die("Couldn't create selection");
+				$_SESSION['error'] = 654;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't create selection");
 			}
 			return;
 		}
@@ -32,10 +35,16 @@ class Selection {
 			if($selection != NULL){
 				$this->description = $selection['description'];
 			} else {
-				die("Couldn't find selection: " . $this->selectionID);
+				$_SESSION['error'] = 655;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't find selection: " . $this->selectionID);
 			}
 		} else {
-			die("Couldn't find selection: " . $this->selectionID);
+			$_SESSION['error'] = 656;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't find selection: " . $this->selectionID);
 		}
 	}
 
@@ -49,7 +58,10 @@ class Selection {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update selection: " . $this->selectionID);
+				$_SESSION['error'] = 657;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't update selection: " . $this->selectionID);
 			}
 		}
 	}
@@ -65,7 +77,10 @@ class Selection {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete selection: " . $this->selectionID);
+			$_SESSION['error'] = 658;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't delete selection: " . $this->selectionID);
 		}
 	}
 

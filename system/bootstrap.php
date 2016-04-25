@@ -23,5 +23,15 @@ if (getenv('WEB_ROOT') != null) {
 	$twig->addGlobal('WEB_ROOT', getenv('WEB_ROOT'));
 }
 
+function myErrorHandler($errno, $errstr, $errfile, $errline) {
+
+    echo "<b>error:</b> [$errno] $errstr<br>";
+    echo "Error on line $errline in $errfile<br>";
+    //Because it will only catch one error before the error handling doesn't work
+    die();
+}
+
+set_error_handler("myErrorHandler");
+
 // Start session
 session_start();

@@ -19,7 +19,10 @@ class Course {
 			if($db->query($query) === TRUE){
 				$this->courseID = $db->insert_id;
 			} else {
-				die("Couldn't create course");
+				$_SESSION['error'] = 628;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't create course");
 			}
 			return;
 		}
@@ -35,10 +38,16 @@ class Course {
 				$this->courseCode = $course['courseCode'];
 				$this->description = $course['description'];
 			} else {
-				die("Couldn't find course: " . $this->courseID);
+				$_SESSION['error'] = 629;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't find course: " . $this->courseID);
 			}
 		} else {
-			die("Couldn't find course: " . $this->courseID);
+			$_SESSION['error'] = 630;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't find course: " . $this->courseID);
 		}
 	}
 
@@ -54,7 +63,10 @@ class Course {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update course: " . $this->courseID);
+				$_SESSION['error'] = 631;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't update course: " . $this->courseID);
 			}
 		}
 	}
@@ -70,7 +82,10 @@ class Course {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete course: " . $this->courseID);
+			$_SESSION['error'] = 632;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't delete course: " . $this->courseID);
 		}
 	}
 

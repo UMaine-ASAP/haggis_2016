@@ -27,7 +27,10 @@ class Period {
 			if($db->query($query) === TRUE){
 				$this->classID = $db->insert_id;
 			} else {
-				die("Couldn't create class");
+				$_SESSION['error'] = 615;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't create class");
 			}
 			return;
 		}
@@ -45,10 +48,16 @@ class Period {
 				$this->description = $class['description'];
 				$this->location = $class['location'];
 			} else {
-				die("Couldn't find class: " . $this->classID);
+				$_SESSION['error'] = 616;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't find class: " . $this->classID);
 			}
 		} else {
-			die("Couldn't find class: " . $this->classID);
+			$_SESSION['error'] = 617;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't find class: " . $this->classID);
 		}
 	}
 
@@ -66,7 +75,10 @@ class Period {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
+				$_SESSION['error'] = 618;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__);
 			}
 		}
 	}
@@ -84,7 +96,10 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
+			$_SESSION['error'] = 619;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__);
 		}
 	}
 
@@ -99,7 +114,10 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete class: " . $this->classID);
+			$_SESSION['error'] = 620;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't delete class: " . $this->classID);
 		}
 	}
 
@@ -120,7 +138,10 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add user to class: " . $this->classID);
+			$_SESSION['error'] = 621;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't add user to class: " . $this->classID);
 		}
 	}
 
@@ -171,7 +192,10 @@ class Period {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			die("Couldn't remove user from class: " . $this->classID);
+			$_SESSION['error'] = 622;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't remove user from class: " . $this->classID);
 		}
 	}
 
@@ -201,18 +225,4 @@ class Period {
 
 	
 }
-
-
-
-
-
-
-
-/*
-$u = new Period(1);
-$u->AddUser(1,1);
-print_r($u->GetUsers()); echo "<br>";
-$u->RemoveUser(1);
-*/
-
 ?>
