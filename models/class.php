@@ -28,7 +28,7 @@ class Period {
 				$this->classID = $db->insert_id;
 			} else {
 				$_GET['error'] = 615;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create class");
 			}
@@ -49,13 +49,13 @@ class Period {
 				$this->location = $class['location'];
 			} else {
 				$_GET['error'] = 616;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find class: " . $this->classID);
 			}
 		} else {
 			$_GET['error'] = 617;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find class: " . $this->classID);
 		}
@@ -76,9 +76,9 @@ class Period {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 618;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
-				// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
+				// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__);
 			}
 		}
 	}
@@ -97,9 +97,9 @@ class Period {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 619;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
-			// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db));
+			// die("Couldn't update class: " . $this->classID . " " . mysqli_error($db)." On Line: ".__LINE__);
 		}
 	}
 
@@ -115,7 +115,7 @@ class Period {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 620;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete class: " . $this->classID);
 		}
@@ -139,7 +139,7 @@ class Period {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 621;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add user to class: " . $this->classID);
 		}
@@ -193,7 +193,7 @@ class Period {
 			// Removed succesfully
 		} else {
 			$_GET['error'] = 622;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't remove user from class: " . $this->classID);
 		}

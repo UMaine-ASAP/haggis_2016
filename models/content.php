@@ -21,7 +21,7 @@ class Content {
 				$this->contentID = $db->insert_id;
 			} else {
 				$_GET['error'] = 623;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create content");
 			}
@@ -41,13 +41,13 @@ class Content {
 				$this->location = $content['location'];
 			} else {
 				$_GET['error'] = 624;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find content: " . $this->contentID);
 			}
 		} else {
 			$_GET['error'] = 625;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find content: " . $this->contentID);
 		}
@@ -67,7 +67,7 @@ class Content {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 626;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update content: " . $this->contentID);
 			}
@@ -86,7 +86,7 @@ class Content {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 627;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete content: " . $this->contentID);
 		}

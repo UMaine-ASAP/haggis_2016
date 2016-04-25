@@ -31,7 +31,7 @@ class User {
 				$this->userID = $db->insert_id;
 			} else {
 				$_GET['error'] = 668;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create user");
 			}
@@ -54,13 +54,13 @@ class User {
 				$this->salt = $user['salt'];
 			} else {
 				$_GET['error'] = 669;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find user: " . $this->userID);
 			}
 		} else {
 			$_GET['error'] = 670;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find user: " . $this->userID);
 		}
@@ -113,7 +113,7 @@ class User {
 			} else {
 				return FALSE;
 				$_GET['error'] = 671;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update user: " . $this->userID);
 			}
@@ -133,9 +133,9 @@ class User {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 672;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
-			// die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db));
+			// die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db)." On Line: ".__LINE__);
 		}
 	}
 
@@ -158,7 +158,7 @@ class User {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 673;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add evaluation to user: " . $this->userID);
 		}
@@ -271,7 +271,7 @@ class User {
 			// Removed succesfully
 		} else {
 			$_GET['error'] = 674;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't remove evaluation from user: " . $this->userID);
 		}

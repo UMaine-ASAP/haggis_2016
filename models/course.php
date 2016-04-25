@@ -20,7 +20,7 @@ class Course {
 				$this->courseID = $db->insert_id;
 			} else {
 				$_GET['error'] = 628;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create course");
 			}
@@ -39,13 +39,13 @@ class Course {
 				$this->description = $course['description'];
 			} else {
 				$_GET['error'] = 629;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find course: " . $this->courseID);
 			}
 		} else {
 			$_GET['error'] = 630;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find course: " . $this->courseID);
 		}
@@ -64,7 +64,7 @@ class Course {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 631;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update course: " . $this->courseID);
 			}
@@ -83,7 +83,7 @@ class Course {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 632;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete course: " . $this->courseID);
 		}

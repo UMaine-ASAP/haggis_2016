@@ -21,7 +21,7 @@ class Assignment {
 				$this->assignmentID = $db->insert_id;
 			} else {
 				$_GET['error'] = 600;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create assignment");
 			}
@@ -39,13 +39,13 @@ class Assignment {
 				$this->description = $assignment['description'];
 			} else {
 				$_GET['error'] = 601;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find assignment: " . $this->assignmentID);
 			}
 		} else {
 			$_GET['error'] = 602;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find assignment: " . $this->assignmentID);
 		}
@@ -63,7 +63,7 @@ class Assignment {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 603;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update assignment: " . $this->assignmentID);
 			}
@@ -82,7 +82,7 @@ class Assignment {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 604;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete assignment: " . $this->assignmentID);
 		}
@@ -100,7 +100,7 @@ class Assignment {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 605;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete assignment from class: " . $classID);
 		}
@@ -118,7 +118,7 @@ class Assignment {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 606;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete assignment from evaluations: " . $this->assignmentID);
 		}
@@ -140,7 +140,7 @@ class Assignment {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 607;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add criteria to assignment: " . $this->assignmentID);
 		}
@@ -193,7 +193,7 @@ class Assignment {
 			// Removed succesfully
 		} else {
 			$_GET['error'] = 608;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't remove criteria from assignment: " . $this->assignmentID);
 		}
@@ -216,7 +216,7 @@ class Assignment {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 609;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add part to assignment: " . $this->assignmentID);
 		}
@@ -269,7 +269,7 @@ class Assignment {
 			// Removed succesfully
 		} else {
 			$_GET['error'] = 610;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't remove part from assignment: " . $this->assignmentID);
 		}
@@ -292,9 +292,9 @@ class Assignment {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 611;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
-			// die("Couldn't add class to assignment: " . $this->assignmentID . " " . mysqli_error($db));
+			// die("Couldn't add class to assignment: " . $this->assignmentID . " " . mysqli_error($db)." On Line: ".__LINE__);
 		}
 	}
 
@@ -345,7 +345,7 @@ class Assignment {
 			// Removed succesfully
 		} else {
 			$_GET['error'] = 612;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't remove class from assignment: " . $this->assignmentID);
 		}
@@ -384,7 +384,7 @@ class Assignment {
 		}
 		else{
 			$_GET['error'] = 613;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find user for evaluationID: " . $this->evaluationID);
 		}
@@ -405,7 +405,7 @@ class Assignment {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 614;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add evaluation to assignment: " . $this->assignmentID);
 		}

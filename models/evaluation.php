@@ -30,7 +30,7 @@ class Evaluation {
 				$this->evaluationID = $db->insert_id;
 			} else {
 				$_GET['error'] = 641;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create evaluation");
 			}
@@ -52,13 +52,13 @@ class Evaluation {
 				$this->groupID = $evaluation['groupID'];
 			} else {
 				$_GET['error'] = 642;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find evaluation: " . $this->evaluationID);
 			}
 		} else {
 			$_GET['error'] = 643;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find evaluation: " . $this->evaluationID);
 		}
@@ -78,7 +78,7 @@ class Evaluation {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 644;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't add evaluation: " . $this->evaluationID);
 			}
@@ -100,9 +100,9 @@ class Evaluation {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 645;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
-				// die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db));
+				// die("Couldn't update evaluation: " . $this->evaluationID . " " . mysqli_error($db)." On Line: ".__LINE__);
 			}
 		}
 	}
@@ -119,7 +119,7 @@ class Evaluation {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 646;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete evaluation: " . $this->evaluationID);
 		}
@@ -143,7 +143,7 @@ class Evaluation {
 		}
 		else{
 			$_GET['error'] = 647;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find user for evaluationID: " . $this->evaluationID);
 		}
@@ -163,7 +163,7 @@ class Evaluation {
 		}
 		else{
 			$_GET['error'] = 648;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find assignment for evaluation: " . $this->evaluationID);
 		}
@@ -202,9 +202,9 @@ class Evaluation {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 649;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
-			// die("Couldn't update criteria for evaluation: " . $this->evaluationID . " " . mysqli_error($db));
+			// die("Couldn't update criteria for evaluation: " . $this->evaluationID . " " . mysqli_error($db)." On Line: ".__LINE__);
 		}
 	}
 
@@ -217,7 +217,7 @@ class Evaluation {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 650;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add criteria to evaluation: " . $this->evaluationID);
 		}
@@ -237,7 +237,7 @@ class Evaluation {
 		}
 		else{
 			$_GET['error'] = 651;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
@@ -252,7 +252,7 @@ class Evaluation {
 			// Created succesfully
 		} else {
 			$_GET['error'] = 652;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add child to parent evaluation: " . $this->evaluationID);
 		}
@@ -290,7 +290,7 @@ class Evaluation {
 		}
 		else{
 			$_GET['error'] = 653;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find parent for evaluation: " . $this->evaluationID);
 		}

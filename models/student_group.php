@@ -23,7 +23,7 @@ class Student_Group {
 				$this->student_groupID = $db->insert_id;
 			} else {
 				$_GET['error'] = 659;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create criteria");
 			}
@@ -41,13 +41,13 @@ class Student_Group {
 				$this->groupNumber = $group['groupNumber'];
 			} else {
 				$_GET['error'] = 660;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find group: " . $this->criteriaID);
 			}
 		} else {
 			$_GET['error'] = 661;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find group: " . $this->criteriaID);
 		}
@@ -65,7 +65,7 @@ class Student_Group {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 662;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update group: " . $this->student_groupID);
 			}
@@ -82,7 +82,7 @@ class Student_Group {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 663;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update group: " . $this->student_groupID);
 			}
@@ -101,7 +101,7 @@ class Student_Group {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 664;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete group: " . $this->student_groupID);
 		}
@@ -138,7 +138,7 @@ class Student_Group {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 665;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't add group user: " . $userID);
 		}
@@ -156,7 +156,7 @@ class Student_Group {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 666;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete group user: " . $userID);
 		}
@@ -211,7 +211,7 @@ class Student_Group {
 		else
 		{
 			$_GET['error'] = 667;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 		}
 		return $ret;

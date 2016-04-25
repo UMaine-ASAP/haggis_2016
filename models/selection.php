@@ -19,7 +19,7 @@ class Selection {
 				$this->selectionID = $db->insert_id;
 			} else {
 				$_GET['error'] = 654;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't create selection");
 			}
@@ -36,13 +36,13 @@ class Selection {
 				$this->description = $selection['description'];
 			} else {
 				$_GET['error'] = 655;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't find selection: " . $this->selectionID);
 			}
 		} else {
 			$_GET['error'] = 656;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't find selection: " . $this->selectionID);
 		}
@@ -59,7 +59,7 @@ class Selection {
 				// Updated succesfully
 			} else {
 				$_GET['error'] = 657;
-				$_GET['error-detailed'] = mysqli_error($db);
+				$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 				header("location:redirect.php");
 				// die("Couldn't update selection: " . $this->selectionID);
 			}
@@ -78,7 +78,7 @@ class Selection {
 			// Updated succesfully
 		} else {
 			$_GET['error'] = 658;
-			$_GET['error-detailed'] = mysqli_error($db);
+			$_GET['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__;
 			header("location:redirect.php");
 			// die("Couldn't delete selection: " . $this->selectionID);
 		}
