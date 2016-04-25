@@ -5,9 +5,5 @@
 <h2 class="pageTitle" style="text-align: center;">Error Home</h2><br>
 <h2 class="pageTitle" style="color: black; text-align: center;">You Are Seeing This Screen Because An Error Was Produced</h2>
 <br>
-{% if errorNum > 599 %}
-	<h2 style="color: black; text-align: center;">Database Error</h2>
-{% endif %}
-<br>
-<h2 style="color: black; text-align: center;">{{ errorNum }} : {{ errorMessage }}</h2>
+<h2>{{ errorNum }} : {{ errorMessage }}</h2>
 {% endblock %}

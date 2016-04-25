@@ -8,8 +8,6 @@
 	}
 
 	$course = $_POST['courseID'];
-	$courseWhole = new Course($course);
-	$courseName = $courseWhole->title;
 
 	function createClass()
 	{
@@ -30,7 +28,7 @@
 	}
 
 	//get the html page ready to be displayed
-	// $page = file_get_contents(dirname(__FILE__) . '/../views/class_new.html');
+	$page = file_get_contents(dirname(__FILE__) . '/../views/class_new.html');
 
 	//replace the values in the html with needed sections
 	echo $twig->render('class_new.html', [
