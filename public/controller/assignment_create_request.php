@@ -14,7 +14,7 @@
     $assignment->description = $_POST['postAssignmentDescription'];
     $assignment->Save();
     $assignment->AddClass($_SESSION['classID'], $_POST['postAssignmentDate']);
+    $_SESSION['assignmentID'] = $assignment->assignmentID;
 
-
-	header("location:instructor_home.php");
+	header("location:instructor_assignment.php");
 ?>
