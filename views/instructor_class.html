@@ -44,7 +44,7 @@
 				<button type="submit" value="{{e.id}}" name="evaluationID">
 					{{e.target}}
 				</button>
-			</form>
+				</form>
 			
 			</td></tr>
 		{% endfor %}
@@ -54,11 +54,24 @@
 </table>
 
 <table id="instructorClassStudent" class="table">
-	<thead><tr><th class="table">Students</tr></thead>
+	<thead><tr><th class="table">Students
+				<th class="table">Results
+			</tr>
+	</thead>
 
 	{% for student in students %}
 
-		<tr><td>{{student}}</td></tr>
+		<tr>
+			<td>{{student.name}}</td>
+			<td>
+				<form method='get' action='cumulative_results.php'>
+				<input type='hidden' value="{{student.id}}" name="studentID">
+				<button type="submit">
+					>>
+				</button>
+				</form>
+			</td>
+		</tr>
 
 	{% endfor %}
 
