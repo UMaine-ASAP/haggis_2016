@@ -30,7 +30,10 @@ class User {
 			if($db->query($query) === TRUE){
 				$this->userID = $db->insert_id;
 			} else {
-				die("Couldn't create user");
+				$_SESSION['error'] = 668;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't create user");
 			}
 			return;
 		}
@@ -50,10 +53,16 @@ class User {
 				$this->password = $user['password'];
 				$this->salt = $user['salt'];
 			} else {
-				die("Couldn't find user: " . $this->userID);
+				$_SESSION['error'] = 669;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't find user: " . $this->userID);
 			}
 		} else {
-			die("Couldn't find user: " . $this->userID);
+			$_SESSION['error'] = 670;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't find user: " . $this->userID);
 		}
 	}
 
@@ -103,7 +112,10 @@ class User {
 				return TRUE;
 			} else {
 				return FALSE;
-				die("Couldn't update user: " . $this->userID);
+				$_SESSION['error'] = 671;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't update user: " . $this->userID);
 			}
 		}
 		return FALSE;
@@ -120,7 +132,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db));
+			$_SESSION['error'] = 672;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't delete user: " . $this->userID . " Because " . mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__);
 		}
 	}
 
@@ -142,7 +157,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Created succesfully
 		} else {
-			die("Couldn't add evaluation to user: " . $this->userID);
+			$_SESSION['error'] = 673;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't add evaluation to user: " . $this->userID);
 		}
 	}
 
@@ -252,7 +270,10 @@ class User {
 		if($db->query($query) === TRUE){
 			// Removed succesfully
 		} else {
-			die("Couldn't remove evaluation from user: " . $this->userID);
+			$_SESSION['error'] = 674;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't remove evaluation from user: " . $this->userID);
 		}
 	}
 
