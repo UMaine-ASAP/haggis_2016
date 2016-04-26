@@ -65,15 +65,11 @@ body{
 /*FOOTER--------------------------------------------*/
 
 #footer{
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-	display: block;
+	
 }
 
 #footer #copywrite{
-	width: 215px;
-	margin: 0px auto;
+	
 }
 
 /*LOGIN--------------------------------------------*/
