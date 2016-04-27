@@ -1,7 +1,7 @@
 {% extends "base_account.html" %}
 {% block title %}Haggis - View Cumulative Results{% endblock %}
 {% block content %}
-<h2 class="pageTitle">Cumulative Results</h2>
+<h2 class="pageTitle">Cumulative Results for {{name}}</h2>
 <div id="tableContainer">
 	
 {% for assignment in assignments %}
@@ -26,6 +26,16 @@
 	</table>
 
 <p>
-<!-- <button type="submit" class="cumulativeEvalButton" value="{{assignment.id}}" name="assignmentID">View {{assignment.title}} Evaluations</button><p> -->
+
+<h3>All comments</h3><br>
+
+
+{% for comment in assignment.comments %}
+
+{{comment}}<br><br>
+
+{% endfor %}
+
+
 {% endfor %}
 {% endblock %}

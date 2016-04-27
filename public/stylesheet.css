@@ -1,8 +1,8 @@
 /*HEADER--------------------------------------------*/
 
 header{
-	background: #216499;
-	border-bottom: 3px solid black;
+	background: #0080ff;
+	border-bottom: 3px solid #cccccc;
 	height: 50px;
 	vertical-align: middle;
 	min-width: 300px;
@@ -12,6 +12,12 @@ header{
 #siteTitle{
 	display: inline-block;
 	margin: 10px 0px 10px 5px;
+}
+
+#siteTitle .a{
+	display: inline-block;
+	margin: 10px 0px 10px 5px;
+	color: white;
 }
 
 #welcome{
@@ -48,7 +54,8 @@ header .register, header .logout, header .login{
 /*BODY--------------------------------------------*/
 
 body{
-	font-family: 'Lora', serif;
+	/*font-family: 'Lora', serif;*/
+	font-family: sans-serif;
 }
 
 #content{
@@ -58,22 +65,18 @@ body{
 /*FOOTER--------------------------------------------*/
 
 #footer{
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-	display: block;
+	
 }
 
 #footer #copywrite{
-	width: 215px;
-	margin: 0px auto;
+	
 }
 
 /*LOGIN--------------------------------------------*/
 
 
 input[name="submitLogin"]{
-	background: #216499;
+	background: #0080ff;
 	color: white;
 	border-color: black;
 	border-width: 2px;
@@ -90,7 +93,7 @@ input[name="submitLogin"]{
 }
 
 #loginContainer h2{
-	color: #216499;
+	color: #0080ff;
 	font-style: italic;
 }
 
@@ -129,20 +132,24 @@ input[name=submitRegister]{
 
 /*STUDENT HOME--------------------------------------------*/
 table{
-	border: 1px solid black;
+	border: 1px black;
 	display: inline-block;
 	vertical-align: top;
 	margin-left: 5px;
 	margin-right: 5px;
 }
 table th{
-	background: #216499;
+	background: #0080ff;
 	padding: 5px;
 	font-size: 18px;
+	color: white;
 }
 
 button[name="evaluationID"]{
 	width: 100%;
+	background: #e6e6e6;
+	text-align: left;
+	color: #0d0d0d;
 }
 
 
@@ -168,7 +175,7 @@ button[name="evaluationID"]{
 }
 
 .pageTitle{
-	color: #216499;
+	color: #0080ff;
 }
 
 #cumulativeResults tbody tr:nth-child(even) {background: #DDD}
@@ -234,9 +241,9 @@ button[name="evaluationID"]{
 }
 
 #instructorClassTablesEval{
-	margin-left: 20px;
-	margin-bottom: 5px;
-	margin-right:20px;
+	/*margin-left: 20px;*/
+	margin-bottom: 10px;
+	/*margin-right:20px;*/
 }
 
 #instructorClasspPageAssign{
@@ -261,6 +268,7 @@ button[name="evaluationID"]{
 /*INSTRUCTOR ASSIGNMENT------------------------------------------*/
 table{
 	display: inline-block;
+	border: 1px solid black;
 }
 #groups{
 	display: inline-block;

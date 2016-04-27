@@ -6,8 +6,6 @@
         die("Didn't provide title and/or date, try again.");
     }
 
-
-    $user = $_SESSION['user'];
     $assignment = new Assignment(0);
 
     $assignment->title = $_POST['postAssignmentTitle'];
