@@ -81,7 +81,7 @@
 
 		//Build students
 	$student_results = array();
-	$students = $class->GetUsers();
+	$students = $class->GetUsersAsc();
 	foreach($students as $s){
 		if($s->userType == 'Student'){
 			$student_results[] = $s->firstName . " " . $s->lastName;

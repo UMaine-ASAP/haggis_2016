@@ -18,7 +18,7 @@
 	$evaluations = $assignment->GetEvaluations();
 	$master_evaluations = $assignment->GetEvaluations();
 	$class = $assignment->GetClasses()[0]; //class for this assignment
-	$all_users = $class->GetUsers();
+	$all_users = $class->GetUsersAsc();
 	$Get_Groups = $assignment->GetGroups();
 
 	$master_group = -1;

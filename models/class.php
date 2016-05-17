@@ -130,6 +130,39 @@ class Period {
 		}
 
 		$query = "SELECT * FROM `class_user` WHERE `classID` = {$this->classID}";
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				
+				/*$query = "SELECT * FROM `user` WHERE `userID` = {$row['userID']}";
+
+				$users = $db->query($query);
+				if($users){
+					while($user = $users->fetch_array(MYSQLI_BOTH)){
+						$user['class_userType'] = $row['userType'];
+						$ret[] = $user;
+					}
+				}*/
+
+				$u = new User($row['userID']);
+				$count++;
+				$ret[] = $u;
+
+			}
+			return $ret;
+		} else {
+			return Array();
+		}
+	}
+
+	public function GetUsersAsc(){
+		if(!filter_var($this->classID, FILTER_VALIDATE_INT) === TRUE){
+			return; // Wrong classID
+		}
+
+		$query = "SELECT * FROM `class_user`, `user` WHERE `classID` = {$this->classID} GROUP BY `user`.firstName ORDER BY `user`.firstName ASC";
 
 		$db = GetDB();
 		$rows = $db->query($query);
