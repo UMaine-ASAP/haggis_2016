@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../../system/bootstrap.php";
 
+//if register button was pressed on login
 if (isset($_POST['submitRegister'])) {
 
 	// Validate fields

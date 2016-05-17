@@ -6,9 +6,11 @@
         die('evaluationID not given');
     }
 
+    //get user, eval, and criteria
     $user = $_SESSION['user'];
     $eval = new Evaluation($_POST['evaluationID']);
     $criteria = $eval->GetCriteria();
+
     //create and save results of criteria results into evaluation_criteria table
 	for ($i = 0; $i<=$_SESSION['count']-1; $i++){
 		$criteriaID = $criteria[$i]->criteriaID;

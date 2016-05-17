@@ -1,8 +1,8 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
-	// echo 'Success';
-
+	
+	//if user is a student, redirect to login
 	if($_SESSION['user']->userType == 'Student')
 	{
 		header("location:login.php");

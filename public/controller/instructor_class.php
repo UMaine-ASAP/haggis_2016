@@ -3,28 +3,33 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+	//if not instructor, go to login
 	if($_SESSION['user']->userType == 'Student')
 	{
 		header("location:login.php");
 	}
+
+	//if class id was not given
 	if(!empty($_POST['classID'])){
 		$_SESSION['classID'] = $_POST['classID'];
 	}
-	$class = new Period($_SESSION['classID']);
+
+	$class = new Period($_SESSION['classID']); //get class object
 	//Build assignments
-	$assignment_results = array();
-	$assignments = $class->GetAssignments();
-	foreach($assignments as $a){
-		$assignment_results[] = [
-			"name"			   => $a[0]->title,
-			"dueDate"    	   => $a[1],
-			"id"  			   => $a[0]->assignmentID
+	$assignment_results = array();				//twig results for assignments
+	$assignments = $class->GetAssignments();	//get assignments for class
+	foreach($assignments as $a){				//for each assignment
+		$assignment_results[] = [				//add twig result
+			"name"			   => $a[0]->title,	//assignment title
+			"dueDate"    	   => $a[1],		//assignment due date
+			"id"  			   => $a[0]->assignmentID //assignment ID
 		];
 		
 	}
 
 	//Build Evaluations
-	$evaluation_results = array();
+	//should be scrapped
+	$evaluation_results = array();			//twig results for evaluations
 
 	foreach($assignments as $a){
 
@@ -79,14 +84,16 @@
 	}
 
 
-		//Build students
+	//Build students
 	$student_results = array();
-	$students = $class->GetUsers();
-	foreach($students as $s){
-		if($s->userType == 'Student'){
-			$student_results[] = [
-				"name" => $s->firstName . " " . $s->lastName,
-				"id"   => $s->userID
+
+	$students = $class->GetUsersAsc(); //ascending order of student's first names
+	foreach($students as $s){			//for each user
+		if($s->userType == 'Student'){	//if user is student
+			$student_results[] = [		//add twig variable
+				"name" => $s->firstName . " " . $s->lastName, //first + last name
+				"id"   => $s->userID 						  //user ID
+
 			];
 		}
 	}

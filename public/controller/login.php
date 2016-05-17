@@ -1,6 +1,7 @@
 <?php 
 	require_once __DIR__ . "/../../system/bootstrap.php";
 
+	//check if there is a message in URL (comes from register page)
 	if (isset($_GET['message'])) {
 		echo $twig->render('login.html', ['message' => $_GET['message']]);
 	} else {
@@ -18,13 +19,16 @@
 			$_SESSION['user'] = $user;
 			$_SESSION['sessionCheck'] = 'true';
 			if ($_SESSION['user']->userType == 'Student'){
+				//if user is student, go to student home
 				header("location:student_home.php");
 			}
 			else{
+				//if user is instructor, go to instructor home
 				header("location:instructor_home.php");
 			}
 		}
 		else {
+			//if credentials are wrong, tell user
 			echo "Wrong Username/Password</br>Please try again.</br>";
 		}
 	}

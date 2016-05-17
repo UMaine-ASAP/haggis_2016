@@ -1,44 +1,53 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
-	$assignment_results = array();
-	$class = new Period($_SESSION['classID']);
-	$assignments = $class->GetAssignments();
 
-	if($_GET['studentID'] != '') $user = new User(intval($_GET['studentID']));
+	$assignment_results = array();							//final Twig results
+	$class = new Period($_SESSION['classID']);				//class object
+	$assignments = $class->GetAssignments();				//get all assignments for class
 
-	$rec_evals = $user->GetReceivedEvaluations();
+	if($_GET['studentID'] != '') $user = new User(intval($_GET['studentID'])); //get userID
 
+	$rec_evals = $user->GetReceivedEvaluations(); 			//get received evaluations
 
-	foreach($assignments as $a){
-		$overallGroup = array();
-		$countGroup = 0;
-		$criteriaCountGroup = 0;
+	foreach($assignments as $a){			//for each assignment
 
-		$overallPeer = array();
-		$countPeer = 0;
-		$criteriaCountPeer = 0;
+		//set group variables
+		$overallGroup = array(); // 2D array, saves each criteria result 
+		$countGroup = 0;		 //number of group evals
+		$criteriaCountGroup = 0; //number of criteria per eval
 
-		$overallIndividual = array();
-		$countIndividual = 0;
-		$criteriaCountIndividual = 0;
+		//set peer variables
+		$overallPeer = array();	// 2D array, saves each criteria result
+		$countPeer = 0;			//number of peer evals
+		$criteriaCountPeer = 0;	//number of criteria per eval
 
+		//set individual variables
+		$overallIndividual = array();	// 2D array, saves each criteria result
+		$countIndividual = 0;			//number of individual evals
+		$criteriaCountIndividual = 0;	//number of criteria of eval
+
+		//set comments varaibles for group/peer/individual
 		$commentsGroup = array();
 		$commentsPeer= array();
 		$commentsIndividual= array();
 
-		foreach($rec_evals as $eval){
+		foreach($rec_evals as $eval){	//for every received eval
+
+			//get assignment ID
 			$assignmentID = $eval->GetParentEvaluation()->GetAssignment()->assignmentID;
+
+			//if received eval's assignment ID is this current assignment ID
 			if($a[0]->assignmentID == $assignmentID){
+
+				//check if eval type is group or peer or individual
 				if($eval->evaluation_type == 'Group'){
-					$criteria = $eval->GetCriteria();
-					$overallGroup[] = array();
-					$criteriaCountGroup = count($criteria);
-					for($i = 0; $i < count($criteria); $i++){
+					$criteria = $eval->GetCriteria();			//get criteria for eval
+					$overallGroup[] = array();					//add index to group evals
+					$criteriaCountGroup = count($criteria);		//get number of criteria for eval
+					for($i = 0; $i < count($criteria); $i++){	//for each criteria of eval
+						//get rating received for criteria and save to 2D array
 						$overallGroup[$countGroup][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 
 						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
@@ -50,10 +59,11 @@ ini_set('display_errors', '1');
 					$countGroup++;
 				}
 				else if($eval->evaluation_type == 'Peer'){
-					$criteria = $eval->GetCriteria();
-					$overallPeer[] = array();
-					$criteriaCountPeer = count($criteria);
-					for($i = 0; $i < count($criteria); $i++){
+					$criteria = $eval->GetCriteria();			//get criteria for eval
+					$overallPeer[] = array();					//add index to group evals
+					$criteriaCountPeer = count($criteria); 		//get number of criteria for eval
+					for($i = 0; $i < count($criteria); $i++){	//for each criteria of eval
+						//get rating received for criteria and save to 2D array
 						$overallPeer[$countPeer][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
 							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
@@ -65,10 +75,11 @@ ini_set('display_errors', '1');
 					$countPeer++;
 				}
 				else if($eval->evaluation_type == 'Individual'){
-					$criteria = $eval->GetCriteria();
-					$overallIndividual[] = array();
-					$criteriaCountIndividual = count($criteria);
-					for($i = 0; $i < count($criteria); $i++){
+					$criteria = $eval->GetCriteria();			//get criteria for eval
+					$overallIndividual[] = array();				//add index to group evals
+					$criteriaCountIndividual = count($criteria);//get number of criteria for eval
+					for($i = 0; $i < count($criteria); $i++){	//for each criteria of eval
+						//get rating received for criteria and save to 2D array
 						$overallIndividual[$countIndividual][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
 							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
@@ -81,76 +92,111 @@ ini_set('display_errors', '1');
 				}
 			}
 		}
+
+		//if there are any group evals
 		if($countGroup > 0){
-			$criteriaGroupFinal = array();
+
+			//initialize final average results for group evals for this assignment
+			$criteriaGroupFinal = array();	
 			for ($i=0; $i < $criteriaCountGroup; $i++) { 
-				$criteriaGroupFinal[] = 0;
-			}
-			foreach ($overallGroup as $criteria) {
-				for ($i=0; $i < $criteriaCountGroup; $i++) { 
-					$criteriaGroupFinal[$i] += $criteria[$i];
-				}
-			}
-			for ($i=0; $i < $criteriaCountGroup; $i++) { 
-				$criteriaGroupFinal[$i] = round($criteriaGroupFinal[$i]/$countGroup,1);
+				$criteriaGroupFinal[] = 0;				 
 			}
 
-			$assignment_results[] = [
-				"name"		=> $a[0]->title . " Group Results",
-				"id"		=> $a[0]->assignmentID,
-				"criteria"  => $criteriaGroupFinal,
-				"comments"  => $commentsGroup,
-				"criteriaCount" => $criteriaCountGroup
+			//foreach group eval receieved
+			foreach ($overallGroup as $criteria) {
+				for ($i=0; $i < $criteriaCountGroup; $i++) { //foreach criteria
+					$criteriaGroupFinal[$i] += $criteria[$i]; //add to running total of criteria rating
+				}
+			}
+
+			//for each criteria
+			for ($i=0; $i < $criteriaCountGroup; $i++) { 
+
+				//get average result for criteria
+				//total of criteria ratings / total number of evals
+				$criteriaGroupFinal[$i] = round($criteriaGroupFinal[$i]/$countGroup,1); 
+			}
+
+
+			$assignment_results[] = [							//add to twig variable
+				"name"		=> $a[0]->title . " Group Results",	//assignment title + group results
+				"id"		=> $a[0]->assignmentID,				//assignment ID
+				"criteria" => $criteriaGroupFinal,				//final averages of criteria
+				"comments"  => $commentsGroup,					//comments for group
+				"criteriaCount" => $criteriaCountGroup			//total number of criteria
+
 			];
 		}
+
+		//if there are any peer evals
 		if($countPeer > 0){
+
+			//initialize final average results for peer evals for this assignment
 			$criteriaPeerFinal = array();
 			for ($i=0; $i < $criteriaCountPeer; $i++) { 
 				$criteriaPeerFinal[] = 0;
 			}
+
+			//for each peer eval received
 			foreach ($overallPeer as $criteria) {
-				for ($i=0; $i < $criteriaCountPeer; $i++) { 
-					$criteriaPeerFinal[$i] += $criteria[$i];
+				for ($i=0; $i < $criteriaCountPeer; $i++) { //foreach criteria
+					$criteriaPeerFinal[$i] += $criteria[$i];//add to running total of criteria rating
 				}
 			}
+
+			//for each criteria
 			for ($i=0; $i < $criteriaCountPeer; $i++) { 
-				$criteriaPeerFinal[$i] = round($criteriaPeerFinal[$i]/$countPeer,1);
+
+				//get average result for criteria
+				//total of criteria ratings / total number of evals
+				$criteriaPeerFinal[$i] = round($criteriaPeerFinal[$i]/$countPeer,1); 
 			}
 
 			$assignment_results[] = [
-				"name"		=> $a[0]->title . " Peer Results",
-				"id"		=> $a[0]->assignmentID,
-				"criteria" => $criteriaPeerFinal,
-				"comments"  => $commentsPeer,
-				"criteriaCount" => $criteriaCountPeer
+
+				"name"		=> $a[0]->title . " Peer Results", //assignment name + peer result
+				"id"		=> $a[0]->assignmentID,			   //assignment id
+				"criteria" => $criteriaPeerFinal,			   //final criteria averages
+				"comments"  => $commentsPeer,				   //criteria comments
+				"criteriaCount" => $criteriaCountPeer		   //number of criteria
+
 			];
 		}
+
+		//if there are any inidividual evals
 		if($countIndividual > 0){
+
+			//initialize final average results for individual evals for this assignment
 			$criteriaIndividualFinal = array();
 			for ($i=0; $i < $criteriaCountIndividual; $i++) { 
 				$criteriaIndividualFinal[] = 0;
 			}
+
+			//for each individual eval received
 			foreach ($overallIndividual as $criteria) {
-				for ($i=0; $i < $criteriaCountIndividual; $i++) { 
-					$criteriaIndividualFinal[$i] += $criteria[$i];
+				for ($i=0; $i < $criteriaCountIndividual; $i++) { //for each criteria
+					$criteriaIndividualFinal[$i] += $criteria[$i];//add to running total of criteria rating
 				}
 			}
+
+			//for each criteria
 			for ($i=0; $i < $criteriaCountIndividual; $i++) { 
+
+				//get average result for criteria
+				//total of criteria ratings / total number of evals
 				$criteriaIndividualFinal[$i] = round($criteriaIndividualFinal[$i]/$countIndividual,1);
 			}
 
 			$assignment_results[] = [
-				"name"		=> $a[0]->title . " Individual Results",
-				"id"		=> $a[0]->assignmentID,
-				"criteria" => $criteriaIndividualFinal,
-				"comments"  => $commentsIndividual,
-				"criteriaCount" => $criteriaCountIndividual
+				"name"		=> $a[0]->title . " Individual Results", //assignment name + individual result
+				"id"		=> $a[0]->assignmentID,					 //assignment id
+				"criteria" => $criteriaIndividualFinal,				 //final criteria averages
+				"comments"  => $commentsIndividual,					 //comments 
+				"criteriaCount" => $criteriaCountIndividual			 //number of criteria
+
 			];
 		}
 	}
-
-
-
 
 	//get the html page ready to be displayed
 	echo $twig->render('cumulative_results.html',[

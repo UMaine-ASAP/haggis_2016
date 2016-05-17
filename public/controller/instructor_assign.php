@@ -2,11 +2,11 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
-	$assignment = new Assignment($_SESSION['assignmentID']);
-	$class = $assignment->GetClasses()[0];
+	$assignment = new Assignment($_SESSION['assignmentID']); //get assignment object
+	$class = $assignment->GetClasses()[0];					 //get class object
 
-	$users = $class->GetUsers();
-	$master = new Evaluation($_POST['evaluationID']);
+	$users = $class->GetUsers();							 //get users from class
+	$master = new Evaluation($_POST['evaluationID']);		 
 	$master_criteria = $master->GetCriteria();
 
 	foreach($users as $u){
