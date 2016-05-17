@@ -1,0 +1,9 @@
+{% extends "base_account.html" %}
+{% block title %}Haggis - Error Home{% endblock %}
+
+{% block content %}
+<h2 class="pageTitle" style="text-align: center;">Error Page</h2><br>
+<h2 class="pageTitle" style="color: black; text-align: center;">You Are Seeing This Screen Because An Error Was Produced</h2>
+<br>
+<h2 class="pageTitle" style="color: red; text-align: center;">{{ errorNum }} : {{ errorMessage }}</h2>
+{% endblock %}

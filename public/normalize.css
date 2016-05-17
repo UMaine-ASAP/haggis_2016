@@ -325,11 +325,18 @@ button,
  * 2. Correct the inability to style clickable types in iOS.
  */
 
+/* EDIT FOR THE 
+
 button,
 html [type="button"], /* 1 */
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button; /* 2 */
+  -webkit-pearance: button; /* 2 */
+
+  /*background: #0080ff;
+  vertical-align: middle;
+  color: white;
+  border:none;*/
 }
 
 /**

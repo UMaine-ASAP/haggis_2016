@@ -55,7 +55,8 @@
 	<tbody>
 		<tr>
 			<td>
-				<form method='post' action='cumulative_results.php'>
+				<form method='get' action='cumulative_results.php'>
+					<input type='hidden' value="{{id}}" name="studentID">
 					<button type="submit">Cumulative Results</button>
 				</form>
 			</td>

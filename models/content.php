@@ -20,7 +20,10 @@ class Content {
 			if($db->query($query) === TRUE){
 				$this->contentID = $db->insert_id;
 			} else {
-				die("Couldn't create content");
+				$_SESSION['error'] = 623;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't create content");
 			}
 			return;
 		}
@@ -37,10 +40,16 @@ class Content {
 				$this->size = $content['size'];
 				$this->location = $content['location'];
 			} else {
-				die("Couldn't find content: " . $this->contentID);
+				$_SESSION['error'] = 624;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't find content: " . $this->contentID);
 			}
 		} else {
-			die("Couldn't find content: " . $this->contentID);
+			$_SESSION['error'] = 625;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't find content: " . $this->contentID);
 		}
 	}
 
@@ -57,7 +66,10 @@ class Content {
 			if($db->query($query) === TRUE){
 				// Updated succesfully
 			} else {
-				die("Couldn't update content: " . $this->contentID);
+				$_SESSION['error'] = 626;
+				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+				header("location:error_message.php");
+				// die("Couldn't update content: " . $this->contentID);
 			}
 		}
 	}
@@ -73,7 +85,10 @@ class Content {
 		if($db->query($query) === TRUE){
 			// Updated succesfully
 		} else {
-			die("Couldn't delete content: " . $this->contentID);
+			$_SESSION['error'] = 627;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+			// die("Couldn't delete content: " . $this->contentID);
 		}
 	}
 

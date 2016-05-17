@@ -67,6 +67,7 @@ foreach($rec_evaluations as $eval){					//for each evaluation received
 // render
 echo $twig->render('student_home.html', [
 	"username"            => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+	"id"				  => $_SESSION['user']->userID,
 	"assignments"         => $assignments_results,
 	"evaluationsToDo"     => $evaluationTodo_results,
 	"evaluationsReceived" => $evaluationReceived_results
