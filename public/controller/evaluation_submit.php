@@ -1,18 +1,21 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
-	//get evaluation
+
+	//get assignment and evaluations
 	$assignment = new Assignment($_SESSION['assignmentID']);
 	$evals = $assignment->GetEvaluations();
 
 	//create evaluation title from assignment name, type of eval, and who it targets.
-	$evaluationTitle = $assignment->title . " - ";
+	$evaluationTitle = $assignment->title . " - "; //assignment title
+
+	//check if group or peer or individual eval
 	if(!empty($_POST['group_target'])){
 		$group = new Student_Group($_POST['group_target']);
 		$evaluationTitle .= "Group " . $group->groupNumber . " Evaluation";
 		foreach($evals as $e){
-			if($e->evaluation_type == 'Group' and $e->groupID == 0){
-				$eval = $e;
+			if($e->evaluation_type == 'Group' and $e->groupID == 0){ //check if template group eval (groupID = 0)
+				$eval = $e;											 //set eval
 				break;
 			}
 		}
@@ -20,8 +23,8 @@
 		$user = new User($_POST['peer_target']);
 		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Peer Evaluation";
 		foreach($evals as $e){
-			if($e->evaluation_type == 'Peer' and $e->target_userID == 0){
-				$eval = $e;
+			if($e->evaluation_type == 'Peer' and $e->target_userID == 0){ //check if template peer eval (target_userID = 0)
+				$eval = $e;											 	  //set eval
 				break;
 			}
 		}
@@ -29,8 +32,8 @@
 		$user = new User($_POST['individual_target']);
 		$evaluationTitle .= $user->firstName . " " . $user->lastName . " Individual Evaluation";
 		foreach($evals as $e){
-			if($e->evaluation_type == 'Individual' and $e->target_userID == 0){
-				$eval = $e;
+			if($e->evaluation_type == 'Individual' and $e->target_userID == 0){ //check if template individual eval (target_userID = 0)
+				$eval = $e;											 	  		//set eval
 				break;
 			}
 		}
@@ -38,23 +41,26 @@
 	 
 
 	//get critera of evaluation.
-	$criteria_results = array();
-	$criteria = $eval->GetCriteria();
-	$count = 0;
-	foreach($criteria as $c){
-		$s = $c->GetSelections();
+	$criteria_results = array();		//initialize criteria twig var
+	$criteria = $eval->GetCriteria();	//get criteria for this eval
+	$count = 0;							//counts how many criteria there are
+
+	foreach($criteria as $c){			//foreach criteria
+		$s = $c->GetSelections();		//get choices
 		$count++;
-		 $criteria_results[] = [
-		 	'id' => $c->criteriaID,
-		 	'criteriaTitle' => $c->title,
-		 	'count' => $count,
-		 	'v1' => $s[0]->description,
+		 $criteria_results[] = [		//add to twig var
+		 	'id' => $c->criteriaID,			//criteria ID
+		 	'criteriaTitle' => $c->title,	//description of criteria
+		 	'count' => $count,				//what number criteria it is
+		 	'v1' => $s[0]->description,		//choice 1
 		 	'v2' => $s[1]->description,
 		 	'v3' => $s[2]->description,
 		 	'v4' => $s[3]->description,
-		 	'v5' => $s[4]->description
+		 	'v5' => $s[4]->description 		//choice 5
 		 ];
 	}
+
+	//set some sessions variables for the submission of evaluation in 'evaluation_submit_request.php'
 	$_SESSION['count'] = $count;
 	$_SESSION['evaluationID'] = $eval->evaluationID;
 

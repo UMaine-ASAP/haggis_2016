@@ -147,7 +147,6 @@ class Period {
 				}*/
 
 				$u = new User($row['userID']);
-				$count++;
 				$ret[] = $u;
 
 			}

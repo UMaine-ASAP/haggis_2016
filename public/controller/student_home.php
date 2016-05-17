@@ -6,24 +6,26 @@ ensureLoggedIn();
 //Build assignments
 $assignments_results = array();
 
-$classes = $_SESSION['user']->GetClasses();
-$assignments = Array();
-foreach ($classes as $class) {
-	$assignments[] = $class->GetAssignments();
-	$_SESSION['classID'] = $class->classID;
+$classes = $_SESSION['user']->GetClasses(); 	//get all of student's classes
+$assignments = Array();							//setup assignment array
+
+foreach ($classes as $class) {					//for every class
+	$assignments[] = $class->GetAssignments();	//get assignments for class
+	$_SESSION['classID'] = $class->classID;		//set classID for session
 }
 
-if ($assignments != array() ) {
-	foreach ($assignments[0] as $assignment) {
-		$assignments_results[] = [
-			"id"    => $assignment[0]->assignmentID,
-			"title" => $assignment[0]->title,
-			"due"   => $assignment[1]
+if ($assignments != array() ) {					//if there are assignments for student
+	foreach ($assignments[0] as $assignment) {	//go through each assignment
+		$assignments_results[] = [				//set Twig variables for displaying assignments
+			"id"    => $assignment[0]->assignmentID,	//assignment id
+			"title" => $assignment[0]->title,			//assignment title
+			"due"   => $assignment[1]					//assignment due date
 		];
 	}
 }
 
 //build evaluations to do
+//scrapped due to redesign
 $evaluationTodo_results = array();
 $evaluations = $_SESSION['user']->GetEvaluations();
 
@@ -50,16 +52,14 @@ foreach($evaluations as $eval) {
 }
 
 //build received evaluations
-$evaluationReceived_results = [];
-$rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();
-// var_dump($rec_evaluations);
-// die("stopped");
-foreach($rec_evaluations as $eval){
-	if($eval->done == 1){
-		$e = new Evaluation($eval->evaluationID);
-		$evaluationReceived_results[] = [
-			"id"    => $eval->evaluationID,
-			"title" => $e->GetParentEvaluation()->GetAssignment()->title . " - " . $e->evaluation_type
+$evaluationReceived_results = [];		//setup Twig results for received evaluations
+$rec_evaluations = $_SESSION['user']->GetReceivedEvaluations();	//get all evaluations targeted at student
+
+foreach($rec_evaluations as $eval){					//for each evaluation received
+	if($eval->done == 1){							//if it's complete
+		$evaluationReceived_results[] = [			//add to Twig results 
+			"id"    => $eval->evaluationID,			//evaluation id
+			"title" => $eval->GetParentEvaluation()->GetAssignment()->title . " - " . $eval->evaluation_type //evaluation title: assignment title + eval type
 		];
 	}
 }
