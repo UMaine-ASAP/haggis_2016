@@ -2,6 +2,7 @@
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+
 	$assignment_results = array();							//final Twig results
 	$class = new Period($_SESSION['classID']);				//class object
 	$assignments = $class->GetAssignments();				//get all assignments for class
@@ -116,6 +117,7 @@
 				$criteriaGroupFinal[$i] = round($criteriaGroupFinal[$i]/$countGroup,1); 
 			}
 
+
 			$assignment_results[] = [							//add to twig variable
 				"name"		=> $a[0]->title . " Group Results",	//assignment title + group results
 				"id"		=> $a[0]->assignmentID,				//assignment ID
@@ -151,11 +153,13 @@
 			}
 
 			$assignment_results[] = [
+
 				"name"		=> $a[0]->title . " Peer Results", //assignment name + peer result
 				"id"		=> $a[0]->assignmentID,			   //assignment id
 				"criteria" => $criteriaPeerFinal,			   //final criteria averages
 				"comments"  => $commentsPeer,				   //criteria comments
 				"criteriaCount" => $criteriaCountPeer		   //number of criteria
+
 			];
 		}
 
@@ -189,6 +193,7 @@
 				"criteria" => $criteriaIndividualFinal,				 //final criteria averages
 				"comments"  => $commentsIndividual,					 //comments 
 				"criteriaCount" => $criteriaCountIndividual			 //number of criteria
+
 			];
 		}
 	}

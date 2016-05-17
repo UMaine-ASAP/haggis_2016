@@ -86,12 +86,14 @@
 
 	//Build students
 	$student_results = array();
+
 	$students = $class->GetUsersAsc(); //ascending order of student's first names
 	foreach($students as $s){			//for each user
 		if($s->userType == 'Student'){	//if user is student
 			$student_results[] = [		//add twig variable
 				"name" => $s->firstName . " " . $s->lastName, //first + last name
 				"id"   => $s->userID 						  //user ID
+
 			];
 		}
 	}
