@@ -1,36 +1,25 @@
 {% extends "base_account.html" %}
-{% block title %}Haggis - Instructor Home{% endblock %}
+{% block title %}
+<!--
+	This page controls the home page, after login, for a teacher account.
+	It contains a list of all the classes that teacher currently teaches.
+-->
+Haggis - Instructor Home
+
+{% endblock %}
 
 {% block content %}
 <h2 class="pageTitle">Classes</h2><br>
 
+<!--For each class, produces a button that takes you to that class' specific page-->
 {% for class in classes %}
 <form id="myform" method='post' action='instructor_class.php'>
 	<button type="submit" id="classButton" value={{courseID}}>{{class.className}}</button>
 </form>
-
-<!--<form method='post' action = 'instructor_class.php' style="cursor:pointer" id="myForm" onclick="goToClass()">
-<input type='hidden' value = "{{class.id}}" name="classID">
-<table>
-	<thead><tr><th>{{class.className}}</tr></thead>
-	<tr><td>Upcoming Assignments:</td></tr>
-	{% for assignment in class.assignmentNames %}
-	<tr><td><ul><b>
-		{{assignment}}
-	</ul></td></tr></b>
-	{% endfor %}
-	<tr><td>Class ID: {{class.id}}</td></tr>
-</table>
-</form>-->
 {% endfor %}
 
+<!--Creates a button that allows you to add a new class-->
 <form method = 'post' action='class_new.php'>
 <button type="submit" id="instructorHomeButton" value="{{courseID}}" name="courseID">Add Class</button>
 </form>
-
-<!--<script>
-function goToClass(){
-	document.getElementById("myForm").submit();
-}
-</script>-->
 {% endblock %}
