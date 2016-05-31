@@ -5,7 +5,11 @@
 <h2 class="pageTitle">Classes</h2><br>
 
 {% for class in classes %}
-<form method='post' action = 'instructor_class.php' style="cursor:pointer" id="myForm" onclick="goToClass()">
+<form id="myform" method='post' action='instructor_class.php'>
+	<button type="submit" id="classButton" value={{courseID}}>{{class.className}}</button>
+</form>
+
+<!--<form method='post' action = 'instructor_class.php' style="cursor:pointer" id="myForm" onclick="goToClass()">
 <input type='hidden' value = "{{class.id}}" name="classID">
 <table>
 	<thead><tr><th>{{class.className}}</tr></thead>
@@ -17,16 +21,16 @@
 	{% endfor %}
 	<tr><td>Class ID: {{class.id}}</td></tr>
 </table>
-</form>
+</form>-->
 {% endfor %}
 
 <form method = 'post' action='class_new.php'>
 <button type="submit" id="instructorHomeButton" value="{{courseID}}" name="courseID">Add Class</button>
 </form>
 
-<script>
+<!--<script>
 function goToClass(){
 	document.getElementById("myForm").submit();
 }
-</script>
+</script>-->
 {% endblock %}
