@@ -29,7 +29,7 @@
 		}
 		else {
 			//if credentials are wrong, tell user
-			echo <font color = 'red'> "Wrong Username/Password</br>Please try again.</br>" </font>;
+			echo "Wrong Username/Password</br>Please try again.</br>";
 		}
 	}
 ?>
