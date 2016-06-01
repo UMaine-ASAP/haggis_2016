@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
 
 	//check if there is a message in URL (comes from register page)
@@ -29,7 +29,7 @@
 		}
 		else {
 			//if credentials are wrong, tell user
-			echo "Wrong Username/Password</br>Please try again.</br>";
+			echo <font color = 'red'> "Wrong Username/Password</br>Please try again.</br>" </font>;
 		}
 	}
 ?>
