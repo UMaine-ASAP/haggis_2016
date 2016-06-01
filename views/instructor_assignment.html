@@ -41,9 +41,10 @@
 		   		</form>
 		   		{% endif %}
 
+		   		<!--button that transports you to results page for assignment-->
 			    {% if evalsTotal > 0 %}
-		   		<form method="post" action="cumulative_results.php">
-		   		<button type="submit" value="{{ assignmentID }}" name="postViewResults">View Results</button>
+		   		<form method="post" action="overall_results.php">
+		   		<button type="submit" value="{{assignmentID}}" name="postViewResults">View Results</button>
 		   		</form>
 		   		{% endif %}
 
