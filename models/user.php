@@ -53,22 +53,17 @@ class User {
 				$this->password = $user['password'];
 				$this->salt = $user['salt'];
 			} else {
-				$this->userID = -1;
-				return;
 				$_SESSION['error'] = 669;
 				$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
 				header("location:error_message.php");
 				// die("Couldn't find user: " . $this->userID);
 			}
 		} else {
-			$this->userID = -1;
-			return;
 			$_SESSION['error'] = 670;
 			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
 			header("location:error_message.php");
 			// die("Couldn't find user: " . $this->userID);
 		}
-
 	}
 
 	public function Login($email, $password){
