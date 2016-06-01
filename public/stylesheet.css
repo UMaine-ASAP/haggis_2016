@@ -40,9 +40,9 @@ header .register, header .logout, header .login{
 }
 
 .register input, .logout input, .login input{
-	border-color: gray;
+	border-color: black;
 	background: white;
-	font-style: normal;
+	font-style: italic;
 }
 .table{
 
@@ -78,8 +78,8 @@ body{
 input[name="submitLogin"]{
 	background: #0080ff;
 	color: white;
-	/*border-color: black;
-	border-width: 2px;*/
+	border-color: black;
+	border-width: 2px;
 	font-size: 18px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -94,7 +94,7 @@ input[name="submitLogin"]{
 
 #loginContainer h2{
 	color: #0080ff;
-	font-style: normal;
+	font-style: italic;
 }
 
 #loginContainer input{
@@ -132,7 +132,7 @@ input[name=submitRegister]{
 
 /*STUDENT HOME--------------------------------------------*/
 table{
-	border: 1px gray;
+	border: 1px black;
 	display: inline-block;
 	vertical-align: top;
 	margin-left: 5px;
@@ -262,13 +262,13 @@ button[name="evaluationID"]{
 }
 
 #assignUsers td{
-	border:1px solid gray;
+	border:1px solid black;
 }
 
 /*INSTRUCTOR ASSIGNMENT------------------------------------------*/
 table{
 	display: inline-block;
-	border: 1px solid gray;
+	border: 1px solid black;
 }
 #groups{
 	display: inline-block;
@@ -288,7 +288,7 @@ table{
 /*STUDENT CREATE EVALUATION------------------------------------------*/
 .evaluationsContainer{
 	margin-left: 10px;
-	border: 1px solid gray;
+	border: 1px solid black;
 	display: inline-block;
 	margin-left: auto;
 	vertical-align: top;
