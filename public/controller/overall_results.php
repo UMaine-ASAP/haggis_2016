@@ -18,7 +18,7 @@
 	echo $twig->render('overall_results.html', [
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"evaluations"     => $evaluations,
-		"assignment"	  => $assignment
-		"criteria"		  => $criteria;
+		"assignment"	  => $assignment,
+		"criteria"		  => $criteria
 	]);
 ?>
