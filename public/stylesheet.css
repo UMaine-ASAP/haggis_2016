@@ -74,6 +74,9 @@ body{
 
 /*LOGIN--------------------------------------------*/
 
+.message {
+	color: red;
+}
 
 input[name="submitLogin"]{
 	background: #0080ff;
