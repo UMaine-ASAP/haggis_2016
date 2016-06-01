@@ -30,7 +30,7 @@
 
 </table>
 
-<!--table id= "instructorClasspPage" class="table">
+<table id= "instructorClasspPage" class="table">
 	<thead><tr><th class="table">Evaluations</tr></thead>
 
 	{% for eval in evaluations %}
@@ -51,7 +51,7 @@
 
 	{% endfor %}
 
-</table>-->
+</table>
 
 <table id="instructorClassStudent" class="table">
 	<thead><tr><th class="table">Students
@@ -65,7 +65,8 @@
 			<td>{{student.name}}</td>
 			<td>
 				<form method='get' action='cumulative_results.php'>
-				<button type="submit" value="{{student.id}}" name="studentID">
+				<input type='hidden' value="{{student.id}}" name="studentID">
+				<button type="submit">
 					>>
 				</button>
 				</form>
