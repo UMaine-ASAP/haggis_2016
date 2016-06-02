@@ -61,17 +61,17 @@
 	}
 
 	#enable each of these to see important information
-	echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-	echo '<pre>' . print_r($_POST, TRUE) . '</pre>';
-	echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($_POST, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 
 	############Rendering page############
 	echo $twig->render('overall_results.html', [
-		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
-		"evaluations"     => $evaluations,
-		"assignment"	  => $assignment,
-		"criteria"		  => $criteria,
-		"assignmentData"  => $assignmentData,
-		"students"		  => $students
+		#"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		#"evaluations"     => $evaluations,
+		#"assignment"	  => $assignment,
+		#"criteria"		  => $criteria,
+		#"assignmentData"  => $assignmentData,
+		#"students"		  => $students
 	]);
 ?>
