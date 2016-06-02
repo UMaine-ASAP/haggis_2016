@@ -1,5 +1,4 @@
 <?php
-
 	############Inclusions############
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
@@ -12,7 +11,7 @@
 	$class = new Period($_SESSION['classID']);
 	$students = $class->GetUsers();
 	$evaluations = $assignment->GetEvaluations();
-	$criteria = $evaluations[0]->GetCriteria();
+	$criteria = $evaluations[1]->GetCriteria();
 
 	#Removing teachers from the students
 	foreach ($students as $student){
@@ -29,14 +28,42 @@
 		foreach ($criteria as $criterion){
 			$assignmentData[$student->userID][$criterion->criteriaID] = array();
 			$assignmentData[$student->userID][$criterion->criteriaID]['rating'] = 0;
-			$assignmentData[$student->userID][$criterion->criteriaID]['comments'] = 0;
+			$assignmentData[$student->userID][$criterion->criteriaID]['numberOfEvals'] = 0;
+			$assignmentData[$student->userID][$criterion->criteriaID]['comments'] = array();
+		}
+	}
+
+	#for each evaluation, checks if it matches a student and a criteria
+	#and if it does, adds it to the corresponding place in the assignment data
+	foreach ($evaluations as $evaluation){
+		$evaluatedCriteria = $evaluation->GetCriteria();
+		$target = $evaluation->target_userID;
+		if(array_key_exists($target, $assignmentData)){
+			foreach ($evaluatedCriteria as $evaluatedCriterion){
+				if(array_key_exists($evaluatedCriterion->criteriaID, $assignmentData[$target])){
+					$assignmentData[$target][$evaluatedCriterion->criteriaID]['rating'] += $criterion->GetCriteriaRating($evaluation->evaluationID);
+					$assignmentData[$target][$evaluatedCriterion->criteriaID]['numberOfEvals'] += 1;
+					if($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
+						$assignmentData[$target][$evaluatedCriterion->criteriaID]['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
+					}
+				}
+			}	
+		}
+	}
+
+	#computes the average rating and stores that in rating
+	foreach ($assignmentData as &$student){
+		foreach ($student as &$criterion){
+			if($criterion['numberOfEvals'] != 0){
+				$criterion['rating'] = $criterion['rating'] / $criterion['numberOfEvals'];
+			}
 		}
 	}
 
 	#enable each of these to see important information
-	#echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-	#echo '<pre>' . print_r($_POST, TRUE) . '</pre>';
-	#echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($_POST, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 
 	############Rendering page############
 	echo $twig->render('overall_results.html', [
@@ -44,6 +71,7 @@
 		"evaluations"     => $evaluations,
 		"assignment"	  => $assignment,
 		"criteria"		  => $criteria,
-		"assignmentData"  => $assignmentData
+		"assignmentData"  => $assignmentData,
+		"students"		  => $students
 	]);
 ?>
