@@ -67,11 +67,11 @@
 
 	############Rendering page############
 	echo $twig->render('overall_results.html', [
-		#"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
-		#"evaluations"     => $evaluations,
-		#"assignment"	  => $assignment,
-		#"criteria"		  => $criteria,
-		#"assignmentData"  => $assignmentData,
-		#"students"		  => $students
+		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"evaluations"     => $evaluations,
+		"assignment"	  => $assignment,
+		"criteria"		  => $criteria,
+		"assignmentData"  => $assignmentData,
+		"students"		  => $students
 	]);
 ?>
