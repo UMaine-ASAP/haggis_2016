@@ -139,7 +139,8 @@ class Criteria {
 		}
 		else{
 			$_SESSION['error'] = 639;
-			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__ ."
+			EvaluationID: ".$evaluationID." CriteriaID: ".$this->criteriaID;
 			header("location:error_message.php");
 			// die("Couldn't find group for evaluation: " . $this->evaluationID);
 		}
@@ -156,7 +157,8 @@ class Criteria {
 	}
 	else{
 		$_SESSION['error'] = 640;
-		$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+		$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__."
+			EvaluationID: ".$evaluationID." CriteriaID: ".$this->criteriaID;
 		header("location:error_message.php");
 		// die("Couldn't find group for evaluation: " . $this->evaluationID);
 	}

@@ -4,8 +4,9 @@
 <!--DATA AVAILABLE
 	{{evals}} = evaluations for this assignment as an array
 	{{assignment}} = the assignment object
-	{{criteria}} = the assignment criteria
-	{{assignmentData}} = a three dimensional array of [userID][criteriaID][rating OR comment]
+	{{criteria}} = the assignment criteria (has the criteriaIDs)
+	{{assignmentData}} = a three dimensional array of [userID][criteriaID][rating] or a four dimensional array of [userID][criteriaID][comments] where comments is an array of a single comment
+	{{students}} = an array of student objects (has their userIDs)
 -->
 
 {% endblock %}
