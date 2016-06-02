@@ -74,4 +74,16 @@
 		"assignmentData"  => $assignmentData,
 		"students"		  => $students
 	]);
+
+	#for use in HTML page
+	#{{username}} = user's firstname lastname
+	#{{evaluations}} = every evaluation as an array
+	#{{assignment}} = the assignment object
+	#{{criteria}} = the criteria of the assignment as an array
+	#{{assignmentData}} = a 3D array
+	#	first array = user ID
+	#	second array = criteria ID
+	#	third array = rating, comments
+	#	NOTE!: comments is every comment as an array
+	#{{students}} = every student in the class as an array
 ?>
