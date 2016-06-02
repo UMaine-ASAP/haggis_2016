@@ -18,9 +18,11 @@
 	foreach ($evaluations as $evaluation){
 		if ($groups == array() && $evaluation->evaluation_type == ''){
 			$criteria = $evaluation->GetCriteria();
+			break;
 		}
 		else if ($groups != array() && $evaluation->evaluation_type = 'Group'){
 			$criteria = $evaluation->GetCriteria();
+			break;
 		}
 	}
 
