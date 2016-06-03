@@ -8,7 +8,7 @@
 {% if type == 'individual' %}
 
 	{# Creating the dropdown menu #}
-	<form name="Sorting Menu" action="overall_results.php" method='post'>
+	<form name="Individual Sorting Menu" action="overall_results.php" method='post'>
 		<div align="Center">
 			<select name="SortChoice">
 				<option selected value = "Alphabetically">Sorting method</option>
@@ -92,12 +92,25 @@
 {% endif %}
 
 {% if type == 'group' %}
-{% set labels = [] %}
+
+	{# Creating the dropdown menu #}
+	<form name="Group Sorting Menu" action="overall_results.php" method='post'>
+		<div align="Center">
+			<select name="SortChoice">
+				<option selected value = "Numerically">Sorting method</option>
+				<option value = "Numerically">Numerically</option>
+				<option value = "RNumerically">Reverse Numerically</option>
+				<option value = "HighToLow">Highest to lowest</option>
+				<option value = "LowToHigh">Lowest to highest</option>
+			</select>
+			<button type="submit">Go</button>
+		</div>
+	</form>
+
+	{% set labels = [] %}
 	{% set scores = [] %}
-	{% for group in groups %}
-		{% set labels = labels|merge(['Group '~group.groupNumber]) %}
-	{% endfor %}
 	{% for group in assignmentData %}
+		{% set labels = labels|merge(['Group ' ~ group['groupNumber']]) %}
 		{% set scores = scores|merge([group.averageRating]) %}
 	{% endfor %}
 
