@@ -257,7 +257,7 @@
 		"students"		  => $students,
 		"groups"		  => $groups,
 		"height"		  => $height,
-		"sort"			  => $_POST['SortChoice']
+		"sort"			  => 1
 	]);
 
 	#for use in HTML page
