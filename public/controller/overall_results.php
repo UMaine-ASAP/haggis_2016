@@ -3,6 +3,9 @@
 	/*
 		$_POST contains a Sorting_Choice that is used to determine which table
 		should be drawn.
+
+		The math for determining average rating is as follows:
+		(all evaluation ratings for a criteria totaled) / (numberofevaluations) /numberofcriteria
 	*/
 
 	############Functions#############
@@ -62,6 +65,56 @@
 
 	function sortGroupsNumerically(&$array){
 		//PRE: $array is the assignment data garnered from below
+		//POST: Sorts the assignment data in group number order
+		foreach ($array as &$groupA){
+			foreach ($array as &$groupB){
+				if($groupA['groupNumber'] < $groupB['groupNumber']){
+					$temp = $groupA;
+					$groupA = $groupB;
+					$groupB = $temp;
+				}
+			}
+		}
+	}
+
+	function sortGroupsRNumerically(&$array){
+		//PRE: $array is the assignment data garnered from below
+		//POST: Sorts the assignment data in reverse group number order
+		foreach ($array as &$groupA){
+			foreach ($array as &$groupB){
+				if($groupA['groupNumber'] > $groupB['groupNumber']){
+					$temp = $groupA;
+					$groupA = $groupB;
+					$groupB = $temp;
+				}
+			}
+		}
+	}
+
+	function sortGroupsHighToLow(&$array){
+		foreach ($array as &$groupA){
+			foreach ($array as &$groupB){
+				if($groupA['averageRating'] > $groupB['averageRating']){
+					$temp = $groupA;
+					$groupA = $groupB;
+					$groupB = $temp;
+				}
+			}
+		}
+	}
+
+	function sortGroupsLowToHigh(&$array){
+		//PRE: $array is the assignment data garnered from below
+		//POST: Sorts the assignment data in lowest to highest rating
+		foreach ($array as &$groupA){
+			foreach ($array as &$groupB){
+				if($groupA['averageRating'] < $groupB['averageRating']){
+					$temp = $groupA;
+					$groupA = $groupB;
+					$groupB = $temp;
+				}
+			}
+		}
 	}
 
 	############Inclusions############
@@ -118,10 +171,10 @@
 			$assignmentData[$student->userID]['averageRating'] = 0;
 			$assignmentData[$student->userID]['name'] = $student->firstName . ' ' . $student->lastName;
 			$assignmentData[$student->userID]['lastName'] = $student->lastName;
+			$assignmentData[$student->userID]['numberOfEvals'] = 0;
 			foreach ($criteria as $criterion){
 				$assignmentData[$student->userID][$criterion->criteriaID] = array();
 				$assignmentData[$student->userID][$criterion->criteriaID]['rating'] = 0;
-				$assignmentData[$student->userID][$criterion->criteriaID]['numberOfEvals'] = 0;
 				$assignmentData[$student->userID][$criterion->criteriaID]['comments'] = array();
 			}
 		}
@@ -132,10 +185,10 @@
 			$evaluatedCriteria = $evaluation->GetCriteria();
 			$target = $evaluation->target_userID;
 			if(array_key_exists($target, $assignmentData)){
+				$assignmentData[$target]['numberOfEvals'] += 1;
 				foreach ($evaluatedCriteria as $evaluatedCriterion){
 					if(array_key_exists($evaluatedCriterion->criteriaID, $assignmentData[$target])){
 						$assignmentData[$target][$evaluatedCriterion->criteriaID]['rating'] += $criterion->GetCriteriaRating($evaluation->evaluationID);
-						$assignmentData[$target][$evaluatedCriterion->criteriaID]['numberOfEvals'] += 1;
 						if($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
 							$assignmentData[$target][$evaluatedCriterion->criteriaID]['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
 						}
@@ -150,21 +203,27 @@
 			$tempTotal = 0;
 			foreach ($student as &$criterion){
 				if (is_array($criterion)){
-					if($criterion['numberOfEvals'] != 0){
-						$criterion['rating'] = $criterion['rating'] / $criterion['numberOfEvals'];
+					if($student['numberOfEvals'] != 0){
+						#echo '<pre> Total Criteria Rating:' . print_r($criterion['rating'], TRUE) . '</pre>';
+						#echo '<pre> Number of Evaluations: ' . print_r($student['numberOfEvals'], TRUE) . '</pre>';
+						$criterion['rating'] = $criterion['rating'] / $student['numberOfEvals'];
+						#echo '<pre> Resulting Criteria Rating: ' . print_r($criterion['rating'], TRUE) . '</pre>';
 					}
 					$tempTotal += $criterion['rating'];
 					$tempNumberOfCriteria += 1;
 				}
 			}
+			#echo '<pre> Total: ' . print_r($tempTotal, TRUE) . '</pre>';
+			#echo '<pre> Number of Criteria: ' . print_r($tempNumberOfCriteria, TRUE) . '</pre>';
 			$student['averageRating'] = $tempTotal / $tempNumberOfCriteria;
+			#echo '<pre> Average Rating: ' . print_r($student['averageRating'], TRUE) . '</pre>';
 		}
 
 		#Sorting the array based on user choice
 		if(!isset($_POST['SortChoice'])){
 			$_POST['SortChoice'] = 'Alphabetically';
 		}
-		else if($_POST['SortChoice'] == 'Alphabetically'){
+		if($_POST['SortChoice'] == 'Alphabetically'){
 			sortStudentsAlphabetically($assignmentData);
 		}
 		else if (($_POST['SortChoice']) == 'RAlphabetically'){
@@ -192,6 +251,7 @@
 			#This array is structured as [groupID][criteriaID][rating/comments]
 			$assignmentData[$group->student_groupID] = array();
 			$assignmentData[$group->student_groupID]['averageRating'] = 0;
+			$assignmentData[$group->student_groupID]['groupNumber'] = $group->groupNumber;
 			foreach ($criteria as $criterion){
 				$assignmentData[$group->student_groupID][$criterion->criteriaID] = array();
 				$assignmentData[$group->student_groupID][$criterion->criteriaID]['rating'] = 0;
@@ -223,24 +283,39 @@
 			$tempNumberOfCriteria = 0;
 			$tempTotal = 0;
 			foreach ($group as &$criterion){
-				if($criterion['numberOfEvals'] != 0){
-					$criterion['rating'] = $criterion['rating'] / $criterion['numberOfEvals'];
+				if(is_array($criterion)){
+					if($criterion['numberOfEvals'] != 0){
+						$criterion['rating'] = $criterion['rating'] / $criterion['numberOfEvals'];
+					}
+					$tempTotal += $criterion['rating'];
+					$tempNumberOfCriteria += 1;
 				}
-				$tempTotal += $criterion['rating'];
-				$tempNumberOfCriteria += 1;
 			}
 			$group['averageRating'] = $tempTotal / $tempNumberOfCriteria;
 		}
 
 		#Sorting the array based on user choice
-		if(!isset($_POST['SortChioce'])){
+		if(!isset($_POST['SortChoice'])){
 			$_POST['SortChoice'] = 'Numerically';
+		}
+		if($_POST['SortChoice'] == 'Numerically'){
+			sortGroupsNumerically($assignmentData);
+		}
+		else if($_POST['SortChoice'] == 'RNumerically'){
+			sortGroupsRNumerically($assignmentData);
+		}
+		else if($_POST['SortChoice'] == 'HighToLow'){
+			sortGroupsHighToLow($assignmentData);
+		}
+		else if($_POST['SortChoice'] == 'LowToHigh'){
+			sortGroupsLowToHigh($assignmentData);
 		}
 	}
 
 	#enable each of these to see important information
 	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
-	//echo '<pre>' . print_r($evaluations, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($evaluations[0], TRUE) . '</pre>';
+	//echo '<pre>' . print_r($evaluations[0]->GetChildEvaluations(), TRUE) . '</pre>';
 	//echo '<pre>' . print_r($groups, TRUE) . '</pre>';
 
 	############Rendering page############
@@ -253,8 +328,7 @@
 		"assignmentData"  => $assignmentData,
 		"students"		  => $students,
 		"groups"		  => $groups,
-		"height"		  => $height,
-		"sort"			  => 1
+		"height"		  => $height
 	]);
 
 	#for use in HTML page

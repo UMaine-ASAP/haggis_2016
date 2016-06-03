@@ -1,9 +1,105 @@
 <?php
+
+	############NOTES#################
+
+	############FUNCTIONS#############
+
+	############INCLUSIONS############
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+	############DATA PROCESSING#######
+	#Fetching data from database
+	$student = new User($_GET['studentID']);
+	$class = new Period($_SESSION['classID']);
+	$assignments = $class->GetAssignments();
+	$evaluations = $student->GetReceivedEvaluations();
 
-	$assignment_results = array();							//final Twig results
+	#For each assignment, creates a 3 dimensional array
+	#assignmentData[assignmentID][criteria][score]
+	$assignmentData = array();
+	foreach ($assignments as $assignment){
+		$groups = $assignment[0]->GetGroups();
+		$groupCriteria = 0;
+		$peerCriteria = 0;
+		$individualCriteria = 0;
+		$assignmentData[$assignment[0]->assignmentID] = array();	
+		$flag = 0;
+		#for each evaluation, pulls the needed criteria
+		foreach ($evaluations as $evaluation){
+			if ($groups != array() &&!is_array($groupCriteria) && $evaluation->evaluation_type == 'Group' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+				$groupCriteria = $evaluation->GetCriteria();
+				$flag++;
+				if($flag == 2){
+					break;
+				}
+			}
+			else if ($groups != array() &&!is_array($peerCriteria) && $evaluation->evaluation_type == 'Peer' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+				$peerCriteria = $evaluation->GetCriteria();
+				$flag++;
+				if($flag == 2){
+					break;
+				}
+			}
+			else if ($groups == array() && !is_array($individualCriteria) && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+				$individualCriteria = $evaluation->GetCriteria();
+				break;
+			}
+		}
+		if(is_array($groupCriteria)){
+			$assignmentData[$assignment[0]->assignmentID]['groupCriteria'] = $groupCriteria;
+			foreach ($assignmentData[$assignment[0]->assignmentID]['groupCriteria'] as &$criterion){
+				$criterionID = $criterion->criteriaID;
+				$criterionTitle = $criterion->title;
+				$criterionDescription = $criterion->description;
+				$criterion = array();
+				$criterion['id'] = $criterionID;
+				$criterion['title'] = $criterionTitle;
+				$criterion['description'] = $criterionDescription;
+				$criterion['rating'] = 0;
+			}
+		}
+		if(is_array($peerCriteria)){
+			$assignmentData[$assignment[0]->assignmentID]['peerCriteria'] = $peerCriteria;
+			
+		}
+		if(is_array($individualCriteria)){
+			$assignmentData[$assignment[0]->assignmentID]['individualCriteria'] = $individualCriteria;
+			
+		}
+	}
+
+	#Computing the average score of each criteria
+	foreach ($evaluations as $evaluation){
+		$evaluatedCriteria = $evaluation->GetCriteria();
+		$assignmentID = $evaluation->GetAssignment()->assignmentID;
+		if(array_key_exists($assignmentID, $assignmentData)){
+			foreach ($assignmentData[$assignmentID] as $criteria){
+				if ($evaluation->evaluation_type == 'Group' && key($criteria) == 'groupCriteria'){
+
+				}
+				else if ($evaluation->evaluation_type == 'Peer' && key($criteria) == 'peer Criteria'){
+					
+				}
+				else if (key($criteria) == 'individualCriteria'){
+					
+				}
+			}
+		}
+	}
+
+
+	#enable this to see important information
+	echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($evaluations, TRUE);
+
+
+	############RENDERING#############
+	echo $twig->render('cumulative_results.html',[
+		"name"			=> $student->firstName . ' ' . $student->lastName
+		]);
+
+	/*$assignment_results = array();							//final Twig results
 	$class = new Period($_SESSION['classID']);				//class object
 	$assignments = $class->GetAssignments();				//get all assignments for class
 
@@ -203,6 +299,5 @@
 			"username"    	=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 			"name"			=> $user->firstName . " " . $user->lastName,
 			"assignments"   => $assignment_results //name, id, result one-five
-		]);
-
+		]);*/
 ?>
