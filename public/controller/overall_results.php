@@ -7,39 +7,37 @@
 
 	############Functions#############
 	function sortStudentsAlphabetically(&$array){
-		//PRE: $array is an array of the students from the class
+		//PRE: $array is the assignment data garnered from below
 		//POST: Sorts the array in alphabetical order
-		foreach ($array as &$elementA){
-			foreach ($array as &$elementB){
-				if(strcasecmp($elementA->lastName, $elementB->lastName) < 0){
-					$temp = $elementA;
-					$elementA = $elementB;
-					$elementB = $temp;
+		foreach ($array as &$studentA){
+			foreach ($array as &$studentB){
+				if(strcasecmp($studentA['lastName'], $studentB['lastName']) < 0) {
+					$temp = $studentA;
+					$studentA = $studentB;
+					$studentB = $temp;
 				}
 			}
 		}
 	}
 
 	function sortStudentsRAlphabetically(&$array){
-		//PRE: $array is an array of the students from the class
+		//PRE: $array is the assignment data garnered from below
 		//POST: Sorts the array in alphabetical order
-		foreach ($array as &$elementA){
-			foreach ($array as &$elementB){
-				if(strcasecmp($elementA->lastName, $elementB->lastName) > 0){
-					$temp = $elementA;
-					$elementA = $elementB;
-					$elementB = $temp;
+		foreach ($array as &$studentA){
+			foreach ($array as &$studentB){
+				if(strcasecmp($studentA['lastName'], $studentB['lastName']) > 0){
+					$temp = $studentA;
+					$studentA = $studentB;
+					$studentB = $temp;
 				}
 			}
 		}
 	}
 
 	function sortStudentsHighToLow(&$array){
-		//PRE: $array is the assignment data garnered from below
-		//POST: Sorts the assignment data in highest to lowest rating
 		foreach ($array as &$studentA){
 			foreach ($array as &$studentB){
-				if($studentA['averageRating'] < $studentB['averageRating']){
+				if($studentA['averageRating'] > $studentB['averageRating']){
 					$temp = $studentA;
 					$studentA = $studentB;
 					$studentB = $temp;
@@ -53,13 +51,17 @@
 		//POST: Sorts the assignment data in lowest to highest rating
 		foreach ($array as &$studentA){
 			foreach ($array as &$studentB){
-				if($studentA['averageRating'] > $studentB['averageRating']){
+				if($studentA['averageRating'] < $studentB['averageRating']){
 					$temp = $studentA;
 					$studentA = $studentB;
 					$studentB = $temp;
 				}
 			}
 		}
+	}
+
+	function sortGroupsNumerically(&$array){
+		//PRE: $array is the assignment data garnered from below
 	}
 
 	############Inclusions############
@@ -99,17 +101,6 @@
 		#Marks what kind of assignment this is
 		$type = 'individual';
 
-		#Sorting students alphabetically or reverse alphabetically
-		if(!isset($_POST['SortChoice'])){
-			$_POST['SortChoice'] = 'Alphabetically';
-		}
-		if($_POST['SortChoice'] == 'Alphabetically'){
-			sortStudentsAlphabetically($students);
-		}
-		else if (($_POST['SortChoice']) == 'RAlphabetically'){
-			sortStudentsRAlphabetically($students);
-		}
-
 		foreach ($students as $student){
 			#Setting the height of the graph
 			$height += 50;
@@ -125,6 +116,8 @@
 		foreach ($students as $student){
 			$assignmentData[$student->userID] = array();
 			$assignmentData[$student->userID]['averageRating'] = 0;
+			$assignmentData[$student->userID]['name'] = $student->firstName . ' ' . $student->lastName;
+			$assignmentData[$student->userID]['lastName'] = $student->lastName;
 			foreach ($criteria as $criterion){
 				$assignmentData[$student->userID][$criterion->criteriaID] = array();
 				$assignmentData[$student->userID][$criterion->criteriaID]['rating'] = 0;
@@ -156,17 +149,28 @@
 			$tempNumberOfCriteria = 0;
 			$tempTotal = 0;
 			foreach ($student as &$criterion){
-				if($criterion['numberOfEvals'] != 0){
-					$criterion['rating'] = $criterion['rating'] / $criterion['numberOfEvals'];
+				if (is_array($criterion)){
+					if($criterion['numberOfEvals'] != 0){
+						$criterion['rating'] = $criterion['rating'] / $criterion['numberOfEvals'];
+					}
+					$tempTotal += $criterion['rating'];
+					$tempNumberOfCriteria += 1;
 				}
-				$tempTotal += $criterion['rating'];
-				$tempNumberOfCriteria += 1;
 			}
 			$student['averageRating'] = $tempTotal / $tempNumberOfCriteria;
 		}
 
-		#Sorts highest to lowest or lowest to highest
-		/*if ($_POST['SortChoice'] == 'HighToLow'){
+		#Sorting the array based on user choice
+		if(!isset($_POST['SortChoice'])){
+			$_POST['SortChoice'] = 'Alphabetically';
+		}
+		else if($_POST['SortChoice'] == 'Alphabetically'){
+			sortStudentsAlphabetically($assignmentData);
+		}
+		else if (($_POST['SortChoice']) == 'RAlphabetically'){
+			sortStudentsRAlphabetically($assignmentData);
+		}
+		else if ($_POST['SortChoice'] == 'HighToLow'){
 			sortStudentsHighToLow($assignmentData);
 			$numberSort = true;
 		}
@@ -174,18 +178,6 @@
 			sortStudentsLowToHigh($assignmentData);
 			$numberSort = true;
 		}
-
-		#Sorts the students for labelling if sorting with above
-		if ($numberSort == true){
-			$tempStudents = array();
-			$tempAssignmentData = $assignmentData;
-			foreach ($assignmentData as &$studentData){
-				$studentDataID = array_search($studentData, $assignmentData);
-				echo '<pre>' . $studentDataID . '</pre>';
-				$studentData = 0;
-			}
-			$students = $tempStudents;
-		}*/
 	}
 	else{
 		#Marks what kind of project this is
@@ -239,6 +231,11 @@
 			}
 			$group['averageRating'] = $tempTotal / $tempNumberOfCriteria;
 		}
+
+		#Sorting the array based on user choice
+		if(!isset($_POST['SortChioce'])){
+			$_POST['SortChoice'] = 'Numerically';
+		}
 	}
 
 	#enable each of these to see important information
@@ -267,7 +264,7 @@
 	#{{assignment}} = the assignment object
 	#{{criteria}} = the criteria of the assignment as an array
 	#{{assignmentData}} = a 3D array
-	#	first array = user ID or group ID
+	#	first array = a numeric identifier for group or user
 	#	second array = criteria ID or average rating
 	#	third array = rating, comments
 	#	NOTE!: comments is every comment as an array

@@ -24,10 +24,8 @@
 
 	{% set labels = [] %}
 	{% set scores = [] %}
-	{% for student in students %}
-		{% set labels = labels|merge([student.firstName ~ ' ' ~ student.lastName]) %}
-	{% endfor %}
 	{% for student in assignmentData %}
+		{% set labels = labels|merge([student['name']]) %}
 		{% set scores = scores|merge([student.averageRating]) %}
 	{% endfor %}
 
