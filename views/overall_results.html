@@ -39,15 +39,20 @@
 	var red = 0;
 	var blue = 0;
 	var green = 0;
+	var colorCounter = 0;
 	{% for label in labels %}
 		labels.push("{{label}}");
 	{% endfor %}
 	{% for score in scores %}
 		scores.push({{score}});
-		red = Math.floor(Math.random() * 10);
-		green = Math.floor(Math.random() * 0);
-		blue = Math.floor(Math.random() * 0);
-		colors.push('rgb('+red+','+green+','+blue+')');
+		if (colorCounter == 0)
+		{
+			colors.push('rgb(0,128,255)','rgb(192,192,192)');
+			colorCounter = 1;
+		}else
+		{
+			colorCounter = 0;
+		}
 	{% endfor %}
 	var myChart = new Chart(ctx, {
 	    type: 'horizontalBar',
@@ -121,12 +126,21 @@
 	var red = 0;
 	var blue = 0;
 	var green = 0;
+	var colorCounter = 0;
 	{% for label in labels %}
 		labels.push("{{label}}");
 	{% endfor %}
 	{% for score in scores %}
 		scores.push({{score}});
-		colors.push('rgb(0,128,255)','rgb(192,192,192)');
+		if (colorCounter == 0)
+		{
+			colors.push('rgb(0,128,255)','rgb(192,192,192)');
+			colorCounter = 1;
+		}
+		else
+		{
+			colorCounter = 0;
+		}
 	{% endfor %}
 	var myChart = new Chart(ctx, {
 	    type: 'horizontalBar',
