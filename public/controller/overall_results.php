@@ -188,7 +188,7 @@
 				$assignmentData[$target]['numberOfEvals'] += 1;
 				foreach ($evaluatedCriteria as $evaluatedCriterion){
 					if(array_key_exists($evaluatedCriterion->criteriaID, $assignmentData[$target])){
-						$assignmentData[$target][$evaluatedCriterion->criteriaID]['rating'] += $criterion->GetCriteriaRating($evaluation->evaluationID);
+						$assignmentData[$target][$evaluatedCriterion->criteriaID]['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 						if($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
 							$assignmentData[$target][$evaluatedCriterion->criteriaID]['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
 						}
@@ -204,19 +204,13 @@
 			foreach ($student as &$criterion){
 				if (is_array($criterion)){
 					if($student['numberOfEvals'] != 0){
-						#echo '<pre> Total Criteria Rating:' . print_r($criterion['rating'], TRUE) . '</pre>';
-						#echo '<pre> Number of Evaluations: ' . print_r($student['numberOfEvals'], TRUE) . '</pre>';
 						$criterion['rating'] = $criterion['rating'] / $student['numberOfEvals'];
-						#echo '<pre> Resulting Criteria Rating: ' . print_r($criterion['rating'], TRUE) . '</pre>';
-					}
+						}
 					$tempTotal += $criterion['rating'];
 					$tempNumberOfCriteria += 1;
 				}
 			}
-			#echo '<pre> Total: ' . print_r($tempTotal, TRUE) . '</pre>';
-			#echo '<pre> Number of Criteria: ' . print_r($tempNumberOfCriteria, TRUE) . '</pre>';
 			$student['averageRating'] = $tempTotal / $tempNumberOfCriteria;
-			#echo '<pre> Average Rating: ' . print_r($student['averageRating'], TRUE) . '</pre>';
 		}
 
 		#Sorting the array based on user choice
@@ -268,7 +262,7 @@
 			if(array_key_exists($target, $assignmentData)){
 				foreach ($evaluatedCriteria as $evaluatedCriterion){
 					if(array_key_exists($evaluatedCriterion->criteriaID, $assignmentData[$target])){
-						$assignmentData[$target][$evaluatedCriterion->criteriaID]['rating'] += $criterion->GetCriteriaRating($evaluation->evaluationID);
+						$assignmentData[$target][$evaluatedCriterion->criteriaID]['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 						$assignmentData[$target][$evaluatedCriterion->criteriaID]['numberOfEvals'] += 1;
 						if($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
 							$assignmentData[$target][$evaluatedCriterion->criteriaID]['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
@@ -313,9 +307,9 @@
 	}
 
 	#enable each of these to see important information
-	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations, TRUE) . '</pre>';
-	//echo '<pre>' . print_r($evaluations[0]->GetChildEvaluations(), TRUE) . '</pre>';
+	//echo '<pre>' . print_r($evaluations[1]->GetCriteria(), TRUE) . '</pre>';
 	//echo '<pre>' . print_r($groups, TRUE) . '</pre>';
 
 	############Rendering page############
