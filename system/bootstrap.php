@@ -1,3 +1,6 @@
+<!--Importing chart and setting global chart variables-->
+<script src="chart.js"></script>
+
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/helpers.php';
@@ -10,7 +13,6 @@ require_once __DIR__ . "/../models/criteria.php";
 require_once __DIR__ . "/../models/evaluation.php";
 require_once __DIR__ . "/../models/student_group.php";
 require_once __DIR__ . "/../models/selection.php";
-
 
 // Load .env file
 $dotenv = new Dotenv\Dotenv(__DIR__ . "/..");
