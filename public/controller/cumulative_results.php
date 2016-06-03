@@ -90,7 +90,7 @@
 
 
 	#enable this to see important information
-	echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations, TRUE);
 
 
