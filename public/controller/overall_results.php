@@ -307,7 +307,7 @@
 	}
 
 	#enable each of these to see important information
-	echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations[1]->GetCriteria(), TRUE) . '</pre>';
 	//echo '<pre>' . print_r($groups, TRUE) . '</pre>';
