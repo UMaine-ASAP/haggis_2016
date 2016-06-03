@@ -21,7 +21,6 @@
 		</div>
 	</form>
 
-
 	{% set labels = [] %}
 	{% set scores = [] %}
 	{% for student in assignmentData %}
@@ -45,9 +44,9 @@
 	{% endfor %}
 	{% for score in scores %}
 		scores.push({{score}});
-		red = Math.floor(Math.random() * 255);
-		green = Math.floor(Math.random() * 255);
-		blue = Math.floor(Math.random() * 255);
+		red = Math.floor(Math.random() * 10);
+		green = Math.floor(Math.random() * 0);
+		blue = Math.floor(Math.random() * 0);
 		colors.push('rgb('+red+','+green+','+blue+')');
 	{% endfor %}
 	var myChart = new Chart(ctx, {
@@ -114,10 +113,7 @@
 	{% endfor %}
 	{% for score in scores %}
 		scores.push({{score}});
-		red = Math.floor(Math.random() * 255);
-		green = Math.floor(Math.random() * 255);
-		blue = Math.floor(Math.random() * 255);
-		colors.push('rgb('+red+','+green+','+blue+')');
+		colors.push('rgb(0,128,255)','rgb(192,192,192)');
 	{% endfor %}
 	var myChart = new Chart(ctx, {
 	    type: 'horizontalBar',
@@ -140,7 +136,7 @@
 	    		text: "{{assignment.title}}"
 	    	},
 	        responsive: false,
-	        responsiveAnimationDuration: 600,
+	        responsiveAnimationDuration: 2800,
 	        maintainAspectRatio: false,
 	        scales: {
 	            xAxes: [{
