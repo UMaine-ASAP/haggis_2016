@@ -2,51 +2,161 @@
 
 {% block content %}
 
-<script src="chart.js"></script>
-<canvas id="myChart" width="400" height="400"></canvas>
-<script>
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'horizontalBar',
-    data: {
-        labels: ["Student A", "Student B", "Student C", "Student D", "Student E", "Student F"],
-        datasets: [{
-            label: 'Unity Project - Interaction',
-            data: [1.3, 3.23, 4.1, 4.7, 2.4, 4.54],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)', 
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)', 
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
+{# Aligning the whole page to center #}
+<div align="Center">
 
-    options: {
-        responsive: true,
-        responsiveAnimationDuration: 600,
-        maintainAspectRatio: false,
-        scales: {
-            xAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
+{% if type == 'individual' %}
 
-    }
-});
-</script>
+	{# Creating the dropdown menu #}
+	<form name="Sorting Menu" action="overall_results.php" method='post'>
+		<div align="Center">
+			<select name="SortChoice">
+				<option selected value = "Alphabetically">Sorting method</option>
+				<option value = "Alphabetically">Alphabetically</option>
+				<option value = "RAlphabetically">Reverse alphabetically</option>
+				<option value = "HighToLow">Highest to lowest</option>
+				<option value = "LowToHigh">Lowest to highest</option>
+			</select>
+			<button type="submit">Go</button>
+		</div>
+	</form>
+
+
+	{% set labels = [] %}
+	{% set scores = [] %}
+	{% for student in students %}
+		{% set labels = labels|merge([student.firstName ~ ' ' ~ student.lastName]) %}
+	{% endfor %}
+	{% for student in assignmentData %}
+		{% set scores = scores|merge([student.averageRating]) %}
+	{% endfor %}
+
+	{% autoescape 'js'%}
+	{# Creating a chart for each student (if individual assignment) and their average ratings #}
+	<canvas id="myChart" width="1000" height="{{height}}"></canvas>
+	<script>
+	var ctx = document.getElementById("myChart");
+	var labels = [];
+	var scores = [];
+	var colors = [];
+	var red = 0;
+	var blue = 0;
+	var green = 0;
+	{% for label in labels %}
+		labels.push("{{label}}");
+	{% endfor %}
+	{% for score in scores %}
+		scores.push({{score}});
+		red = Math.floor(Math.random() * 255);
+		green = Math.floor(Math.random() * 255);
+		blue = Math.floor(Math.random() * 255);
+		colors.push('rgb('+red+','+green+','+blue+')');
+	{% endfor %}
+	var myChart = new Chart(ctx, {
+	    type: 'horizontalBar',
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: 'Average rating across criteria',
+	            data: scores,
+	            backgroundColor: colors,
+	        }]
+	    },
+
+	    options: {
+	    	legend: {
+	    		display: false
+	    	},
+	    	title: {
+	    		display: true,
+	    		fontSize: 36,
+	    		text: "{{assignment.title}}"
+	    	},
+	        responsive: false,
+	        responsiveAnimationDuration: 600,
+	        maintainAspectRatio: false,
+	        scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+
+	    }
+	});
+	</script>
+	{% endautoescape %}
+{% endif %}
+
+{% if type == 'group' %}
+{% set labels = [] %}
+	{% set scores = [] %}
+	{% for group in groups %}
+		{% set labels = labels|merge(['Group '~group.groupNumber]) %}
+	{% endfor %}
+	{% for group in assignmentData %}
+		{% set scores = scores|merge([group.averageRating]) %}
+	{% endfor %}
+
+	{% autoescape 'js'%}
+	{# Creating a chart for each group (if group assignment) and their average ratings #}
+	<script src="chart.js"></script>
+	<canvas id="myChart" width="1000" height="{{height}}"></canvas>
+	<script>
+	var ctx = document.getElementById("myChart");
+	var labels = [];
+	var scores = [];
+	var colors = [];
+	var red = 0;
+	var blue = 0;
+	var green = 0;
+	{% for label in labels %}
+		labels.push("{{label}}");
+	{% endfor %}
+	{% for score in scores %}
+		scores.push({{score}});
+		red = Math.floor(Math.random() * 255);
+		green = Math.floor(Math.random() * 255);
+		blue = Math.floor(Math.random() * 255);
+		colors.push('rgb('+red+','+green+','+blue+')');
+	{% endfor %}
+	var myChart = new Chart(ctx, {
+	    type: 'horizontalBar',
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: 'Average rating across criteria',
+	            data: scores,
+	            backgroundColor: colors,
+	        }]
+	    },
+
+	    options: {
+	    	legend: {
+	    		display: false
+	    	},
+	    	title: {
+	    		display: true,
+	    		fontSize: 36,
+	    		text: "{{assignment.title}}"
+	    	},
+	        responsive: false,
+	        responsiveAnimationDuration: 600,
+	        maintainAspectRatio: false,
+	        scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+
+	    }
+	});
+	</script>
+	{% endautoescape %}
+{% endif %}
+</div>
 
 {% endblock %}
