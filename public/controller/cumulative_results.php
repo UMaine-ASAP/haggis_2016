@@ -1,7 +1,10 @@
 <?php
 
 	############NOTES#################
-
+	/*
+		This page is used to display a single student's
+		ratings over all assignments he or she has done
+	*/
 	############FUNCTIONS#############
 
 	############INCLUSIONS############
@@ -58,10 +61,12 @@
 				$criterionID = $criterion->criteriaID;
 				$criterionTitle = $criterion->title;
 				$criterionDescription = $criterion->description;
+				$criterionSelections = $criterion->GetSelections();
 				$criterion = array();
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
 				$criterion['description'] = $criterionDescription;
+				$criterion['selections'] = $criterionSelections;
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
 				$criteriaCounter += 1;
@@ -77,10 +82,12 @@
 				$criterionID = $criterion->criteriaID;
 				$criterionTitle = $criterion->title;
 				$criterionDescription = $criterion->description;
+				$criterionSelections = $criterion->GetSelections();
 				$criterion = array();
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
 				$criterion['description'] = $criterionDescription;
+				$criterion['selections'] = $criterionSelections;
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
 				$criteriaCounter += 1;
@@ -96,10 +103,12 @@
 				$criterionID = $criterion->criteriaID;
 				$criterionTitle = $criterion->title;
 				$criterionDescription = $criterion->description;
+				$criterionSelections = $criterion->GetSelections();
 				$criterion = array();
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
 				$criterion['description'] = $criterionDescription;
+				$criterion['selections'] = $criterionSelections;
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
 				$criteriaCounter += 1;
@@ -114,6 +123,7 @@
 	foreach ($evaluations as $evaluation){
 		$evaluatedCriteria = $evaluation->GetCriteria();
 		$assignmentID = $evaluation->GetAssignment()->assignmentID;
+		$user = $evaluation->GetUser();
 		#Checks if the evaluation corresponds with an assignment
 		if(array_key_exists($assignmentID, $assignmentData)){
 			#For each criteria within the evaluation, checks what type it is
@@ -126,7 +136,7 @@
 							if ($evaluatedCriterion->criteriaID == $groupCriterion['id']){
 								$groupCriterion['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 								if ($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
-									$groupCriterion['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
+									$groupCriterion['comments'][] = $user->firstName . ' ' . $user->lastName . ': ' . $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) . ' - Score: ' . $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 								}
 							}
 						}
@@ -143,7 +153,7 @@
 							if ($evaluatedCriterion->criteriaID == $peerCriterion['id']){
 								$peerCriterion['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 								if ($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
-									$peerCriterion['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
+									$peerCriterion['comments'][] = $user->firstName . ' ' . $user->lastName . ': ' . $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) . ' - Score: ' . $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 								}
 							}
 						}
@@ -160,7 +170,7 @@
 							if ($evaluatedCriterion->criteriaID == $individualCriterion['id']){
 								$individualCriterion['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 								if ($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
-									$individualCriterion['comments'][] = $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID);
+									$individualCriterion['comments'][] = $user->firstName . ' ' . $user->lastName . ': ' . $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) . ' - Score: ' . $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
 								}
 							}
 						}
@@ -189,7 +199,8 @@
 
 	#enable this to see important information
 	//echo '<pre>' . print_r($heights, TRUE) . '</pre>';
-	echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($evaluations[0]->GetCriteria()[0]->GetSelections(), TRUE) . '</pre>';
 
 
 	############RENDERING#############

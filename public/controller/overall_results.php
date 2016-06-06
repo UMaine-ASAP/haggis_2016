@@ -1,6 +1,9 @@
 <?php
 	############NOTES#################
 	/*
+		This page is used for graphically showing the results
+		for the entire assignment over all students/groups
+
 		$_POST contains a Sorting_Choice that is used to determine which table
 		should be drawn.
 
