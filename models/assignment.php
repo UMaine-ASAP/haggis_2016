@@ -158,14 +158,15 @@ class Assignment {
 		if($rows){
 			$ret = Array();
 			while($row = $rows->fetch_array(MYSQLI_BOTH)){
-				$query = "SELECT * FROM `criteria` WHERE `criteriaID` = {$row['criteriaID']}";
+				
+				/*$query = "SELECT * FROM `criteria` WHERE `criteriaID` = {$row['criteriaID']}";
 
 				$criteria = $db->query($query);
 				if($criteria){
 					while($c = $criteria->fetch_array(MYSQLI_BOTH)){
 						$ret[] = $c;
 					}
-				}
+				}*/
 
 				$c = new Criteria($row['criteriaID']);
 				$ret[] = $c;

@@ -3,9 +3,84 @@
 {% block content %}
 <h2 class="pageTitle">Cumulative Results for {{name}}</h2>
 
+{% set assignmentTitles = [] %}
+{% for assignment in assignments %}
+	{% set assignmentTitles = assignmentTitles|merge([assignment.0.title]) %}
+{% endfor %}
 
-{# <h2 class="pageTitle">Cumulative Results for {{name}}</h2>
-<div id="tableContainer">
+{% set titleIterator = 0 %}
+{% set chartIterator = 0 %}
+{% set heightIterator = 0 %}
+{% for assignment in assignmentData %}
+	<h3 class="assignmentTitle">{{assignmentTitles[titleIterator]}}</h3>
+	{% for criteria in assignment %}			
+		<div align="Center">
+		<canvas id="{{chartIterator}}" width="1000" height="{{heights[heightIterator]}}"></canvas>
+		<script>
+			var ctx = document.getElementById("{{chartIterator}}");
+			var labels = [];
+			var scores = [];
+			var colors = [];
+			var colorCounter = 0;
+			{% for criterion in criteria %}
+				{% if criterion is iterable %}
+					labels.push("{{criterion.title}}");			
+					scores.push({{criterion.rating}});
+					if (colorCounter == 0)
+					{
+						colors.push('rgb(0,128,255)','rgb(192,192,192)');
+						colorCounter = 1;
+					}
+					else
+					{
+						colorCounter = 0;
+					}
+				{% endif %}
+			{% endfor %}
+			var myChart = new Chart(ctx, {
+			    type: 'horizontalBar',
+			    data: {
+			        labels: labels,
+			        datasets: [{
+			            label: 'Average rating across criteria',
+			            data: scores,
+			            backgroundColor: colors,
+			        }]
+			    },
+
+			    options: {
+			    	legend: {
+			    		display: false
+			    	},
+			    	title: {
+			    		display: true,
+			    		fontSize: 36,
+			    		text: "{{criteria.type}}"
+			    	},
+			        responsive: false,
+			        responsiveAnimationDuration: 2800,
+			        maintainAspectRatio: false,
+			        scales: {
+			            xAxes: [{
+			                ticks: {
+			                    beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+			</script>
+		</div>
+		{% set chartIterator = chartIterator + 1 %}
+		{% set heightIterator = heightIterator + 1 %}
+		{% set titleIterator = titleIterator + 1 %}
+	{% endfor %} 
+	
+{% endfor %}
+{% set labels = [] %}
+{% set scores = [] %}
+
+{# <div id="tableContainer">
 	
 {% for assignment in assignments %}
 	<h3 class="cumulativeAssignmentTitle">{{assignment.name}}</h3>
@@ -35,7 +110,7 @@
 
 {% for comment in assignment.comments %}
 
-{{comment}}<br><br>
+{{comments}}<br><br>
 
 {% endfor %}
 

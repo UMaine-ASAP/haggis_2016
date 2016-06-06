@@ -38,6 +38,8 @@
 	}
 
 	function sortStudentsHighToLow(&$array){
+		//PRE: $array is the assignment data garnered from below
+		//POST: Sorts the array in highest to lowest rating
 		foreach ($array as &$studentA){
 			foreach ($array as &$studentB){
 				if($studentA['averageRating'] > $studentB['averageRating']){
