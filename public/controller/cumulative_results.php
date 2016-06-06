@@ -58,14 +58,35 @@
 				$criterion['description'] = $criterionDescription;
 				$criterion['rating'] = 0;
 			}
+			$assignmentData[$assignment[0]->assignmentID]['groupCriteria']['numberOfEvals'] = 0;
 		}
 		if(is_array($peerCriteria)){
 			$assignmentData[$assignment[0]->assignmentID]['peerCriteria'] = $peerCriteria;
-			
+			foreach ($assignmentData[$assignment[0]->assignmentID]['peerCriteria'] as &$criterion){
+				$criterionID = $criterion->criteriaID;
+				$criterionTitle = $criterion->title;
+				$criterionDescription = $criterion->description;
+				$criterion = array();
+				$criterion['id'] = $criterionID;
+				$criterion['title'] = $criterionTitle;
+				$criterion['description'] = $criterionDescription;
+				$criterion['rating'] = 0;
+			}
+			$assignmentData[$assignment[0]->assignmentID]['peerCriteria']['numberOfEvals'] = 0;
 		}
 		if(is_array($individualCriteria)){
 			$assignmentData[$assignment[0]->assignmentID]['individualCriteria'] = $individualCriteria;
-			
+			foreach ($assignmentData[$assignment[0]->assignmentID]['individualCriteria'] as &$criterion){
+				$criterionID = $criterion->criteriaID;
+				$criterionTitle = $criterion->title;
+				$criterionDescription = $criterion->description;
+				$criterion = array();
+				$criterion['id'] = $criterionID;
+				$criterion['title'] = $criterionTitle;
+				$criterion['description'] = $criterionDescription;
+				$criterion['rating'] = 0;
+			}
+			$assignmentData[$assignment[0]->assignmentID]['individualCriteria']['numberOfEvals'] = 0;
 		}
 	}
 
@@ -300,4 +321,5 @@
 			"name"			=> $user->firstName . " " . $user->lastName,
 			"assignments"   => $assignment_results //name, id, result one-five
 		]);*/
+
 ?>

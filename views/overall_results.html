@@ -36,9 +36,6 @@
 	var labels = [];
 	var scores = [];
 	var colors = [];
-	var red = 0;
-	var blue = 0;
-	var green = 0;
 	var colorCounter = 0;
 	{% for label in labels %}
 		labels.push("{{label}}");
@@ -77,12 +74,24 @@
 	        responsive: false,
 	        responsiveAnimationDuration: 600,
 	        maintainAspectRatio: false,
-	        scales: {
+	       	scales: {
 	            xAxes: [{
 	                ticks: {
 	                    beginAtZero:true
+	                },
+	                scaleLabel:{
+	                	display:true,
+	                	labelString:'Scores',
+	                	fontSize: 20,
 	                }
-	            }]
+	            }],
+	        	yAxes: [{
+	        		scaleLabel:{
+	        			display:true,
+	        			labelString:'Group Number',
+	        			fontSize:20
+	        		}
+	        	}]
 	        }
 
 	    }
@@ -123,9 +132,6 @@
 	var labels = [];
 	var scores = [];
 	var colors = [];
-	var red = 0;
-	var blue = 0;
-	var green = 0;
 	var colorCounter = 0;
 	{% for label in labels %}
 		labels.push("{{label}}");
@@ -165,12 +171,25 @@
 	        responsive: false,
 	        responsiveAnimationDuration: 2800,
 	        maintainAspectRatio: false,
+
 	        scales: {
 	            xAxes: [{
 	                ticks: {
 	                    beginAtZero:true
+	                },
+	                scaleLabel:{
+	                	display:true,
+	                	labelString:'Scores',
+	                	fontSize: 20,
 	                }
-	            }]
+	            }],
+	        	yAxes: [{
+	        		scaleLabel:{
+	        			display:true,
+	        			labelString:'Group Number',
+	        			fontSize:20
+	        		}
+	        	}]
 	        }
 
 	    }
