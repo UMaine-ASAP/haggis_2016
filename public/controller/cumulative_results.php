@@ -1,9 +1,220 @@
 <?php
+
+	############NOTES#################
+	/*
+		This page is used to display a single student's
+		ratings over all assignments he or she has done
+	*/
+	############FUNCTIONS#############
+
+	############INCLUSIONS############
 	require_once __DIR__ . "/../../system/bootstrap.php";
 	ensureLoggedIn();
 
+	############DATA PROCESSING#######
+	#Fetching data from database
+	$student = new User($_GET['studentID']);
+	$class = new Period($_SESSION['classID']);
+	$assignments = $class->GetAssignments();
+	$evaluations = $student->GetReceivedEvaluations();
 
-	$assignment_results = array();							//final Twig results
+	#For each assignment, creates a 3 dimensional array
+	#assignmentData[assignmentID][criteria][score]
+	$assignmentData = array();
+	foreach ($assignments as $assignment){
+		$groups = $assignment[0]->GetGroups();
+		$groupCriteria = 0;
+		$peerCriteria = 0;
+		$individualCriteria = 0;
+		$assignmentData[$assignment[0]->assignmentID] = array();
+
+		#for each evaluation, pulls the needed criteria
+		$flag = 0;
+		foreach ($evaluations as $evaluation){
+			if ($groups != array() &&!is_array($groupCriteria) && $evaluation->evaluation_type == 'Group' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+				$groupCriteria = $evaluation->GetCriteria();
+				$flag++;
+				if($flag == 2){
+					break;
+				}
+			}
+			else if ($groups != array() &&!is_array($peerCriteria) && $evaluation->evaluation_type == 'Peer' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+				$peerCriteria = $evaluation->GetCriteria();
+				$flag++;
+				if($flag == 2){
+					break;
+				}
+			}
+			else if ($groups == array() && !is_array($individualCriteria) && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+				$individualCriteria = $evaluation->GetCriteria();
+				break;
+			}
+		}
+
+		#for each criteria, places it as an array within the assignment's array
+		#This is structured as [criteria][criterion][id/title/description/rating/comments]
+		#note that comments is an array
+		if(is_array($groupCriteria)){
+			$assignmentData[$assignment[0]->assignmentID]['groupCriteria'] = $groupCriteria;
+			$criteriaCounter = 0;
+			foreach ($assignmentData[$assignment[0]->assignmentID]['groupCriteria'] as &$criterion){
+				$criterionID = $criterion->criteriaID;
+				$criterionTitle = $criterion->title;
+				$criterionDescription = $criterion->description;
+				$criterionSelections = $criterion->GetSelections();
+				$criterion = array();
+				$criterion['id'] = $criterionID;
+				$criterion['title'] = $criterionTitle;
+				$criterion['description'] = $criterionDescription;
+				$criterion['selections'] = $criterionSelections;
+				$criterion['rating'] = 0;
+				$criterion['comments'] = array();
+				$criteriaCounter += 1;
+			}
+			$assignmentData[$assignment[0]->assignmentID]['groupCriteria']['numberOfCriteria'] = $criteriaCounter;
+			$assignmentData[$assignment[0]->assignmentID]['groupCriteria']['numberOfEvals'] = 0;
+			$assignmentData[$assignment[0]->assignmentID]['groupCriteria']['type'] = 'group';
+		}
+		if(is_array($peerCriteria)){
+			$assignmentData[$assignment[0]->assignmentID]['peerCriteria'] = $peerCriteria;
+			$criteriaCounter = 0;
+			foreach ($assignmentData[$assignment[0]->assignmentID]['peerCriteria'] as &$criterion){
+				$criterionID = $criterion->criteriaID;
+				$criterionTitle = $criterion->title;
+				$criterionDescription = $criterion->description;
+				$criterionSelections = $criterion->GetSelections();
+				$criterion = array();
+				$criterion['id'] = $criterionID;
+				$criterion['title'] = $criterionTitle;
+				$criterion['description'] = $criterionDescription;
+				$criterion['selections'] = $criterionSelections;
+				$criterion['rating'] = 0;
+				$criterion['comments'] = array();
+				$criteriaCounter += 1;
+			}
+			$assignmentData[$assignment[0]->assignmentID]['peerCriteria']['numberOfCriteria'] = $criteriaCounter;
+			$assignmentData[$assignment[0]->assignmentID]['peerCriteria']['numberOfEvals'] = 0;
+			$assignmentData[$assignment[0]->assignmentID]['peerCriteria']['type'] = 'peer';
+		}
+		if(is_array($individualCriteria)){
+			$assignmentData[$assignment[0]->assignmentID]['individualCriteria'] = $individualCriteria;
+			$criteriaCounter = 0;
+			foreach ($assignmentData[$assignment[0]->assignmentID]['individualCriteria'] as &$criterion){
+				$criterionID = $criterion->criteriaID;
+				$criterionTitle = $criterion->title;
+				$criterionDescription = $criterion->description;
+				$criterionSelections = $criterion->GetSelections();
+				$criterion = array();
+				$criterion['id'] = $criterionID;
+				$criterion['title'] = $criterionTitle;
+				$criterion['description'] = $criterionDescription;
+				$criterion['selections'] = $criterionSelections;
+				$criterion['rating'] = 0;
+				$criterion['comments'] = array();
+				$criteriaCounter += 1;
+			}
+			$assignmentData[$assignment[0]->assignmentID]['individualCriteria']['numberOfCriteria'] = $criteriaCounter;
+			$assignmentData[$assignment[0]->assignmentID]['individualCriteria']['numberOfEvals'] = 0;
+			$assignmentData[$assignment[0]->assignmentID]['individualCriteria']['type'] = 'individual';
+		}
+	}
+
+	#Gathering the data from each evaluation
+	foreach ($evaluations as $evaluation){
+		$evaluatedCriteria = $evaluation->GetCriteria();
+		$assignmentID = $evaluation->GetAssignment()->assignmentID;
+		$user = $evaluation->GetUser();
+		#Checks if the evaluation corresponds with an assignment
+		if(array_key_exists($assignmentID, $assignmentData)){
+			#For each criteria within the evaluation, checks what type it is
+			if ($evaluation->evaluation_type == 'Group'){
+				#Cycles through each criterion and compares it to the assignments criteria
+				foreach ($evaluatedCriteria as $evaluatedCriterion){
+					foreach ($assignmentData[$assignmentID]['groupCriteria'] as &$groupCriterion){
+						if (is_array($groupCriterion)){
+							#Checks if there is a match and, if so, adds its rating and comments
+							if ($evaluatedCriterion->criteriaID == $groupCriterion['id']){
+								$groupCriterion['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
+								if ($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
+									$groupCriterion['comments'][] = $user->firstName . ' ' . $user->lastName . ': ' . $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) . ' - Score: ' . $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
+								}
+							}
+						}
+					}
+				}
+				$assignmentData[$assignmentID]['groupCriteria']['numberOfEvals'] += 1;
+			}
+			else if ($evaluation->evaluation_type == 'Peer'){
+				#Cycles through each criterion and compares it to the assignments criteria
+				foreach ($evaluatedCriteria as $evaluatedCriterion){
+					foreach ($assignmentData[$assignmentID]['peerCriteria'] as &$peerCriterion){
+						if (is_array($peerCriterion)){
+							#Checks if there is a match and, if so, adds its rating and comments
+							if ($evaluatedCriterion->criteriaID == $peerCriterion['id']){
+								$peerCriterion['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
+								if ($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
+									$peerCriterion['comments'][] = $user->firstName . ' ' . $user->lastName . ': ' . $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) . ' - Score: ' . $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
+								}
+							}
+						}
+					}
+				}
+				$assignmentData[$assignmentID]['peerCriteria']['numberOfEvals'] += 1;
+			}
+			else {
+				#Cycles through each criterion and compares it to the assignments criteria
+				foreach ($evaluatedCriteria as $evaluatedCriterion){
+					foreach ($assignmentData[$assignmentID]['individualCriteria'] as &$individualCriterion){
+						if (is_array($individualCriterion)){
+							#Checks if there is a match and, if so, adds its rating and comments
+							if ($evaluatedCriterion->criteriaID == $individualCriterion['id']){
+								$individualCriterion['rating'] += $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
+								if ($evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) != ''){
+									$individualCriterion['comments'][] = $user->firstName . ' ' . $user->lastName . ': ' . $evaluatedCriterion->GetCriteriaComments($evaluation->evaluationID) . ' - Score: ' . $evaluatedCriterion->GetCriteriaRating($evaluation->evaluationID);
+								}
+							}
+						}
+					}
+				}
+				$assignmentData[$assignmentID]['individualCriteria']['numberOfEvals'] += 1;
+			}
+		}
+	}
+
+	#Computing the average ratings in each criterion
+	#and computing the height each graph should be
+	$heights = [];
+	foreach ($assignmentData as &$assignment){
+		foreach ($assignment as &$criteria){
+			foreach ($criteria as &$criterion){
+				#To avoid bugs, checks if this is a valid criterion
+				if (is_array($criterion)){
+					$criterion['rating'] = $criterion['rating'] / $criteria['numberOfEvals'];
+				}
+			}
+			$heights[] = $criteria['numberOfCriteria'] * 50;
+		}
+	}
+
+
+	#enable this to see important information
+	//echo '<pre>' . print_r($heights, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($evaluations[0]->GetCriteria()[0]->GetSelections(), TRUE) . '</pre>';
+
+
+	############RENDERING#############
+	echo $twig->render('cumulative_results.html',[
+		"username" 			=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
+		"name"				=> $student->firstName . ' ' . $student->lastName,
+		"assignmentData" 	=> $assignmentData,
+		"assignments"		=> $assignments,
+		"heights"			=> $heights
+		]);
+
+	#Assignment data is structured as assignmentData[assignmentID][criteria type][criterion][id/title/description/rating/comments]
+
+/*	$assignment_results = array();							//final Twig results
 	$class = new Period($_SESSION['classID']);				//class object
 	$assignments = $class->GetAssignments();				//get all assignments for class
 
@@ -51,7 +262,11 @@
 						$overallGroup[$countGroup][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 
 						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
-							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							$new_comment = array();
+							$new_comment['criteria'] = $i + 1;
+							$new_comment['score'] = $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+							$new_comment['comment'] = $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							/*$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
 							$new_comment .= " ----- Score: " . $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 							$commentsGroup[] = $new_comment;
 						}
@@ -66,7 +281,11 @@
 						//get rating received for criteria and save to 2D array
 						$overallPeer[$countPeer][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
-							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							$new_comment = array();
+							$new_comment['criteria'] = $i + 1;
+							$new_comment['score'] = $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+							$new_comment['comment'] = $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							/*$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
 							$new_comment .= " ----- Score: " . $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 							$commentsPeer[] = $new_comment;
 						}
@@ -82,7 +301,11 @@
 						//get rating received for criteria and save to 2D array
 						$overallIndividual[$countIndividual][] += $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 						if($criteria[$i]->GetCriteriaComments($eval->evaluationID) != ''){
-							$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							$new_comment = array();
+							$new_comment['criteria'] = $i + 1;
+							$new_comment['score'] = $criteria[$i]->GetCriteriaRating($eval->evaluationID);
+							$new_comment['comment'] = $criteria[$i]->GetCriteriaComments($eval->evaluationID);
+							/*$new_comment = "Criteria " . ($i + 1) . ": " . $criteria[$i]->GetCriteriaComments($eval->evaluationID);
 							$new_comment .= " ----- Score: " . $criteria[$i]->GetCriteriaRating($eval->evaluationID);
 							$commentsIndividual[] = $new_comment;
 						}
@@ -191,18 +414,20 @@
 				"name"		=> $a[0]->title . " Individual Results", //assignment name + individual result
 				"id"		=> $a[0]->assignmentID,					 //assignment id
 				"criteria" => $criteriaIndividualFinal,				 //final criteria averages
-				"comments"  => $commentsIndividual,					 //comments 
+				"comments"  => $commentsIndividual,					 //comments as arrays with [criteria], [score], and [comment] (for literal)
 				"criteriaCount" => $criteriaCountIndividual			 //number of criteria
 
 			];
 		}
 	}
 
-	//get the html page ready to be displayed
+	echo '<pre>' . print_r($assignment_results, TRUE) . '</pre>';
+
+	############RENDERING#############
 	echo $twig->render('cumulative_results.html',[
 			"username"    	=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 			"name"			=> $user->firstName . " " . $user->lastName,
 			"assignments"   => $assignment_results //name, id, result one-five
-		]);
+		]);*/
 
 ?>

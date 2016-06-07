@@ -1,0 +1,226 @@
+{% extends "base_account.html" %}
+
+{% block content %}
+
+{# Aligning the whole page to center #}
+<div align="Center">
+
+{% if type == 'individual' %}
+
+	{# Creating the dropdown menu #}
+	<form name="Individual Sorting Menu" action="overall_results.php" method='post'>
+		<div align="Center">
+			<select name="SortChoice">
+				<option selected value = "Alphabetically">Sorting method</option>
+				<option value = "Alphabetically">Alphabetically</option>
+				<option value = "RAlphabetically">Reverse alphabetically</option>
+				<option value = "HighToLow">Highest to lowest</option>
+				<option value = "LowToHigh">Lowest to highest</option>
+			</select>
+			<button type="submit">Go</button>
+		</div>
+	</form>
+
+	{% set labels = [] %}
+	{% set scores = [] %}
+	{% set IDs = [] %}
+	{% for student in assignmentData %}
+		{% set labels = labels|merge([student['name']]) %}
+		{% set scores = scores|merge([student.averageRating]) %}
+		{% set IDs = IDs|merge([student['userID']]) %}
+	{% endfor %}
+
+	{% autoescape 'js'%}
+	{# Creating a chart for each student (if individual assignment) and their average ratings #}
+	<canvas id="myChart" width="1000" height="{{height}}" onclick="goToStudent(event)"></canvas>
+	<script>
+	var ctx = document.getElementById("myChart");
+	var labels = [];
+	var scores = [];
+	var colors = [];
+	var colorCounter = 0;
+	{% for label in labels %}
+		labels.push("{{label}}");
+	{% endfor %}
+	{% for score in scores %}
+		scores.push({{score}});
+		if (colorCounter == 0)
+		{
+			colors.push('rgb(0,128,255)','rgb(192,192,192)');
+			colorCounter = 1;
+		}else
+		{
+			colorCounter = 0;
+		}
+	{% endfor %}
+	var myChart = new Chart(ctx, {
+	    type: 'horizontalBar',
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: 'Average rating across criteria',
+	            data: scores,
+	            backgroundColor: colors,
+	        }]
+	    },
+
+	    options: {
+	    	legend: {
+	    		display: false
+	    	},
+	    	title: {
+	    		display: true,
+	    		fontSize: 36,
+	    		text: "{{assignment.title}}"
+	    	},
+	        responsive: false,
+	        responsiveAnimationDuration: 600,
+	        maintainAspectRatio: false,
+	       	scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                },
+	                scaleLabel:{
+	                	display:true,
+	                	labelString:'Scores',
+	                	fontSize: 20,
+	                }
+	            }],
+	        	yAxes: [{
+	        		scaleLabel:{
+	        			display:true,
+	        			labelString:'Group Number',
+	        			fontSize:20
+	        		}
+	        	}]
+	        }
+
+	    }
+	});
+	{# Createing an onclick event that takes you to the page of the student #}
+	var IDs = [];
+	{% for ID in IDs %}
+		IDs.push({{ID}});
+	{% endfor %}
+	function goToStudent(event){
+		var element = myChart.getElementAtEvent(event);
+		if (element.length != 0){
+			console.log(IDs[element[0]._index]);
+			var form = document.createElement("form");
+			form.target = "_self";
+			form.method = "get";
+			form.action = "cumulative_results.php";
+			var input = document.createElement("input");
+			input.type = "hidden";
+			input.name = "studentID";
+			input.value = IDs[element[0]._index];
+			form.appendChild(input);
+			document.body.appendChild(form);
+			form.submit();
+		}
+		//window.open('cumulative_results.php', '_self');
+	}
+	</script>
+	{% endautoescape %}
+{% endif %}
+
+{% if type == 'group' %}
+
+	{# Creating the dropdown menu #}
+	<form name="Group Sorting Menu" action="overall_results.php" method='post'>
+		<div align="Center">
+			<select name="SortChoice">
+				<option selected value = "Numerically">Sorting method</option>
+				<option value = "Numerically">Numerically</option>
+				<option value = "RNumerically">Reverse Numerically</option>
+				<option value = "HighToLow">Highest to lowest</option>
+				<option value = "LowToHigh">Lowest to highest</option>
+			</select>
+			<button type="submit">Go</button>
+		</div>
+	</form>
+
+	{% set labels = [] %}
+	{% set scores = [] %}
+	{% for group in assignmentData %}
+		{% set labels = labels|merge(['Group ' ~ group['groupNumber']]) %}
+		{% set scores = scores|merge([group.averageRating]) %}
+	{% endfor %}
+
+	{% autoescape 'js'%}
+	{# Creating a chart for each group (if group assignment) and their average ratings #}
+	<canvas id="myChart" width="1000" height="{{height}}"></canvas>
+	<script>
+	var ctx = document.getElementById("myChart");
+	var labels = [];
+	var scores = [];
+	var colors = [];
+	var colorCounter = 0;
+	{% for label in labels %}
+		labels.push("{{label}}");
+	{% endfor %}
+	{% for score in scores %}
+		scores.push({{score}});
+		if (colorCounter == 0)
+		{
+			colors.push('rgb(0,128,255)','rgb(192,192,192)');
+			colorCounter = 1;
+		}
+		else
+		{
+			colorCounter = 0;
+		}
+	{% endfor %}
+	var myChart = new Chart(ctx, {
+	    type: 'horizontalBar',
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: 'Average rating across criteria',
+	            data: scores,
+	            backgroundColor: colors,
+	        }]
+	    },
+
+	    options: {
+	    	legend: {
+	    		display: false
+	    	},
+	    	title: {
+	    		display: true,
+	    		fontSize: 36,
+	    		text: "{{assignment.title}}"
+	    	},
+	        responsive: false,
+	        responsiveAnimationDuration: 2800,
+	        maintainAspectRatio: false,
+
+	        scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                },
+	                scaleLabel:{
+	                	display:true,
+	                	labelString:'Scores',
+	                	fontSize: 20,
+	                }
+	            }],
+	        	yAxes: [{
+	        		scaleLabel:{
+	        			display:true,
+	        			labelString:'Group Number',
+	        			fontSize:20
+	        		}
+	        	}]
+	        }
+
+	    }
+	});
+	</script>
+	{% endautoescape %}
+{% endif %}
+</div>
+
+{% endblock %}
