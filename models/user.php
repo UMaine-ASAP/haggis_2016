@@ -317,9 +317,17 @@ class User {
 		}
 	}
 
+	public function ResetPassword(){
+		$db = GetDB();
+		$query = "SELECT * FROM `user` WHERE `email` = $_POST[postEmail]";
+		$rows = $db->query($query);
+		if($rows){
+			return "hey";
+		}
+
+	}
+
 }
-
-
 
 
 
