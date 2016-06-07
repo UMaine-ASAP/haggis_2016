@@ -6,6 +6,27 @@
 	<link rel="stylesheet" type="text/css" href="../stylesheet.css"/>
 	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script>
+		function popup(link, windowName, variables = 0){
+			//PRE: link is either a string for the html/php name of the page
+			//	or an object with a href component. windowName must be a
+			//	unique name.
+			//POST: Brings up a popup window using the specified link
+			if (!window.focus) return true;
+			var href;
+			if (typeof(link) == 'string'){
+				href = link;
+			}
+			else{
+				href = link.href;
+			}
+			if (variables != 0){
+				$_SESSION['tempVariables'] = variables;
+			}
+			window.open(href, windowName, 'width=600, height=400,scrollbars=yes');
+			return false;
+		}
+	</script>
 </head>
 <body>
 

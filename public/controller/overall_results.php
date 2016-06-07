@@ -176,6 +176,7 @@
 			$assignmentData[$student->userID]['averageRating'] = 0;
 			$assignmentData[$student->userID]['name'] = $student->firstName . ' ' . $student->lastName;
 			$assignmentData[$student->userID]['lastName'] = $student->lastName;
+			$assignmentData[$student->userID]['userID'] = $student->userID;
 			$assignmentData[$student->userID]['numberOfEvals'] = 0;
 			foreach ($criteria as $criterion){
 				$assignmentData[$student->userID][$criterion->criteriaID] = array();
@@ -321,12 +322,8 @@
 	echo $twig->render('overall_results.html', [
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"type" 			  => $type,
-		"evaluations"     => $evaluations,
 		"assignment"	  => $assignment,
-		"criteria"		  => $criteria,
 		"assignmentData"  => $assignmentData,
-		"students"		  => $students,
-		"groups"		  => $groups,
 		"height"		  => $height
 	]);
 

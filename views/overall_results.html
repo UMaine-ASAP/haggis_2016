@@ -23,14 +23,16 @@
 
 	{% set labels = [] %}
 	{% set scores = [] %}
+	{% set IDs = [] %}
 	{% for student in assignmentData %}
 		{% set labels = labels|merge([student['name']]) %}
 		{% set scores = scores|merge([student.averageRating]) %}
+		{% set IDs = IDs|merge([student['userID']]) %}
 	{% endfor %}
 
 	{% autoescape 'js'%}
 	{# Creating a chart for each student (if individual assignment) and their average ratings #}
-	<canvas id="myChart" width="1000" height="{{height}}"></canvas>
+	<canvas id="myChart" width="1000" height="{{height}}" onclick="goToStudent(event)"></canvas>
 	<script>
 	var ctx = document.getElementById("myChart");
 	var labels = [];
@@ -96,6 +98,29 @@
 
 	    }
 	});
+	{# Createing an onclick event that takes you to the page of the student #}
+	var IDs = [];
+	{% for ID in IDs %}
+		IDs.push({{ID}});
+	{% endfor %}
+	function goToStudent(event){
+		var element = myChart.getElementAtEvent(event);
+		if (element.length != 0){
+			console.log(IDs[element[0]._index]);
+			var form = document.createElement("form");
+			form.target = "_self";
+			form.method = "get";
+			form.action = "cumulative_results.php";
+			var input = document.createElement("input");
+			input.type = "hidden";
+			input.name = "studentID";
+			input.value = IDs[element[0]._index];
+			form.appendChild(input);
+			document.body.appendChild(form);
+			form.submit();
+		}
+		//window.open('cumulative_results.php', '_self');
+	}
 	</script>
 	{% endautoescape %}
 {% endif %}
