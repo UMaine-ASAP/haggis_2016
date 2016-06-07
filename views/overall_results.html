@@ -34,6 +34,14 @@
 	{# Creating a chart for each student (if individual assignment) and their average ratings #}
 	<canvas id="myChart" width="1000" height="{{height}}" onclick="goToStudent(event)"></canvas>
 	<script>
+	var labels = [];
+	var scores = [];
+	{% for label in labels %}
+		labels.push("{{label}}");
+	{% endfor %}
+	{% for score in scores %}
+		scores.push({{score}});
+	{% endfor %}
 	var ctx = document.getElementById("myChart");
 	var labels = [];
 	var scores = [];
@@ -106,7 +114,6 @@
 	function goToStudent(event){
 		var element = myChart.getElementAtEvent(event);
 		if (element.length != 0){
-			console.log(IDs[element[0]._index]);
 			var form = document.createElement("form");
 			form.target = "_self";
 			form.method = "get";

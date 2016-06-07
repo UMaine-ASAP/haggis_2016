@@ -66,7 +66,10 @@
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
 				$criterion['description'] = $criterionDescription;
-				$criterion['selections'] = $criterionSelections;
+				$criterion['selections'] = array();
+				foreach ($criterionSelections as $selection){
+					$criterion['selections'][] = $selection->description;
+				}
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
 				$criteriaCounter += 1;
@@ -87,7 +90,10 @@
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
 				$criterion['description'] = $criterionDescription;
-				$criterion['selections'] = $criterionSelections;
+				$criterion['selections'] = array();
+				foreach ($criterionSelections as $selection){
+					$criterion['selections'][] = $selection->description;
+				}
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
 				$criteriaCounter += 1;
@@ -108,7 +114,10 @@
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
 				$criterion['description'] = $criterionDescription;
-				$criterion['selections'] = $criterionSelections;
+				$criterion['selections'] = array();
+				foreach ($criterionSelections as $selection){
+					$criterion['selections'][] = $selection->description;
+				}
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
 				$criteriaCounter += 1;
@@ -198,7 +207,7 @@
 
 
 	#enable this to see important information
-	//echo '<pre>' . print_r($heights, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($_GET, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations[0]->GetCriteria()[0]->GetSelections(), TRUE) . '</pre>';
 

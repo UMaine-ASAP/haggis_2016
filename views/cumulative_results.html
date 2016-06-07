@@ -18,11 +18,10 @@
 		<h3 class="assignmentTitle">{{assignmentTitles[titleIterator]}}</h3>
 		{% set titleIterator = titleIterator + 1 %}
 		{% for criteria in assignment %}
-			<canvas id="{{chartIterator}}" width="1000" height="{{heights[heightIterator]}}"></canvas>
+			<canvas id="{{chartIterator}}" width="1000" height="{{heights[heightIterator]}}" onclick="openComments{{chartIterator}}(event)"></canvas>
 			{% set heightIterator = heightIterator + 1 %}
 			<script>
 				var ctx = document.getElementById("{{chartIterator}}");
-				{% set chartIterator = chartIterator + 1 %}
 				var labels = [];
 				var scores = [];
 				var colors = [];
@@ -42,7 +41,7 @@
 						}
 					{% endif %}
 				{% endfor %}
-				var myChart = new Chart(ctx, {
+				var myChart{{chartIterator}} = new Chart(ctx, {
 				    type: 'horizontalBar',
 				    data: {
 				        labels: labels,
@@ -65,15 +64,63 @@
 				        responsiveAnimationDuration: 2800,
 				        maintainAspectRatio: false,
 				        scales: {
+				        	yAxes: [{
+				        		ticks: {
+
+				        		}
+				        	}],
 				            xAxes: [{
 				                ticks: {
-				                    beginAtZero:true
+				                    beginAtZero:true,
+				                    max: 5
 				                }
 				            }]
 				        }
 				    } 
 
 				});
+
+			function openComments{{chartIterator}}(event){
+				var element = myChart{{chartIterator}}.getElementAtEvent(event);
+				if (element.length != 0){
+					console.log(element);
+					var criterionNum = element[0]._index;
+					var criterion = [];
+					{% set iterator = -1 %}
+					{% set finalAssignment = 0 %}
+					{% set finalCriteria = ' ' %}
+					{% for assignment in assignmentData|keys %}
+						{% for criteria in assignmentData[assignment]|keys %}
+							{% set iterator = iterator + 1 %}
+							{% if iterator == chartIterator %}
+								{% set finalAssignment = assignment %}
+								{% set finalCriteria = criteria %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+					{% set criterionIterator = -1 %}
+					{% for criterion in assignmentData[finalAssignment][finalCriteria] %}
+						{% set criterionIterator = criterionIterator + 1 %}
+						if ({{criterionIterator}} == criterionNum){
+							{% for data in assignmentData[finalAssignment][finalCriteria][criterionIterator] %}
+								{% if data is iterable %}
+									temp = [];
+									{% for comment in data %}
+										temp.push("{{comment|e('js')}}");
+									{% endfor %}
+									criterion.push(temp);
+								{% else %}
+									criterion.push("{{data|e('js')}}");
+								{% endif %}
+							{% endfor %}
+						}
+					{% endfor %}
+					console.log(criterion);
+					var form = document.createElement("form");
+					popup('criteria_view.php', 'criteriaViewer{{chartIterator}}', variables = criterion);
+				}
+			}
+			{% set chartIterator = chartIterator + 1 %}
 			</script>
 		{% endfor %}	{% endfor %}
 </div>
