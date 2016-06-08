@@ -367,6 +367,7 @@ class User {
 
 		if($rows = $db->query($query)){
 			echo "yeaahh mannnn";
+			return true;
 		}else{
 			echo "Password Reset Failed, Wrong Email or Code";
 		}
