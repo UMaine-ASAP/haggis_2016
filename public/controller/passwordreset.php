@@ -18,30 +18,28 @@ if(!isset($_GET['code']) && !isset($_GET['email']))
 			$code = rand(100000,1000000000);
 			
 			if(User::ResetPassword($code) === true){
+				echo "<br>Please check your email (it may take a couple of minutes before you reciece a email";
 
+
+				$email = $_POST['postEmail'];
+				$to = $_POST['postEmail'];
+				$from = "support@haggis.com";
+				$subject = "Password Reset";
+				$body = "
+
+				This is an auto generated email. Please DO NOT respond as the inbox is not monitored.
+
+
+				Click the link below or paste it into your browser to reset your password.
+
+				http://chitna.asap.um.maine.edu/haggis/public/controller/passwordreset.php?code=$code&email=$email
+
+				";
+
+				mail($to,$subject,$body,$from);
 			}else{
-
+				echo "The email ".$_POST['postEmail']." is not associated with any account currently registered.";
 			}
-
-			echo "<br>Please check your email";
-
-
-			$email = $_POST['postEmail'];
-			$to = $_POST['postEmail'];
-			$from = "support@haggis.com";
-			$subject = "Password Reset";
-			$body = "
-
-			This is an auto generated email. Please DO NOT respond as the inbox is not monitored.
-
-
-			Click the link below or paste it into your browser to reset your password.
-
-			http://chitna.asap.um.maine.edu/haggis/public/controller/passwordreset.php?code=$code&email=$email
-
-			";
-
-			mail($to,$subject,$body,$from);
 		}else{
 			echo "<br>Your email address is required to reset your password.";
 		}
@@ -69,7 +67,7 @@ if(isset($_POST['newpassword']) && $_POST['newpassword1']){
 	if($_POST['newpassword'] != null && $_POST['newpassword1'] != null){
  		if($_POST['newpassword'] === $_POST['newpassword1']){
  			//push information to DB
- 			echo 'hello world!';
+ 			//Information goes here!!!! 		
  		}
  		else
  		{

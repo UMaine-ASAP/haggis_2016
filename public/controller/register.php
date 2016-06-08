@@ -52,7 +52,7 @@ if (isset($_POST['submitRegister'])) {
 		exit();}
 
 	
-
+	//TURN THIS INTO A FUNCTION
 	// Create 10 character salt.
 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
