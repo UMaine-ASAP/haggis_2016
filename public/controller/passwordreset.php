@@ -51,11 +51,11 @@ if(isset($_GET['code']) && isset($_GET['email'])){
 	$email = $_GET['email'];
 	
 	if(User::ConfirmResetPassword($code,$email) === true){
-		echo"butterflies";
+		echo "butterflies";
 	}else{
 		echo "ERRORs";
 	}
-
+}
 
 
 
