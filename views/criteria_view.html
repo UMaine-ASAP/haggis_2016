@@ -1,5 +1,57 @@
-{% extends 'base_account.html' %}
+{% extends 'base.html' %}
 {% block title %}Haggis - Criteria View{% endblock %}
 {% block content %}
+
+<h2 class="pageTitle">Criteria Result in {{assignmentName}} for {{studentName}}</h2>
+
+{% set counter = -1 %}
+{% for item in criterion %}
+	{% set counter = counter + 1 %}
+	{% if counter == 0 %}
+		{# do nothing because this is the ID #}
+	{% else %}
+		{% if item is iterable %}
+			{# this is for the criteria #}
+			{% if counter == 3 %}
+				<table border="5">					
+					<tr>
+						<td>Score: </td>
+						{% set descriptionCounter = 0 %}
+						{% for description in item %}
+						{% set descriptionCounter = descriptionCounter + 1 %}
+						<td>{{descriptionCounter}}</td>
+						{% endfor %}
+					</tr>
+					<tr>
+						<td>Meaning: </td>
+						{% set descriptionCounter = 0 %}
+						{% for description in item %}
+						{% set descriptionCounter = descriptionCounter + 1 %}
+						<td>{{description}}</td>
+						{% endfor %}
+					</tr>
+				</table>
+			{# this is for comments #}
+			{% else %}
+				<h3>Comments: </h3>
+				{% for comment in item %}
+					<p>{{comment}}</p>
+				{% endfor %}
+			{% endif %}
+
+		{% else %}
+			{% if counter == 1 %}
+				<h2>Criteria: {{item}}</h2>
+			{% endif %}
+			{% if counter == 4 %}
+				<h3>Score: {{item}}</h3>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% endfor %}
+
+<br />
+<br />
+<br />
 
 {% endblock %}

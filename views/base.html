@@ -9,11 +9,12 @@
 </head>
 <body>
 	<script>
-		function popup(link, windowName, variables = []){
+		function popup(link, windowName, variables = 0){
 			//PRE: link is either a string for the html/php name of the page
 			//	or an object with a href component. windowName must be a
 			//	unique name.
-			//POST: Brings up a popup window using the specified link
+			//POST: Brings up a popup window using the specified link and
+			//	the variables as $_GET['tempVariables']
 			if (!window.focus) return true;
 			var href;
 			if (typeof(link) == 'string'){
@@ -23,32 +24,15 @@
 				href = link.href;
 			}
 			if(variables != 0){
-				var form = document.createElement("form");
-				form.target = "_blank";
-				form.action = "criteria_view.php";
-				form.method = "get";
-				/*for (var k = 0; k < variables.length; k++){
-					if (variables[k].length > 0){
-						for (var i = 0; i < variables[k].length; i++){
-							var input = document.createElement("input");
-							input.type = "hidden";
-							input.name = "tempCriterion" + i;
-							input.value = variables[k][i];
-							form.appendChild(input);
-						}
-					}
-				}*/
-				var input = document.createElement("input");
-				input.type = "hidden";
-				input.name = "tempVariables";
-				input.value = variables;
-				form.appendChild(input);
-				document.body.appendChild(form);
-				form.submit();
+				//NOTE: This places the variable in temp
+				if (Array.isArray(variables)){
+					href += "?tempVariables=" + JSON.stringify(variables);
+				}
+				else{
+					href += "?tempVariables=" + variables;
+				}
 			}
-			else{
-				window.open(href, windowName, 'width=600, height=400,scrollbars=yes');
-			}
+			window.open(href, windowName, 'width=800, height=600,scrollbars=yes');
 			return false;
 		}
 
@@ -105,6 +89,7 @@
 		}*/
 	</script>
 	<header>
+		<h2 id="siteTitle"><a href="./redirect.php">Haggis</a></h2>
 		{% block header %}{% endblock %}
 	</header>
 

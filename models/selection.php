@@ -84,6 +84,25 @@ class Selection {
 		}
 	}
 
+	public function GetCriteria(){
+		//POST: Returns the criteria this selection belongs to
+		$query = "SELECT * FROM `criteria_selection` WHERE `selectionID` = {$this->selectionID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				$s = new Criteria($row['criteriaID']);
+			}
+			return $s;
+		} else {
+			$_SESSION['error'] = 675;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__."
+			SelectionID: ".$this->selectionID;
+			header("location:error_message.php");
+		}
+	}
+
 }
 
 ?>

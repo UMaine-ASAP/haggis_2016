@@ -68,7 +68,7 @@
 				$criterion['description'] = $criterionDescription;
 				$criterion['selections'] = array();
 				foreach ($criterionSelections as $selection){
-					$criterion['selections'][] = $selection->description;
+					$criterion['selections'][$selection->selectionID] = $selection->description;
 				}
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
@@ -92,7 +92,7 @@
 				$criterion['description'] = $criterionDescription;
 				$criterion['selections'] = array();
 				foreach ($criterionSelections as $selection){
-					$criterion['selections'][] = $selection->description;
+					$criterion['selections'][$selection->selectionID] = $selection->description;
 				}
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
@@ -116,7 +116,7 @@
 				$criterion['description'] = $criterionDescription;
 				$criterion['selections'] = array();
 				foreach ($criterionSelections as $selection){
-					$criterion['selections'][] = $selection->description;
+					$criterion['selections'][$selection->selectionID] = $selection->description;
 				}
 				$criterion['rating'] = 0;
 				$criterion['comments'] = array();
@@ -218,7 +218,8 @@
 		"name"				=> $student->firstName . ' ' . $student->lastName,
 		"assignmentData" 	=> $assignmentData,
 		"assignments"		=> $assignments,
-		"heights"			=> $heights
+		"heights"			=> $heights,
+		"studentID"		    => $_GET['studentID']
 		]);
 
 	#Assignment data is structured as assignmentData[assignmentID][criteria type][criterion][id/title/description/rating/comments]
