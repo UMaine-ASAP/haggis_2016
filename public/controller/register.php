@@ -49,9 +49,9 @@ if (isset($_POST['submitRegister'])) {
 
 
 		echo $twig->render('register.html', $data);
-		exit();
-	}
+		exit();}
 
+	
 
 	// Create 10 character salt.
 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
