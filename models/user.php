@@ -328,7 +328,6 @@ class User {
 	static public function ResetPassword(){
 		$db = GetDB();
 		$email = $_POST['postEmail'];
-		echo $email;
 		$query = "SELECT * FROM `user` WHERE `email` = '$email'";
 		$rows = $db->query($query);
 		$ret = [];

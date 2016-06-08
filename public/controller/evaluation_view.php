@@ -3,11 +3,11 @@
 	ensureLoggedIn();
 	//get evaluation
 
-	if(empty($_POST['evaluationID'])){
+	if(empty($_GET['evaluationID'])){
 		die('evaluationID not given');
 	}
 
-	$eval = new Evaluation($_POST['evaluationID']);
+	$eval = new Evaluation($_GET['evaluationID']);
 	
 	//create evaluation title from assignment name, type of eval, and who it targets.
 	if(!empty($_SESSION['assignmentID'])){
