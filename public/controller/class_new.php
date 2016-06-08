@@ -1,5 +1,6 @@
 <?php
 	require_once __DIR__ . "/../../system/bootstrap.php";
+
 	ensureLoggedIn();
 
 	if($_SESSION['user']->userType == 'Student')
@@ -28,12 +29,13 @@
 	}
 
 	//get the html page ready to be displayed
-	$page = file_get_contents(dirname(__FILE__) . '/../views/class_new.html');
+	//copies all of the class_new.html file and converts it into a string 
+	$page = file_get_contents(dirname(__FILE__) . '/../../views/class_new.html');
 
 	//replace the values in the html with needed sections
 	echo $twig->render('class_new.html', [
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
-		"courseName"         => $courseName,
-		"courseID"			=> $course
+		//"courseName"         => $courseName,
+		//"courseID"			=> $course
 	]);
 ?>
