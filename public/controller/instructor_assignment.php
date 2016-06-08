@@ -3,9 +3,9 @@
 	ensureLoggedIn();
 
 	//grab assignment info
-	if(isset($_POST['assignmentID'])){
-		$_SESSION['assignmentID'] =  $_POST['assignmentID'];
-		$assignmentID = $_POST['assignmentID'];
+	if(isset($_GET['assignmentID'])){
+		$_SESSION['assignmentID'] =  $_GET['assignmentID'];
+		$assignmentID = $_GET['assignmentID'];
 	}
 	else
 		$assignmentID = $_SESSION['assignmentID'];

@@ -14,116 +14,138 @@
 {% set heightIterator = 0 %}
 
 <div align="Center">
+	{# Filters through each assignment and creates a graph for each criteria #}
 	{% for assignment in assignmentData %}
 		<h3 class="assignmentTitle">{{assignmentTitles[titleIterator]}}</h3>
 		{% set titleIterator = titleIterator + 1 %}
-		{% for criteria in assignment %}
-			<canvas id="{{chartIterator}}" width="1000" height="{{heights[heightIterator]}}" onclick="openComments{{chartIterator}}(event)"></canvas>
-			{% set heightIterator = heightIterator + 1 %}
-			<script>
-				var ctx = document.getElementById("{{chartIterator}}");
-				var labels = [];
-				var scores = [];
-				var colors = [];
-				var colorCounter = 0;
-				{% for criterion in criteria %}
-					{% if criterion is iterable %}
-						labels.push("{{criterion.title}}");			
-						scores.push({{criterion.rating}});
-						if (colorCounter == 0)
-						{
-							colors.push('rgb(0,128,255)','rgb(192,192,192)');
-							colorCounter = 1;
-						}
-						else
-						{
-							colorCounter = 0;
-						}
-					{% endif %}
-				{% endfor %}
-				var myChart{{chartIterator}} = new Chart(ctx, {
-				    type: 'horizontalBar',
-				    data: {
-				        labels: labels,
-				        datasets: [{
-				            label: 'Average rating',
-				            data: scores,
-				            backgroundColor: colors,
-				        }]
-				    },
-				    options: {
-				    	legend: {
-				    		display: false
-				    	},
-				    	title: {
-				    		display: true,
-				    		fontSize: 36,
-				    		text: "{{criteria.type}} total results"
-				    	},
-				        responsive: false,
-				        responsiveAnimationDuration: 2800,
-				        maintainAspectRatio: false,
-				        scales: {
-				        	yAxes: [{
-				        		ticks: {
-
-				        		}
-				        	}],
-				            xAxes: [{
-				                ticks: {
-				                    beginAtZero:true,
-				                    max: 5
-				                }
-				            }]
-				        }
-				    } 
-
-				});
-
-			function openComments{{chartIterator}}(event){
-				var element = myChart{{chartIterator}}.getElementAtEvent(event);
-				if (element.length != 0){
-					var criterionNum = element[0]._index;
-					var criterion = [];
-					{% set iterator = -1 %}
-					{% set finalAssignment = 0 %}
-					{% set finalCriteria = ' ' %}
-					{% for assignment in assignmentData|keys %}
-						{% for criteria in assignmentData[assignment]|keys %}
-							{% set iterator = iterator + 1 %}
-							{% if iterator == chartIterator %}
-								{% set finalAssignment = assignment %}
-								{% set finalCriteria = criteria %}
-							{% endif %}
-						{% endfor %}
+		{% for criteria in assignment|keys %}
+			{# Checks to see if it is a legitimate criteria #}
+			{% if criteria != 'group' %}
+				<canvas id="{{chartIterator}}" width="1000" height="{{heights[heightIterator]}}" onclick="openComments{{chartIterator}}(event)"></canvas>
+				{% set heightIterator = heightIterator + 1 %}
+				<script>
+					var ctx = document.getElementById("{{chartIterator}}");
+					var labels = [];
+					var scores = [];
+					var colors = [];
+					var colorCounter = 0;
+					{% for criterion in assignment[criteria] %}
+						{% if criterion is iterable %}
+							labels.push("{{criterion.title}}");			
+							scores.push({{criterion.rating}});
+							if (colorCounter == 0)
+							{
+								colors.push('rgb(0,128,255)','rgb(192,192,192)');
+								colorCounter = 1;
+							}
+							else
+							{
+								colorCounter = 0;
+							}
+						{% endif %}
 					{% endfor %}
-					{% set criterionIterator = -1 %}
-					{% for criterion in assignmentData[finalAssignment][finalCriteria] %}
-						{% set criterionIterator = criterionIterator + 1 %}
-						if ({{criterionIterator}} == criterionNum){
-							{% for data in assignmentData[finalAssignment][finalCriteria][criterionIterator] %}
-								{% if data is iterable %}
-									temp = [];
-									{% for comment in data %}
-										temp.push("{{comment|e('js')}}");
-									{% endfor %}
-									criterion.push(temp);
-								{% else %}
-									criterion.push("{{data|e('js')}}");
+					var myChart{{chartIterator}} = new Chart(ctx, {
+					    type: 'horizontalBar',
+					    data: {
+					        labels: labels,
+					        datasets: [{
+					            label: 'Average rating',
+					            data: scores,
+					            backgroundColor: colors,
+					        }]
+					    },
+					    options: {
+					    	legend: {
+					    		display: false
+					    	},
+					    	title: {
+					    		display: true,
+					    		fontSize: 36,
+					    		text: "{{assignment[criteria].type}} total results"
+					    	},
+					        responsive: false,
+					        responsiveAnimationDuration: 2800,
+					        maintainAspectRatio: false,
+					        scales: {
+					        	yAxes: [{
+					        		ticks: {
+
+					        		}
+					        	}],
+					            xAxes: [{
+					                ticks: {
+					                    beginAtZero:true,
+					                    max: 5
+					                }
+					            }]
+					        }
+					    } 
+
+					});
+
+				function openComments{{chartIterator}}(event){
+					var element = myChart{{chartIterator}}.getElementAtEvent(event);
+					if (element.length != 0){
+						var criterionNum = element[0]._index;
+						var criterion = [];
+						{% set iterator = -1 %}
+						{% set finalAssignment = 0 %}
+						{% set finalCriteria = ' ' %}
+						{# Looks for the specific criteria clicked on #}
+						{% for assignment in assignmentData|keys %}
+							{% for criteria in assignmentData[assignment]|keys %}
+								{# ensuring this is a legitimate criteria to iterate through #}
+								{% if criteria != 'group' %}
+									{% set iterator = iterator + 1 %}
+									{% if iterator == chartIterator %}
+										{% set finalAssignment = assignment %}
+										{% set finalCriteria = criteria %}
+									{% endif %}
 								{% endif %}
 							{% endfor %}
-						}
-					{% endfor %}
-					criterion.push({{finalAssignment}});
-					criterion.push({{studentID}});
-					criterion.push("{{finalCriteria}}");
-					var form = document.createElement("form");
-					popup('criteria_view.php', 'criteriaViewer', variables = criterion);
+						{% endfor %}
+						{% set criterionIterator = -1 %}
+						{# Compiles the necessary information from that criteria #}
+						{% for criterion in assignmentData[finalAssignment][finalCriteria] %}
+							{% set criterionIterator = criterionIterator + 1 %}
+							if ({{criterionIterator}} == criterionNum){
+								{% for data in assignmentData[finalAssignment][finalCriteria][criterionIterator] %}
+									{% if data is iterable %}
+										temp = [];
+										{% for comment in data %}
+											temp.push("{{comment|e('js')}}");
+										{% endfor %}
+										criterion.push(temp);
+									{% else %}
+										criterion.push("{{data|e('js')}}");
+									{% endif %}
+								{% endfor %}
+							}
+						{% endfor %}
+						{# Pushes the requisite information onto a variable #}
+						criterion.push({{finalAssignment}});
+						criterion.push({{studentID}});
+						criterion.push("{{finalCriteria}}");
+						{# Displays a popup with that information #}
+						popup('criteria_view.php', 'criteriaViewer', variables = criterion);
+					}
 				}
-			}
-			{% set chartIterator = chartIterator + 1 %}
-			</script>
-		{% endfor %}	{% endfor %}
+				{% set chartIterator = chartIterator + 1 %}
+				</script>
+			{# if this is the group array, produces their names #}
+			{% else %}
+				<p>Group Members: </p>
+				{% for groupMember in assignment[criteria] %}
+					{% if groupMember.userID != studentID %}
+						<form id="toGroupButton" method='get' action='cumulative_results.php'>
+							<input type="hidden" name="studentID" value="{{groupMember.userID}}"></input>
+							<input type="submit" name="submit" value="{{groupMember.firstName}} {{groupMember.lastName}}"></input>
+						</form>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
 </div>
 {% set labels = [] %}
 {% set scores = [] %}

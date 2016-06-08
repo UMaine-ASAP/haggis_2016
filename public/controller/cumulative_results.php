@@ -29,25 +29,39 @@
 		$assignmentData[$assignment[0]->assignmentID] = array();
 
 		#for each evaluation, pulls the needed criteria
-		$flag = 0;
-		foreach ($evaluations as $evaluation){
-			if ($groups != array() &&!is_array($groupCriteria) && $evaluation->evaluation_type == 'Group' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
-				$groupCriteria = $evaluation->GetCriteria();
-				$flag++;
-				if($flag == 2){
-					break;
+		if ($groups != array()){
+			$flag = 0;
+			foreach ($groups as $group){
+				$groupMembers = $group->GetUsers();
+				foreach ($groupMembers as $groupMember){
+					if ($groupMember == $student){
+						$assignmentData[$assignment[0]->assignmentID]['group'] = $groupMembers;
+					}
 				}
 			}
-			else if ($groups != array() &&!is_array($peerCriteria) && $evaluation->evaluation_type == 'Peer' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
-				$peerCriteria = $evaluation->GetCriteria();
-				$flag++;
-				if($flag == 2){
-					break;
+			foreach ($evaluations as $evaluation){
+				if (!is_array($groupCriteria) && $evaluation->evaluation_type == 'Group' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+					$groupCriteria = $evaluation->GetCriteria();
+					$flag++;
+					if($flag == 2){
+						break;
+					}
+				}
+				else if (!is_array($peerCriteria) && $evaluation->evaluation_type == 'Peer' && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+					$peerCriteria = $evaluation->GetCriteria();
+					$flag++;
+					if($flag == 2){
+						break;
+					}
 				}
 			}
-			else if ($groups == array() && !is_array($individualCriteria) && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
-				$individualCriteria = $evaluation->GetCriteria();
-				break;
+		}
+		else{
+			foreach ($evaluations as $evaluation){
+				if (!is_array($individualCriteria) && $assignment[0]->assignmentID == $evaluation->GetAssignment()->assignmentID){
+					$individualCriteria = $evaluation->GetCriteria();
+					break;
+				}
 			}
 		}
 
@@ -195,19 +209,21 @@
 	$heights = [];
 	foreach ($assignmentData as &$assignment){
 		foreach ($assignment as &$criteria){
-			foreach ($criteria as &$criterion){
-				#To avoid bugs, checks if this is a valid criterion
-				if (is_array($criterion)){
-					$criterion['rating'] = $criterion['rating'] / $criteria['numberOfEvals'];
+			if(is_array($criteria) && array_search($criteria, $assignment) != 'group'){
+				foreach ($criteria as &$criterion){
+					#To avoid bugs, checks if this is a valid criterion
+					if (is_array($criterion)){
+						$criterion['rating'] = $criterion['rating'] / $criteria['numberOfEvals'];
+					}
 				}
-			}
-			$heights[] = $criteria['numberOfCriteria'] * 50;
+				$heights[] = $criteria['numberOfCriteria'] * 50;
+			}		
 		}
 	}
 
 
 	#enable this to see important information
-	//echo '<pre>' . print_r($_GET, TRUE) . '</pre>';
+	echo '<pre>' . print_r($_GET, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations[0]->GetCriteria()[0]->GetSelections(), TRUE) . '</pre>';
 

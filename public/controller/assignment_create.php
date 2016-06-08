@@ -9,12 +9,12 @@
 	}
 
 	//if class id not posted
-	if(empty($_POST['classID'])){
+	if(empty($_GET['classID'])){
 		header("location:instructor_home.php");
 	}
 
 	//set session variable of class id
-	$_SESSION['classID'] = $_POST['classID'];
+	$_SESSION['classID'] = $_GET['classID'];
 	
 	echo $twig->render('assignment_create.html', [
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName

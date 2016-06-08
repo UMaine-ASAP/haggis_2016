@@ -3,7 +3,7 @@
 header{
 	background: #0080ff;
 	border-bottom: 3px solid #cccccc;
-	height: 50px;
+	height: 60px;
 	vertical-align: middle;
 	min-width: 300px;
 	color: white;
@@ -29,6 +29,7 @@ header{
 #welcomeMessage{
 	display: inline-block;
 	margin-left: 75%;
+
 
 }
 
@@ -69,6 +70,9 @@ body{
 }
 
 #footer #copywrite{
+	font-size: 12px;
+	margin: auto;
+	width: 10%;
 
 }
 
@@ -137,6 +141,7 @@ table{
 	vertical-align: top;
 	margin-left: 5px;
 	margin-right: 5px;
+	width: auto;
 }
 table th{
 	background: #0080ff;
