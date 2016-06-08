@@ -358,6 +358,8 @@ class User {
 			return "Please try again";
 		}
 	}
+
+
 	static public function ConfirmResetPassword($code,$email){
 		$db =GetDB();
 
@@ -366,11 +368,11 @@ class User {
 		if($rows = $db->query($query)){
 			echo "yeaahh mannnn";
 		}else{
-			echo "Error";
+			echo "Password Reset Failed, Wrong Email or Code";
 		}
-
-
 	}
+
+
 }
 /*
 $u = new User(1);
