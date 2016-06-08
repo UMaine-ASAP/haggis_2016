@@ -25,6 +25,7 @@
 			)
 			[6] => assignment ID
 			[7] => student ID
+			[8] => criteria type (raw)
 		)
 	*/
 	############FUNCTIONS#############
@@ -42,8 +43,21 @@
 		$criterion = json_decode($_GET['tempVariables']);
 	}
 
+	#Checking the assignment and user this is for
 	$assignment = new Assignment($criterion[6]);
 	$student = new User($criterion[7]);
+
+	#Checking the criteria type
+	$type = '';
+	if($criterion[8] == "individualCriteria"){
+		$type = "Individual";
+	}
+	if($criterion[8] == "groupCriteria"){
+		$type = "Group";
+	}
+	if($criterion[8] == "peerCriteria"){
+		$type = "Peer";
+	}
 
 	#enable these to see important information
 	//echo '<pre>' . print_r($criterion, TRUE) . '</pre>';
@@ -54,6 +68,7 @@
 		"username" 			=> $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"criterion"			=> $criterion,
 		"studentName"		=> $student->firstName . " " . $student->lastName,
-		"assignmentName"	=> $assignment->title
+		"assignmentName"	=> $assignment->title,
+		"type"				=> $type
 		]);
 ?>
