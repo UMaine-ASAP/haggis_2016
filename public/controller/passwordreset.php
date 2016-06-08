@@ -23,7 +23,7 @@ if(!isset($_GET['code']) && !isset($_GET['email']))
 
 			}
 
-			echo "<br>The account associated with ".$_POST['postEmail']." has had its password reset. Please check your email for stpes on resetting your password.<br>";
+			echo "<br>Please check your email";
 
 
 			$email = $_POST['postEmail'];
@@ -69,7 +69,7 @@ if(isset($_POST['newpassword']) && $_POST['newpassword1']){
 	if($_POST['newpassword'] != null && $_POST['newpassword1'] != null){
  		if($_POST['newpassword'] === $_POST['newpassword1']){
  			//push information to DB
-
+ 			echo 'hello world!';
  		}
  		else
  		{
