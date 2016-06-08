@@ -6,8 +6,10 @@
 	<link rel="stylesheet" type="text/css" href="../stylesheet.css"/>
 	<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
 	<script>
-		function popup(link, windowName, variables = 0){
+		function popup(link, windowName, variables = []){
 			//PRE: link is either a string for the html/php name of the page
 			//	or an object with a href component. windowName must be a
 			//	unique name.
@@ -20,16 +22,88 @@
 			else{
 				href = link.href;
 			}
-			if (variables != 0){
-				$_SESSION['tempVariables'] = variables;
+			if(variables != 0){
+				var form = document.createElement("form");
+				form.target = "_blank";
+				form.action = "criteria_view.php";
+				form.method = "get";
+				/*for (var k = 0; k < variables.length; k++){
+					if (variables[k].length > 0){
+						for (var i = 0; i < variables[k].length; i++){
+							var input = document.createElement("input");
+							input.type = "hidden";
+							input.name = "tempCriterion" + i;
+							input.value = variables[k][i];
+							form.appendChild(input);
+						}
+					}
+				}*/
+				var input = document.createElement("input");
+				input.type = "hidden";
+				input.name = "tempVariables";
+				input.value = variables;
+				form.appendChild(input);
+				document.body.appendChild(form);
+				form.submit();
 			}
-			window.open(href, windowName, 'width=600, height=400,scrollbars=yes');
+			else{
+				window.open(href, windowName, 'width=600, height=400,scrollbars=yes');
+			}
 			return false;
 		}
-	</script>
-</head>
-<body>
 
+		/*function grappher(chartName, scoreNums, labelNames, labelText, titleText){
+			var ctx = document.getElementById(chartName);
+			var colors = [];
+			var colorCounter = 0;
+			for (var i = 0; i < scoreNums.length; i++){
+				if (colorCounter == 0){
+					colors.push('rgb(0,128,255)','rgb(192,192,192)');
+					colorCounter = 1;
+				}
+				else{
+					colorCounter = 0;
+				}
+			}
+			var myChart = new Chart(ctx, {
+			    type: 'horizontalBar',
+			    data: {
+			        labels: labelNames,
+			        datasets: [{
+			            label: labelText,
+			            data: scoreNums,
+			            backgroundColor: colors
+			        }]
+			    },
+			    options: {
+			    	legend: {
+			    		display: false
+			    	},
+			    	title: {
+			    		display: true,
+			    		fontSize: 36,
+			    		text: titleText
+			    	},
+			        responsive: false,
+			        responsiveAnimationDuration: 2800,
+			        maintainAspectRatio: false,
+			        scales: {
+			        	yAxes: [{
+			        		ticks: {
+			        			
+			        		}
+			        	}],
+			            xAxes: [{
+			                ticks: {
+			                    beginAtZero:true,
+			                    max: 5
+			                }
+			            }]
+			        }
+			    }
+			});
+		}*/
+	</script>
 	<header>
 		{% block header %}{% endblock %}
 	</header>

@@ -5,16 +5,19 @@ require_once dirname(__FILE__) . "/../models/class.php";
 
 class User {
 
-	public $userID = -1;
-	public $firstName;
-	public $lastName;
-	public $middleInitial;
-	public $userType;
-	public $email;
-	public $password;
-	public $salt;
+	public $userID = -1;			//A unique number for the user
+	public $firstName;				//The user's first name
+	public $lastName;				//The user's last name
+	public $middleInitial;			//The user's middle initial
+	public $userType;				//The type of user, Student or Instructor
+	public $email;					//The user's email
+	public $password;				//The password for the user
+	public $salt;					//A salt encryption for the user's password
 
 	public function User($user_id){
+		//PRE: user_id must be 0 for a new user or a valid userID
+		//POST: Creates a new user or pulls a user object from the database matching the user_id
+
 		//check to see if valid user_id
 		if($user_id <= -1){
 			return;
@@ -67,6 +70,8 @@ class User {
 	}
 
 	public function Login($email, $password){
+		//POST: pulls a user object where email and password both match
+
 		$db = GetDB();
 
 		//query for the user in the database using credentials
@@ -95,6 +100,8 @@ class User {
 	}
 
 	public function Save(){
+		//POST: Saves the user's current information to the database
+
 		if($this->userID != -1){
 			$query = "UPDATE `user` SET ";
 			$query .= "`firstName` = '" . $this->firstName . "', ";
@@ -122,6 +129,7 @@ class User {
 	}
 
 	public function Delete(){
+		//POST: Deletes the user's information from the databse
 		if(!filter_var($this->userID, FILTER_VALIDATE_INT) === TRUE){
 			return; // Wrong userID
 		}
