@@ -8,6 +8,13 @@ echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 //Reset password things
 if(!isset($_GET['code']) && !isset($_GET['email']))
 {
+	echo "
+		<p>If you have forgotten your password enter your email. You will have instructions emailed to you.</p>
+		<form method='POST' name='password_reset'>
+			<input type='text' name='postEmail' placeholder='Registered Email'/>
+			<input type='submit' name='submitPasswordReset' value='Submit'></input>
+		</form>
+";
 	if(isset($_POST['postEmail'])){
 		if($_POST['postEmail'] != null){
 			
