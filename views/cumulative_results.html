@@ -118,7 +118,7 @@
 					criterion.push({{studentID}});
 					criterion.push("{{finalCriteria}}");
 					var form = document.createElement("form");
-					popup('criteria_view.php', 'criteriaViewer{{chartIterator}}', variables = criterion);
+					popup('criteria_view.php', 'criteriaViewer', variables = criterion);
 				}
 			}
 			{% set chartIterator = chartIterator + 1 %}

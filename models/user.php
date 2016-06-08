@@ -326,14 +326,26 @@ class User {
 	}
 
 	static public function ResetPassword(){
-		return 'hey';
 		$db = GetDB();
-		$query = "SELECT * FROM `user` WHERE `email` = $_POST[postEmail]";
+		$email = $_POST['postEmail'];
+		echo $email;
+		$query = "SELECT * FROM `user` WHERE `email` = '$email'";
 		$rows = $db->query($query);
+		$ret = [];
 		if($rows){
-			return "hey";
+			while ($row = $rows->fetch_array(MYSQLI_BOTH)){
+				$user = new User($row['userID']);
+				$ret[] = $user;
+			}
+			if (isset($ret[0])){
+				//Do password reset things
+			}
 		}
-
+		else{
+			$_SESSION['error'] = 676;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+		}
 	}
 
 }
