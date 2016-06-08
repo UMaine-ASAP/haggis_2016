@@ -366,7 +366,6 @@ class User {
 		$query = "SELECT * FROM user WHERE passreset = '$code' AND email = '$email'";
 
 		if($rows = $db->query($query)){
-			echo "yeaahh mannnn";
 			return true;
 		}else{
 			echo "Password Reset Failed, Wrong Email or Code";

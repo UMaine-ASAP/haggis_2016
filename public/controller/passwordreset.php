@@ -2,9 +2,6 @@
 
 require_once __DIR__ . "/../../system/bootstrap.php";
 
-echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-
-
 //Reset password things
 if(!isset($_GET['code']) && !isset($_GET['email']))
 {
@@ -68,6 +65,22 @@ if(isset($_GET['code']) && isset($_GET['email'])){
 	}
 }
 
+if(isset($_POST['newpassword']) && $_POST['newpassword1']){
+	if($_POST['newpassword'] != null && $_POST['newpassword1'] != null){
+ 		if($_POST['newpassword'] === $_POST['newpassword1']){
+ 			//push information to DB
+
+ 		}
+ 		else
+ 		{
+ 			echo "Passwords must match";
+ 		}
+	}
+	else
+	{
+		echo "Passwords must not be null";
+	}
+}
 
 
 
