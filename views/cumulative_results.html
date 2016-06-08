@@ -83,7 +83,6 @@
 			function openComments{{chartIterator}}(event){
 				var element = myChart{{chartIterator}}.getElementAtEvent(event);
 				if (element.length != 0){
-					console.log(element);
 					var criterionNum = element[0]._index;
 					var criterion = [];
 					{% set iterator = -1 %}
@@ -115,7 +114,9 @@
 							{% endfor %}
 						}
 					{% endfor %}
-					console.log(criterion);
+					criterion.push({{finalAssignment}});
+					criterion.push({{studentID}});
+					criterion.push("{{finalCriteria}}");
 					var form = document.createElement("form");
 					popup('criteria_view.php', 'criteriaViewer{{chartIterator}}', variables = criterion);
 				}

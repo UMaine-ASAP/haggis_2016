@@ -325,7 +325,8 @@ class User {
 		}
 	}
 
-	public function ResetPassword(){
+	static public function ResetPassword(){
+		return 'hey';
 		$db = GetDB();
 		$query = "SELECT * FROM `user` WHERE `email` = $_POST[postEmail]";
 		$rows = $db->query($query);
