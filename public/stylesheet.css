@@ -3,7 +3,7 @@
 header{
 	background: #0080ff;
 	border-bottom: 3px solid #cccccc;
-	height: 50px;
+	height: 60px;
 	vertical-align: middle;
 	min-width: 300px;
 	color: white;
@@ -29,6 +29,7 @@ header{
 #welcomeMessage{
 	display: inline-block;
 	margin-left: 75%;
+	margin-top: 2%;
 
 }
 
