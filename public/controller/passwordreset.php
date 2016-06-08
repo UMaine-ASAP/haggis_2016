@@ -6,7 +6,7 @@ echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 
 
 //Reset password things
-if(!$_GET['code'] && !$_GET['email'])
+if(!isset($_GET['code']) && !isset($_GET['email']))
 {
 	if(isset($_POST['postEmail'])){
 		if($_POST['postEmail'] != null){
