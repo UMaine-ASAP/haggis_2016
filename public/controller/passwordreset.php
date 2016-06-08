@@ -5,6 +5,7 @@ require_once __DIR__ . "/../../system/bootstrap.php";
 echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 
 
+//Reset password things
 if(isset($_POST['postEmail'])){
 	if($_POST['postEmail'] != null){
 		
@@ -17,10 +18,6 @@ if(isset($_POST['postEmail'])){
 		}else{
 
 		}
-
-
-
-
 
 		echo "<br>The account associated with ".$_POST['postEmail']." has had its password reset. Please check your email for stpes on resetting your password.<br>";
 
@@ -46,9 +43,22 @@ if(isset($_POST['postEmail'])){
 	}
 }
 
+//verify reset password er... part 2?
+if(isset($_GET['code']) && isset($_GET['email'])){
+	$code = $_GET['code'];
+	$email = $_GET['email'];
+	User::ConfirmResetPassword($code,$email);
+	echo "testing";
+}
+
+
+
+
+
 //TWIG THINGS
 echo $twig->render('passwordreset.html', [
 
 ]);
 
+//$_GET["name"]
 ?>

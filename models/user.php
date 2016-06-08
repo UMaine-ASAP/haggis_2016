@@ -342,19 +342,15 @@ class User {
 				$query = "UPDATE user SET passreset = '$code' WHERE email = '$email'";
 				//if the passrest field is updated
 				if($db->query($query) === TRUE){
-
 					return true;
 				//if not
 				}else{
-
-					return false;
+					return "Please try again";
 				}
-				
-
 			}
 			//if not return false
 			else{
-				return false;
+				return "Please try again";
 			}
 		}
 		//if DB query fails
@@ -362,11 +358,20 @@ class User {
 			return "Please try again";
 		}
 	}
+	static public function ConfirmResetPassword($code,$email){
+		$db =GetDB();
+
+		$query = "SELECT * FROM user WHERE passreset = '$code' AND email = '$email'";
+
+		if($rows = $db->query($query)){
+			echo "yeaahh mannnn";
+		}else{
+			echo "Error";
+		}
+
+
+	}
 }
-
-
-
-
 /*
 $u = new User(1);
 $u->AddEvaluation(1);
