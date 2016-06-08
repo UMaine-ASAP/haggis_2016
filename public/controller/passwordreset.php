@@ -14,13 +14,11 @@ if(!isset($_GET['code']) && !isset($_GET['email']))
 			<input type='text' name='postEmail' placeholder='Registered Email'/>
 			<input type='submit' name='submitPasswordReset' value='Submit'></input>
 		</form>
-";
+	";
 	if(isset($_POST['postEmail'])){
 		if($_POST['postEmail'] != null){
 			
 			$code = rand(100000,1000000000);
-			
-			echo $code;
 			
 			if(User::ResetPassword($code) === true){
 
@@ -58,7 +56,13 @@ if(isset($_GET['code']) && isset($_GET['email'])){
 	$email = $_GET['email'];
 	
 	if(User::ConfirmResetPassword($code,$email) === true){
-		echo "butterflies";
+		echo "
+		<form method='post' name='password_reset_complete'>
+			Enter a new password<br><input type='password' name='newpassword'/><br>
+			Re-enter your password<br><input type='password' name='newpassword1'/><br>
+			<input type='submit' value='Update Password'>
+		</form>
+		";
 	}else{
 		echo "ERRORs";
 	}
