@@ -216,6 +216,38 @@ class Student_Group {
 		}
 		return $ret;
 	}
+
+	public function GetAssignment(){
+		//POST: Returns the assignment to which the student group belongs
+		$query = "SELECT * FROM 'student_group' WHERE 'student_groupID' = {$this->student_groupID}'";
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			return $rows[0];
+		}
+		else{
+			$_SESSION['error'] = 677;
+			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
+			header("location:error_message.php");
+		}
+	}
 }
+
+/*	public function GetGroups(){
+		$query = "SELECT * FROM `student_group` WHERE `assignmentID` = {$this->assignmentID}";
+
+		$db = GetDB();
+		$rows = $db->query($query);
+		if($rows){
+			$ret = Array();
+			while($row = $rows->fetch_array(MYSQLI_BOTH)){
+				$e = new Student_Group($row['student_groupID']);
+				$ret[] = $e;
+			}
+			return $ret; 
+		} else {
+			return Array();
+		}
+	}*/
 
 ?>

@@ -87,7 +87,8 @@
 	       	scales: {
 	            xAxes: [{
 	                ticks: {
-	                    beginAtZero:true
+	                    beginAtZero:true,
+	                    max: 5
 	                },
 	                scaleLabel:{
 	                	display:true,
@@ -106,6 +107,7 @@
 
 	    }
 	});
+
 	{# Createing an onclick event that takes you to the page of the student #}
 	var IDs = [];
 	{% for ID in IDs %}
@@ -126,7 +128,6 @@
 			document.body.appendChild(form);
 			form.submit();
 		}
-		//window.open('cumulative_results.php', '_self');
 	}
 	</script>
 	{% endautoescape %}
@@ -150,14 +151,16 @@
 
 	{% set labels = [] %}
 	{% set scores = [] %}
+	{% set IDs = [] %}
 	{% for group in assignmentData %}
 		{% set labels = labels|merge(['Group ' ~ group['groupNumber']]) %}
 		{% set scores = scores|merge([group.averageRating]) %}
+		{% set IDs = IDs|merge([group['groupID']]) %}
 	{% endfor %}
 
 	{% autoescape 'js'%}
 	{# Creating a chart for each group (if group assignment) and their average ratings #}
-	<canvas id="myChart" width="1000" height="{{height}}"></canvas>
+	<canvas id="myChart" width="1000" height="{{height}}" onclick="goToGroup(event)"></canvas>
 	<script>
 	var ctx = document.getElementById("myChart");
 	var labels = [];
@@ -206,7 +209,8 @@
 	        scales: {
 	            xAxes: [{
 	                ticks: {
-	                    beginAtZero:true
+	                    beginAtZero:true,
+	                    max: 5
 	                },
 	                scaleLabel:{
 	                	display:true,
@@ -225,6 +229,28 @@
 
 	    }
 	});
+	
+
+	var IDs = [];
+	{% for ID in IDs %}
+		IDs.push({{ID}});
+	{% endfor %}
+	function goToGroup(event){
+		var element = myChart.getElementAtEvent(event);
+		if (element.length != 0){
+			var form = document.createElement("form");
+			form.target = "_self";
+			form.method = "get";
+			form.action = "cumulative_results_group.php";
+			var input = document.createElement("input");
+			input.type = "hidden";
+			input.name = "groupID";
+			input.value = '1';
+			form.appendChild(input);
+			document.body.appendChild(form);
+			form.submit();
+		}
+	}
 	</script>
 	{% endautoescape %}
 {% endif %}

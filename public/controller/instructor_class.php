@@ -28,8 +28,14 @@
 	}
 
 	//Build Evaluations
-	//should be scrapped
-	$evaluation_results = array();			//twig results for evaluations
+	/*$evaluation_results = array();
+	foreach ($assignments as $assignment){
+		$evaluation_results[$assignment[0]->assignmentID] = array();
+		$evaluations = $assignment[0]->GetEvaluations();
+		foreach ($evaluations as $evaluation){
+			$evaluation_results[$assignment[0]->assignmentID][] = $evaluation;
+		}
+	}
 
 	foreach($assignments as $a){
 
@@ -81,7 +87,7 @@
 				'name'			 => $a[0]->title,
 				'assigned'		 => $e
 		];
-	}
+	}*/
 
 
 	//Build students
@@ -98,11 +104,14 @@
 		}
 	}
 
+	#enable these to see important information
+	//echo '<pre>' . print_r($evaluation_results, TRUE) . '</pre>';
+
 	echo $twig->render('instructor_class.html', [
 		"username"        => $_SESSION['user']->firstName . " " . $_SESSION['user']->lastName,
 		"className"       => $class->title,
 		"assignments"	  => $assignment_results,
-		"evaluations"	  => $evaluation_results,
+		//"evaluations"	  => $evaluation_results,
 		"students"		  => $student_results,
 		"classID"	 	  => $_SESSION['classID']
 	]);

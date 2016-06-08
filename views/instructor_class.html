@@ -30,7 +30,18 @@
 
 </table>
 
-<table id= "instructorClasspPage" class="table">
+<table id="instructorClassPageEvals" class="table">
+	<thread><tr><th class="table">Evaluations</tr></threat>
+	<tr>
+		<td>
+			<form method='get' id="instructorClassPageEvalsByAssignment">
+				<button type="submit" name="submit">View by Assignment</button>
+			</form>
+		</td>
+	</tr>
+</table>
+
+{# <table id= "instructorClassPageEvals" class="table">
 	<thead><tr><th class="table">Evaluations</tr></thead>
 
 	{% for eval in evaluations %}
@@ -51,7 +62,7 @@
 
 	{% endfor %}
 
-</table>
+</table> #}
 
 <table id="instructorClassStudent" class="table">
 	<thead><tr><th class="table">Students

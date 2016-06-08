@@ -72,10 +72,12 @@
 			$assignmentData[$assignment[0]->assignmentID]['groupCriteria'] = $groupCriteria;
 			$criteriaCounter = 0;
 			foreach ($assignmentData[$assignment[0]->assignmentID]['groupCriteria'] as &$criterion){
+				#saving object properties
 				$criterionID = $criterion->criteriaID;
 				$criterionTitle = $criterion->title;
 				$criterionDescription = $criterion->description;
 				$criterionSelections = $criterion->GetSelections();
+				#loading object properties into an array
 				$criterion = array();
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
@@ -96,10 +98,12 @@
 			$assignmentData[$assignment[0]->assignmentID]['peerCriteria'] = $peerCriteria;
 			$criteriaCounter = 0;
 			foreach ($assignmentData[$assignment[0]->assignmentID]['peerCriteria'] as &$criterion){
+				#saving object properties
 				$criterionID = $criterion->criteriaID;
 				$criterionTitle = $criterion->title;
 				$criterionDescription = $criterion->description;
 				$criterionSelections = $criterion->GetSelections();
+				#loading object properties into an array
 				$criterion = array();
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
@@ -120,10 +124,12 @@
 			$assignmentData[$assignment[0]->assignmentID]['individualCriteria'] = $individualCriteria;
 			$criteriaCounter = 0;
 			foreach ($assignmentData[$assignment[0]->assignmentID]['individualCriteria'] as &$criterion){
+				#saving object properties
 				$criterionID = $criterion->criteriaID;
 				$criterionTitle = $criterion->title;
 				$criterionDescription = $criterion->description;
 				$criterionSelections = $criterion->GetSelections();
+				#loading object properties into an array
 				$criterion = array();
 				$criterion['id'] = $criterionID;
 				$criterion['title'] = $criterionTitle;
@@ -223,7 +229,7 @@
 
 
 	#enable this to see important information
-	echo '<pre>' . print_r($_GET, TRUE) . '</pre>';
+	//echo '<pre>' . print_r($_GET, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($assignmentData, TRUE) . '</pre>';
 	//echo '<pre>' . print_r($evaluations[0]->GetCriteria()[0]->GetSelections(), TRUE) . '</pre>';
 

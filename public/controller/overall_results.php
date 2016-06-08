@@ -252,6 +252,7 @@
 			$assignmentData[$group->student_groupID] = array();
 			$assignmentData[$group->student_groupID]['averageRating'] = 0;
 			$assignmentData[$group->student_groupID]['groupNumber'] = $group->groupNumber;
+			$assignmentData[$group->student_groupID]['groupID'] = $group->student_groupID;
 			foreach ($criteria as $criterion){
 				$assignmentData[$group->student_groupID][$criterion->criteriaID] = array();
 				$assignmentData[$group->student_groupID][$criterion->criteriaID]['rating'] = 0;
