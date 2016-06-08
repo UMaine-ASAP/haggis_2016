@@ -325,33 +325,53 @@ class User {
 		}
 	}
 
-	static public function ResetPassword(){
+	static public function ResetPassword($code){
 		$db = GetDB();
 		$email = $_POST['postEmail'];
 		$query = "SELECT * FROM `user` WHERE `email` = '$email'";
 		$rows = $db->query($query);
 		$ret = [];
+		//if the query returns a user
 		if($rows){
 			while ($row = $rows->fetch_array(MYSQLI_BOTH)){
 				$user = new User($row['userID']);
 				$ret[] = $user;
 			}
+			//if the user is found return true
 			if (isset($ret[0])){
-				//Do password reset things
+				$query = "UPDATE user SET passreset = '$code' WHERE email = '$email'";
+				//if the passrest field is updated
+				if($db->query($query) === TRUE){
+					return true;
+				//if not
+				}else{
+					return "Please try again";
+				}
+			}
+			//if not return false
+			else{
+				return "Please try again";
 			}
 		}
+		//if DB query fails
 		else{
-			$_SESSION['error'] = 676;
-			$_SESSION['error-detailed'] = mysqli_error($db)." On Line: ".__LINE__." of file ".__FILE__;
-			header("location:error_message.php");
+			return "Please try again";
 		}
 	}
+	static public function ConfirmResetPassword($code,$email){
+		$db =GetDB();
 
+		$query = "SELECT * FROM user WHERE passreset = '$code' AND email = '$email'";
+
+		if($rows = $db->query($query)){
+			echo "yeaahh mannnn";
+		}else{
+			echo "Error";
+		}
+
+
+	}
 }
-
-
-
-
 /*
 $u = new User(1);
 $u->AddEvaluation(1);
