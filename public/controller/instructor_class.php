@@ -10,8 +10,8 @@
 	}
 
 	//if class id was not given
-	if(!empty($_POST['classID'])){
-		$_SESSION['classID'] = $_POST['classID'];
+	if(!empty($_GET['classID'])){
+		$_SESSION['classID'] = $_GET['classID'];
 	}
 
 	$class = new Period($_SESSION['classID']); //get class object

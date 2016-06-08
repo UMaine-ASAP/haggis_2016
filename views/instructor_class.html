@@ -10,14 +10,14 @@
 	<thead><tr><th class="table">Assignments</tr></thead>
 
 	<tr><td>
-		<form method='post' action='assignment_create.php'>
+		<form method='get' action='assignment_create.php'>
 		<button type="submit" value="{{classID}}" name="classID">Add Assignment</button>
 		</form>
 	</td></tr>
 
 	{% for assignment in assignments %}
 		<tr><td>
-		<form method='post' id="instructorClassTables" action='instructor_assignment.php'>
+		<form method='get' id="instructorClassTables" action='instructor_assignment.php'>
 		<button type="submit" value="{{assignment.id}}" name="assignmentID">{{assignment.name}}</button>
 		</form>
 		</tr></td>
@@ -40,7 +40,7 @@
 		{% for e in eval.assigned %}
 			<tr><td>
 			
-				<form method='post' id ="instructorClassTablesEval" action='evaluation_view.php'>
+				<form method='get' id ="instructorClassTablesEval" action='evaluation_view.php'>
 				<button type="submit" value="{{e.id}}" name="evaluationID">
 					{{e.target}}
 				</button>

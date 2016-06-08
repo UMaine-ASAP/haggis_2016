@@ -15,7 +15,7 @@
 			   	{% endif %}
 			   	{% if groupEvaluationID == -1 or peerEvaluationID == -1 or individualEvaluationID == -1 %}
 			   <td>
-			   <form method="post" action="evaluation_create.php">
+			   <form method="get" action="evaluation_create.php">
 			   <button type="submit" name="postCreateMasterEval">Create Evaluation</button>
 			   </form>
 			   </td>
@@ -24,26 +24,26 @@
 			   	<td>
 			   
 			    {% if groupEvaluationID > 0 %}
-			    <form method="post" action="evaluation_view.php">
+			    <form method="get" action="evaluation_view.php">
 		   		<button type="submit" value="{{groupEvaluationID}}" name="evaluationID">View Group Criteria</button>		
 		   		</form>
 		   		{% endif %}
 
 		   		{% if peerEvaluationID > 0 %}
-			    <form method="post" action="evaluation_view.php">
+			    <form method="get" action="evaluation_view.php">
 		   		<button type="submit" value="{{peerEvaluationID}}" name="evaluationID">View Peer Criteria</button>		
 		   		</form>
 		   		{% endif %}
 
 		   		{% if individualEvaluationID > 0 %}
-			    <form method="post" action="evaluation_view.php">
+			    <form method="get" action="evaluation_view.php">
 		   		<button type="submit" value="{{individualEvaluationID}}" name="evaluationID">View Individual Criteria</button>		
 		   		</form>
 		   		{% endif %}
 
 		   		<!--button that transports you to results page for assignment-->
 			    {% if evalsTotal > 0 %}
-		   		<form method="post" action="overall_results.php">
+		   		<form method="get" action="overall_results.php">
 		   		<button type="submit" value="{{assignmentID}}" name="postViewResults">View Results</button>
 		   		</form>
 		   		{% endif %}
@@ -69,7 +69,7 @@
 
 
 <div id="groups">
-		<form method='post' action='create_group.php'>
+		<form method='get' action='create_group.php'>
 			<input type='hidden' value='{{assignmentID}}' name='assignmentID'>
 			Create New Group with Number: 
 			<input type='number' min='1' name='groupNumber'>
