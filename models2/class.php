@@ -140,5 +140,9 @@ class Class {
 		}
 	}
 
+	############USERS#################
+	public function AddUser(){
+
+	}
 }
 ?>

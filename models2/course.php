@@ -12,6 +12,14 @@
 	To delete a course:
 	pull the course from the database
 	call the Delete() function on the course
+
+	To add a class to the course:
+	obtain the ID for the class
+	call the AddClass([number]) function where [number] is the ID
+
+	To create a class descending from the course
+	call the CreateClass() function
+	NOTE: Make sure to edit the variables CreateClass doesn't touch
 */
 
 require_once dirname(__FILE__) . "/../system/database.php";
@@ -114,17 +122,19 @@ class Course {
 	}
 
 	############CLASSES###############
-	public function CreateAClass(){
-		//POST: Creates a new class using this course's information and links it to this course
+	public function CreateClass(){
+		//POST: Creates a new class using this course's information and links it to this course, then returns the class to you
 		$class = new Class(0);
 		$class->courseID = $this->courseID;
 		$class->title = $this->courseCode;
 		$class->description = $this->description;
 		$class->Save();
+		return $class;
 	}
 
-	public function AddAClass($classID = -1){
+	public function AddClass($classID = -1){
 		//PRE: classID must be a valid integer
+		//POST: Adds a reference to the class from the course
 
 		if($classID = -1){
 			return;
